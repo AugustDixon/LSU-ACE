@@ -1,6 +1,6 @@
 <?php
 /*
-	Page gerenate script: register.php
+	Page gerenate script: /register.php
 	This script generates the register account page. HTTPS Required.
 	
 	HTTP Inputs:
@@ -49,8 +49,8 @@
 					Show message and clear password fields
 
 	Page Connections:
-		index.php
-		profile.php
+		/index.php
+		/profile/index.php
 */
 
 

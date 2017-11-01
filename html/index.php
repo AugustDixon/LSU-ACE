@@ -1,6 +1,6 @@
 <?php
 /*
-	Page generate script: index.php
+	Page generate script: /index.php
 	This script generates login screen and is the homepage of the website.
 	
 	HTTP Inputs:
@@ -27,9 +27,9 @@
 					Show unsuccesful login message and clear text fields
 	
 	Page connections:
-		profile.php
-		forgotPassword.php
-		register.php
+		/profile/index.php
+		/forgotPassword.php
+		/register.php
 */
 
 
@@ -50,7 +50,7 @@ if(isset($_SESSION['username'])){
 		unset($_SESSION['idle'];		
 	}
 	else{										
-		header('Location: profile.php');
+		header('Location: http://www.LSU-ACE.com/profile.php', true, 303);
 		exit();
 	}
 }

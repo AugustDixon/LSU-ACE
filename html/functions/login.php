@@ -1,6 +1,6 @@
 <?php
 /*
-	Function Script: functions/login.php
+	Function Script: /functions/login.php
 	This script checks a login attempt from the index.php login page. This script should only be called using
 	HTTPS.
 	

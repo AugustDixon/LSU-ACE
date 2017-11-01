@@ -1,6 +1,6 @@
 <?php
 /*
-	Function script: registerAccount.php
+	Function script: /functions/registerAccount.php
 	This script creates a new account. This script should only be called using HTTPS.
 	
 	Script Inputs:

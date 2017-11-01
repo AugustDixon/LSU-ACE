@@ -1,6 +1,6 @@
 <?php
 /*
-		Page generate script: profile.php
+		Page generate script: /profile/index.php
 		This script generates the profile page.
 		
 		HTTP Inputs:
@@ -13,9 +13,9 @@
 			
 		
 		Page Connections:
-			index.php
-			editProfile.php
-			class.php
+			/index.php
+			/profile/edit.php
+			/class/index.php
 */
 
 
