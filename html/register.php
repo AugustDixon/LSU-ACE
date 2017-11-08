@@ -14,7 +14,7 @@
 		"Phone Number" text field
 		"Password" text field
 		"Confirm Password" text field
-		"Register" button - runs registerAccount.php
+		"Register" button - runs AJAX /functions/registerAccount.php
 		
 	AJAX Functions:
 		registerAccount.php

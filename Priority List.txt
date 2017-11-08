@@ -1,0 +1,17 @@
+1. /index.php
+2. /register.php + /functions/registerAccount.php
+3. /functions/login.php
+4. /profile/index.php + /profile/functions/logout.php
+5. /profile/edit.php
+6. /profile/add.php + /profile/functions/addClass.php
+7. /class/index.php
+8. /class/session.php + /class/functions/autosave.php + /class/functions/pingChat.php +/class/functions/sendMessage.php
+9. /class/log all functionality
+10./class/bulletin all functionality
+11./class/info all functionality
+12./class/options.php + /class/functions/editOptions.php
+12./class/forum all functionality
+13./class/group all functionality
+14./profile/functions/editProfile.php + /profile/password.php + /profile/functions/changePassword.php
+15.GUI upgrading
+16./forgot1.php + /forgot2.php + /forgot3.php + functions

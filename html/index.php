@@ -9,9 +9,9 @@
 	Page Features:
 		"Username" text field
 		"Password" text field
-		"Login" button - Runs AJAX login.php
-		"Forgot Password?" button - Hyperlinks to forgotPassword.php
-		"Register" button - Hyperlinks to register.php
+		"Login" button - Runs AJAX /functions/login.php
+		"Forgot Password?" button - Hyperlinks to /forgotPassword.php
+		"Register" button - Hyperlinks to /register.php
 	
 	AJAX functions:
 		login.php
@@ -28,7 +28,7 @@
 	
 	Page connections:
 		/profile/index.php
-		/forgotPassword.php
+		/forgot1.php
 		/register.php
 */
 
