@@ -1,0 +1,55 @@
+<html>
+ 	<head> 
+   		 <title>Log In</title>
+  	</head>
+  	<body> 
+		<h1>Log In</h1>
+   		 	<form name="loginForm" action="/login.php">
+				Username: <input type="text" name="username"><br>  
+				Password: <input type="text" name="password"><br>
+				<input type="submit" value="Submit" onClick="loadDoc('https://lsu-ace.com/functions/login.php', myFunction)">
+			</form>
+			<a href="https://lsu-ace.com/forgot1.php">Forgot Password?</a>
+			<a href="https://lsu-ace.com/register.php">Register?</a>
+  	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		var username = document.getElementById('loginForm').username; 
+		var password = document.getElementById('loginForm').password; 
+		var attributes = 'username=' + username '&password=' + password;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.send(attributes);
+	}
+	
+	function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case "0": 
+		
+		break;
+		
+		case "1": 
+		window.location = "https://lsu-ace.com/profile/index.php"
+		break;
+		
+		case "2": 
+		
+		break;
+		}
+	}
+	</script>
+</html>
+	
