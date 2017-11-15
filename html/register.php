@@ -53,8 +53,22 @@
 		/profile/index.php
 */
 
+session_start();
 
+if(isset($_SESSION['username'])){
+	if(($_SESSION['idle'] + 600) > time()){
+		unset($_SESSION['username']);
+		unset($_SESSION['idle']);		
+	}
+	else{										
+		header('Location: https://ec2-34-226-212-195.compute-1.amazonaws.com/profile.php', true, 303);
+		exit();
+	}
+}
 
+echo "";
+
+exit();
 
 
 ?>

@@ -43,20 +43,73 @@ session_start();
 	If the user has been idle for ten minutes (i.e. an old session), the user is logged out 
 		and the script continues.
 	Else, the user is redirected to their profile homepage.
-*/	
+*/
+
 if(isset($_SESSION['username'])){
 	if(($_SESSION['idle'] + 600) > time()){
 		unset($_SESSION['username']);
-		unset($_SESSION['idle'];		
+		unset($_SESSION['idle']);		
 	}
 	else{										
-		header('Location: http://www.LSU-ACE.com/profile.php', true, 303);
+		header('Location: https://ec2-34-226-212-195.compute-1.amazonaws.com/profile.php', true, 303);
 		exit();
 	}
 }
 
+echo "
+	<html>
+ 	<head> 
+   		 <title>Log In</title>
+  	</head>
+  	<body> 
+		<h1>Log In</h1>
+   		 	<form name=\"login\">
+				Username: <input type=\"text\" name=\"username\"><br>
+				Password: <input type=\"text\" name=\"password\"><br>
+				<input type=\"submit\" value=\"Submit\" onClick=\"loadDoc('https://ec2-34-226-212-195.compute-1.amazonaws.com/functions/login.php', myFunction)\">
+			</form>
+  	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		var username = document.getElementById('login').username; 
+		var password = document.getElementById('login').password; 
+		var attributes = 'username=' + username '&password=' + password;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open(\"POST\", url, true);
+		xhttp.send(attributes);
+	}
+	
+	function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case \"0\": 
+		
+		break;
+		
+		case \"1\": 
+		window.location = \"https://ec2-34-226-212-195.compute-1.amazonaws.com/profile/index.php\"
+		break;
+		
+		case \"2\": 
+		
+		break;
+		}
+	}
+	</script>
+</html>";
 
-
-
+exit();
 
 ?>

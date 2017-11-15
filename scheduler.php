@@ -113,7 +113,7 @@ while(true){
 				$day = "00000";
 		}
 		//Select the new classes
-		$res = $mysqli->query("SELECT STimeA, ETimeA FROM Class WHERE DayA = '$day';");
+		$res = $mysqli->query("SELECT STimeA, ETimeA FROM Class WHERE DayA REGEXP '$day';");
 		
 		//Create the next day's schedule
 		
