@@ -34,10 +34,17 @@
 
 //Start/Load session
 session_start();
-// $nickname = $_POST['nickname'];
-// $firstname = $_POST['firstname'];
-// $lastname = $_POST['lastname'];
-// $phone = $_POST['phone'];
+
+$mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
+$logins = new mysqli("localhost", "Scheduler", "system", "Logins");
+if($mysqli->connect_errno || $logins->connect_error){
+	echo "0";
+	exit();
+}
+$nickname = $_POST['nickname'];
+$firstname = $_POST['firstname'];
+$lastname = $_POST['lastname'];
+$phone = $_POST['phone'];
 $username = $_POST['username'];
 $password = $_POST['password'];
 $cpass = $_POST['cpass'];
@@ -75,3 +82,27 @@ if(strlen($password) > 20){
    echo "7"
    exit();
 }
+
+//add account to LSU-ACE database
+$err = false;
+$sql = "INSERT Student (Sid, FirstName, LastName, Phone)
+VALUES ('$username', '$firstname', '$lastname', '$phone')";
+
+if ($mysqli->query($sql) === TRUE) {
+    $err = true;
+} else {
+    echo "0";
+    exit();
+}
+$mysqli->close();
+
+//add account to Logins database
+$sql = "INSERT Logins (Sid, Password)
+VALUES ('$username', '$password')";
+
+if ($logins->query($sql) === TRUE) {
+    echo "1";
+} else {
+    echo "0";
+}
+$logins->close();
