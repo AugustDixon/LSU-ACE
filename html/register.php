@@ -72,7 +72,7 @@ echo "<html>
   	</head>
   	<body> 
 		<h1>Register</h1>
-   		 	<form name=\"registerForm\" action=\"/login.php\">
+   		 	<form name=\"registerForm\">
 				Username: <input type=\"text\" name=\"username\"><br>
 				Nickname: <input type=\"text\" name=\"nickname\"><br>
 				First name: <input type=\"text\" name=\"firstName\"><br>
@@ -80,7 +80,7 @@ echo "<html>
 				Phone number: <input type=\"text\" name=\"phoneNumber\"><br>
 				Password: <input type=\"text\" name=\"password\"><br>
 				Confirm Password: <input type=\"text\" name=\"confirmPassword\"><br>
-				<input type=\"Register\" value=\"Register\" onClick=\"loadDoc('functions/register.php', myFunction)\">
+				<input type=\"button\" value=\"Register\" onClick=\"loadDoc('functions/register.php', myFunction)\">
 			</form>	
   	</body>
 	
