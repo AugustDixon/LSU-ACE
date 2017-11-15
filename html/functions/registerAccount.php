@@ -34,3 +34,44 @@
 
 //Start/Load session
 session_start();
+// $nickname = $_POST['nickname'];
+// $firstname = $_POST['firstname'];
+// $lastname = $_POST['lastname'];
+// $phone = $_POST['phone'];
+$username = $_POST['username'];
+$password = $_POST['password'];
+$cpass = $_POST['cpass'];
+
+//Check if username is valid
+if(strlen($username) == 0){
+   echo "2";
+   exit();
+}
+if(strlen($username) > 20){
+   echo "2";
+   exit();
+}
+else {
+   $res = $mysqli->query("SELECT Sid FROM Student WHERE Sid = '$username';");
+
+	if($res->num_rows == 1){
+        echo "9";
+	exit();
+    	}   
+}
+
+//Check if password and cpass match if not than send constrain failure notification.
+if($password != $cpass){
+   echo "8";
+   exit();
+}
+//check if password is atleast 5 characters long and send constraint failure notification.
+if(strlen($password) < 5){
+   echo "7"
+   exit();
+}
+//check if password is over 20 characters long and send constraint failure notification.
+if(strlen($password) > 20){
+   echo "7"
+   exit();
+}
