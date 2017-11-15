@@ -1,3 +1,15 @@
+<!-- 
+Variables from database:
+
+$LSUID
+$FirstName
+$LastName
+$Nicknake
+$PhoneNumber
+
+$Department
+$Number
+-->
 <html>
  	<head> 
    		 <title>Profile</title>
@@ -6,13 +18,20 @@
 		<h1>Profile</h1>
    		 	
 			<button onclick="loadDoc('https://lsu-ace.com/profile/functions/logout.php', myFunction)">Logout</button>
-			<a href="https://lsu-ace.com/profile/edit.php">Edit Profile?</a>
-			<a href="https://lsu-ace.com/class/index.php">Class Page?</a>
+			<a href="https://lsu-ace.com/profile/edit.php">Edit Profile</a>
+			<a href="https://lsu-ace.com/class/index.php">Class Page</a>
 			<p>
-			Info from database of student
+			Student Info:
+			LSUID: $LSUID
+			Name: $FirstName $LastName
+			Nicknake: $Nickname
+			Phone: $PhoneNumber
 			</p>
+			</br>
 			<p>
-			Info from database of classes enrolled in
+			Class Info:
+			$Department $Number
+			<a href="https://lsu-ace.com/class/index.php">Class Page</a>
 			</p>
   	</body>
 	
