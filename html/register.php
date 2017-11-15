@@ -61,12 +61,75 @@ if(isset($_SESSION['username'])){
 		unset($_SESSION['idle']);		
 	}
 	else{										
-		header('Location: https://ec2-34-226-212-195.compute-1.amazonaws.com/profile.php', true, 303);
+		header('Location: profile.php', true, 303);
 		exit();
 	}
 }
 
-echo "";
+echo "<html>
+ 	<head> 
+   		 <title>Register</title>
+  	</head>
+  	<body> 
+		<h1>Register</h1>
+   		 	<form name=\"registerForm\" action=\"/login.php\">
+				Username: <input type=\"text\" name=\"username\"><br>
+				Nickname: <input type=\"text\" name=\"nickname\"><br>
+				First name: <input type=\"text\" name=\"firstName\"><br>
+				Last name: <input type=\"text\" name=\"lastName\"><br>
+				Phone number: <input type=\"text\" name=\"phoneNumber\"><br>
+				Password: <input type=\"text\" name=\"password\"><br>
+				Confirm Password: <input type=\"text\" name=\"confirmPassword\"><br>
+				<input type=\"Register\" value=\"Register\" onClick=\"loadDoc('functions/register.php', myFunction)\">
+			</form>	
+  	</body>
+	
+	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		var username = document.getElementById('registerForm').username;
+		var nickname = document.getElementById('registerForm').nickname;
+		var firstName = document.getElementById('registerForm').firstName;
+		var lastName = document.getElementById('registerForm').lastName;
+		var phoneNumber = document.getElementById('registerForm').phoneNumber;
+		var password = document.getElementById('registerForm').password;
+		var confirmPassword = document.getElementById('registerForm').confirmPassword;
+		var attributes = 'username=' + username '&nickname=' + nickname '&firstName=' + firstName '&lastName=' + lastName '&phoneNumber=' + phoneNumber '&password=' + password '&confirmPassword=' + confirmPassword;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open(\"POST\", url, true);
+		xhttp.send(attributes);
+	}
+	
+	function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case \"0\": 
+		
+		break;
+		
+		case \"1\": 
+		window.location = \"profile/index.php\"
+		break;
+		
+		case \"2\": 
+		
+		break;
+		}
+	}
+	</script>
+</html>";
 
 exit();
 

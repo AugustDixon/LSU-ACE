@@ -51,7 +51,7 @@ if(isset($_SESSION['username'])){
 		unset($_SESSION['idle']);		
 	}
 	else{										
-		header('Location: https://ec2-34-226-212-195.compute-1.amazonaws.com/profile.php', true, 303);
+		header('Location: profile.php', true, 303);
 		exit();
 	}
 }
@@ -63,18 +63,20 @@ echo "
   	</head>
   	<body> 
 		<h1>Log In</h1>
-   		 	<form name=\"login\">
-				Username: <input type=\"text\" name=\"username\"><br>
+   		 	<form name=\"loginForm\" action=\"/login.php\">
+				Username: <input type=\"text\" name=\"username\"><br>  
 				Password: <input type=\"text\" name=\"password\"><br>
-				<input type=\"submit\" value=\"Submit\" onClick=\"loadDoc('https://ec2-34-226-212-195.compute-1.amazonaws.com/functions/login.php', myFunction)\">
+				<input type=\"submit\" value=\"Submit\" onClick=\"loadDoc('functions/login.php', myFunction)\">
 			</form>
+			<a href=\"forgot1.php\">Forgot Password?</a>
+			<a href=\"register.php\">Register?</a>
   	</body>
 	
 	<script>
 	function loadDoc(url, cFunction) 
 	{
-		var username = document.getElementById('login').username; 
-		var password = document.getElementById('login').password; 
+		var username = document.getElementById('loginForm').username; 
+		var password = document.getElementById('loginForm').password; 
 		var attributes = 'username=' + username '&password=' + password;
 	
 		var xhttp;
@@ -99,7 +101,7 @@ echo "
 		break;
 		
 		case \"1\": 
-		window.location = \"https://ec2-34-226-212-195.compute-1.amazonaws.com/profile/index.php\"
+		window.location = \"profile/index.php\"
 		break;
 		
 		case \"2\": 
