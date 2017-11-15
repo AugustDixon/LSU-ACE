@@ -63,10 +63,10 @@ echo "
   	</head>
   	<body> 
 		<h1>Log In</h1>
-   		 	<form name=\"loginForm\" action=\"/login.php\">
+   		 	<form name=\"loginForm\">
 				Username: <input type=\"text\" name=\"username\"><br>  
 				Password: <input type=\"text\" name=\"password\"><br>
-				<input type=\"submit\" value=\"Submit\" onClick=\"loadDoc('functions/login.php', myFunction)\">
+				<input type=\"button\" value=\"Submit\" onClick=\"loadDoc('functions/login.php', myFunction)\">
 			</form>
 			<a href=\"forgot1.php\">Forgot Password?</a>
 			<a href=\"register.php\">Register?</a>
