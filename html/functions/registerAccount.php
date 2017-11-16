@@ -84,13 +84,10 @@ if(strlen($password) > 20){
 }
 
 //add account to LSU-ACE database
-$err = false;
 $sql = "INSERT Student (Sid, FirstName, LastName, Phone)
 VALUES ('$username', '$firstname', '$lastname', '$phone')";
 
-if ($mysqli->query($sql) === TRUE) {
-    $err = true;
-} else {
+if ($mysqli->query($sql) === FALSE){
     echo "0";
     exit();
 }

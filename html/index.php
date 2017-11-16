@@ -64,20 +64,20 @@ echo "
   	<body> 
 		<h1>Log In</h1>
    		 	<form name=\"loginForm\">
-				Username: <input type=\"text\" name=\"username\"><br>  
-				Password: <input type=\"text\" name=\"password\"><br>
+				Username: <input type=\"text\" name=\"username\" id=\"username\"><br>  
+				Password: <input type=\"text\" name=\"password\" id=\"password\"><br>
 				<input type=\"button\" value=\"Submit\" onClick=\"loadDoc('functions/login.php', myFunction)\">
 			</form>
 			<a href=\"forgot1.php\">Forgot Password?</a>
 			<a href=\"register.php\">Register?</a>
-  	</body>
-	
+			
 	<script>
+	
 	function loadDoc(url, cFunction) 
 	{
-		var username = document.getElementById('loginForm').username; 
-		var password = document.getElementById('loginForm').password; 
-		var attributes = 'username=' + username '&password=' + password;
+		var username = document.getElementById('username').value; 
+		var password = document.getElementById('password').value; 
+		var attributes = \"username=\" + username + \"&password=\" + password;
 	
 		var xhttp;
 		xhttp=new XMLHttpRequest();
@@ -89,6 +89,7 @@ echo "
 			}
 		};
 		xhttp.open(\"POST\", url, true);
+		xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
 		xhttp.send(attributes);
 	}
 	
@@ -97,19 +98,22 @@ echo "
 		switch(xhttp.responseText)
 		{
 		case \"0\": 
-		
-		break;
+			
+			break;
 		
 		case \"1\": 
-		window.location = \"profile/index.php\"
-		break;
+			window.location = \"profile/index.php\";
+			break;
 		
 		case \"2\": 
-		
-		break;
+			
+			break;
 		}
 	}
 	</script>
+  	</body>
+	
+	
 </html>";
 
 exit();

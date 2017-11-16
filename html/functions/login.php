@@ -43,8 +43,10 @@ if($mysqli->connect_errno){
 /*
 	Very simple, the post HTTP request form can send named arguments and they just have to be retrieved.
 */
+
 $username = $_POST['username'];
 $password = $_POST['password'];
+
 
 //Check arguments meet constraints
 /*
