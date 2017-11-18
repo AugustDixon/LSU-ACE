@@ -4,20 +4,13 @@
 	This script creates a new account. This script should only be called using HTTPS.
 	
 	Script Inputs:
-	'username'
-		Max length 20 char
-	'nickname'
-		Max length 20 char
-	'firstname'
-		Max length 20 char
-	'lastname'
-		Max length 20 char
-	'phone'
-		Max length 20 char
-	'password'
-		Max length 20 char
-	'cpass'
-		Max length 20 char
+	'username' - 1 to 20 characters. Must be unique
+	'nickname' - 0 to 20 characters
+	'firstname' - 0 to 20 characters
+	'lastname' - 0 to 20 characters
+	'phone' - 0 to 20 characters
+	'password' - 5 to 20 characters
+	'cpass' - Must match password
 	
 	Script Output Codes:
 		0 = Script Failure
@@ -50,7 +43,7 @@ $password = $_POST['password'];
 $cpass = $_POST['cpass'];
 
 //Check if username is valid
-if(strlen($username) == 0){
+if(strlen($username) > 0){
    echo "2";
    exit();
 }

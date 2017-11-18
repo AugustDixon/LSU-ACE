@@ -7,13 +7,13 @@
 		No inputs besides session data.
 		
 	Page Features:
-		"Username" text field
-		"Nickname" text field
-		"First Name" text field
-		"Last Name" text field
-		"Phone Number" text field
-		"Password" text field
-		"Confirm Password" text field
+		"Username" text field - 1 to 20 characters. Must be Unique.
+		"Nickname" text field - 0 to 20 characters.
+		"First Name" text field - 0 to 20 characters.
+		"Last Name" text field - 0 to 20 characters
+		"Phone Number" text field - 0 to 20 characters
+		"Password" text field - 5 to 20 characters
+		"Confirm Password" text field - Must match Password
 		"Register" button - runs AJAX /functions/registerAccount.php
 		
 	AJAX Functions:

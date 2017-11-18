@@ -2,9 +2,10 @@
 /*
 	Function Script: profile/functions/addClass.php
 	This script either adds a new class to a student's schedule. The script should first check whether or not the class is
-	already a part of the database. If it is set Confirmed for that class to true. If it is not, create a new class with
-	confirmed set to false. Cid will be automatically generated so nothing should be sent. A new entry in the Taking 
-	table must be made for the individual student.
+	already a part of the database. Classes are the same if all Dept, Num, Sect, DayA, STimeA, ETimeA, DayB, STimeB, and ETimeB 
+	are the same. If it is set Confirmed for that class to true (Only if the Student isn't already taking the class). If it is not, 
+	create a new class with confirmed set to false. Cid will be automatically generated so nothing should be sent. A new entry in 
+	the Taking table must be made for the individual student, unless the student is already taking the class.
 	
 	Inputs
 		'Dept' - Must be between 1 and 5 characters
@@ -33,6 +34,7 @@
 		9 - DayB Constraint Error
 		10 - Start Time B Constraint Error
 		11 - End Time B Constraint Error
+		12 - Student already taking class
 */
 //Start/Load session
 session_start();

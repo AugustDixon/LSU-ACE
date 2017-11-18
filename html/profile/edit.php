@@ -10,10 +10,10 @@
 		"Back" button - Hyperlinks to /profile/index.php
 		"Add Class" button - Hyperlinks to /profile/add.php
 		"Change Password" button - Hyperlinks to /profile/password.php
-		"First Name" text field
-		"Last Name" text field
-		"Nickname" text field
-		"Phone Number" text field
+		"First Name" text field - 0 to 20 characters
+		"Last Name" text field - 0 to 20 characters
+		"Nickname" text field - 0 to 20 characters
+		"Phone Number" text field - 0 to 20 characters
 		"Edit Profile" button - Runs AJAX /profile/functions/editProfile.php
 	
 	AJAX Functions:
