@@ -1,5 +1,39 @@
 <?php
-
+/*
+	Function Script: profile/functions/addClass.php
+	This script either adds a new class to a student's schedule. The script should first check whether or not the class is
+	already a part of the database. If it is set Confirmed for that class to true. If it is not, create a new class with
+	confirmed set to false. Cid will be automatically generated so nothing should be sent. A new entry in the Taking 
+	table must be made for the individual student.
+	
+	Inputs
+		'Dept' - Must be between 1 and 5 characters
+		'Num' - Must be between 1 and 5 characters
+		'Sect' - Must be between 1 and 3 characters
+		'DayA' - Must be 5 characters
+		'STimeA' - Must be 6 or 7 characters
+		'ETimeA' - Must be 6 or 7 characters
+		'DayB' - Must be 5 characters
+		'STimeB' - Must be 6 or 7 characters
+		'ETimeB' - Must be 6 or 7 characters
+		'HName'
+		'HPhone'
+		'HLSUID'
+		All three DayB, STimeB, ETimeB may be null, but only if they are all null.
+	Outputs/Actions
+		0 - Script Failure
+		1 - Success
+		2 - Idle timer expiration
+		3 - Department Constraint Error
+		4 - Number Constraint Error
+		5 - Section Constraint Error
+		6 - DayA Constraint Error
+		7 - Start Time A Constraint Error
+		8 - End Time A Constraint Error
+		9 - DayB Constraint Error
+		10 - Start Time B Constraint Error
+		11 - End Time B Constraint Error
+*/
 //Start/Load session
 session_start();
 
