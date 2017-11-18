@@ -73,14 +73,14 @@ echo "<html>
   	<body> 
 		<h1>Register</h1>
    		 	<form name=\"registerForm\">
-				Username: <input type=\"text\" name=\"username\"><br>
-				Nickname: <input type=\"text\" name=\"nickname\"><br>
-				First name: <input type=\"text\" name=\"firstName\"><br>
-				Last name: <input type=\"text\" name=\"lastName\"><br>
-				Phone number: <input type=\"text\" name=\"phoneNumber\"><br>
-				Password: <input type=\"text\" name=\"password\"><br>
-				Confirm Password: <input type=\"text\" name=\"confirmPassword\"><br>
-				<input type=\"button\" value=\"Register\" onClick=\"loadDoc('functions/register.php', myFunction)\">
+				Username: <input type=\"text\" name=\"username\" id=\"username\"><br>
+				Nickname: <input type=\"text\" name=\"nickname\" id=\"nickname\"><br>
+				First name: <input type=\"text\" name=\"firstName\" id=\"firstName\"><br>
+				Last name: <input type=\"text\" name=\"lastName\" id=\"lastName\"><br>
+				Phone number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br>
+				Password: <input type=\"text\" name=\"password\" id=\"password\"><br>
+				Confirm Password: <input type=\"text\" name=\"confirmPassword\" id=\"confirmPassword\"><br>
+				<input type=\"button\" value=\"Register\" onClick=\"loadDoc('functions/registerAccount.php', myFunction)\">
 			</form>	
   	</body>
 	
@@ -89,14 +89,14 @@ echo "<html>
 	<script>
 	function loadDoc(url, cFunction) 
 	{
-		var username = document.getElementById('registerForm').username;
-		var nickname = document.getElementById('registerForm').nickname;
-		var firstName = document.getElementById('registerForm').firstName;
-		var lastName = document.getElementById('registerForm').lastName;
-		var phoneNumber = document.getElementById('registerForm').phoneNumber;
-		var password = document.getElementById('registerForm').password;
-		var confirmPassword = document.getElementById('registerForm').confirmPassword;
-		var attributes = 'username=' + username '&nickname=' + nickname '&firstName=' + firstName '&lastName=' + lastName '&phoneNumber=' + phoneNumber '&password=' + password '&confirmPassword=' + confirmPassword;
+		var username = document.getElementById('username').value;
+		var nickname = document.getElementById('nickname').value;
+		var firstName = document.getElementById('firstName').value;
+		var lastName = document.getElementById('lastName').value;
+		var phoneNumber = document.getElementById('phoneNumber').value;
+		var password = document.getElementById('password').value;
+		var confirmPassword = document.getElementById('confirmPassword').value;
+		var attributes = 'username=' + username + '&nickname=' + nickname + '&firstname=' + firstName + '&lastname=' + lastName + '&phone=' + phoneNumber + '&password=' + password + '&cpass=' + confirmPassword;
 	
 		var xhttp;
 		xhttp=new XMLHttpRequest();
@@ -108,11 +108,13 @@ echo "<html>
 			}
 		};
 		xhttp.open(\"POST\", url, true);
+		xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
 		xhttp.send(attributes);
 	}
 	
 	function myFunction(xhttp) 
 	{
+		alert(xhttp.responseText);
 		switch(xhttp.responseText)
 		{
 		case \"0\": 

@@ -63,8 +63,8 @@ else {
 
 	if($res->num_rows == 1){
         echo "9";
-	exit();
-    	}   
+		exit();
+    }   
 }
 
 //Check if password and cpass match if not than send constrain failure notification.
@@ -74,12 +74,12 @@ if($password != $cpass){
 }
 //check if password is atleast 5 characters long and send constraint failure notification.
 if(strlen($password) < 5){
-   echo "7"
+   echo "7";
    exit();
 }
 //check if password is over 20 characters long and send constraint failure notification.
 if(strlen($password) > 20){
-   echo "7"
+   echo "7";
    exit();
 }
 
@@ -103,3 +103,7 @@ if ($logins->query($sql) === TRUE) {
     echo "0";
 }
 $logins->close();
+
+exit();
+
+?>
