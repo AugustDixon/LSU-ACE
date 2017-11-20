@@ -49,7 +49,7 @@ if($mysqli->connect_errno){
 if($_GET['idle'] > 600){
    echo "2";
    exit();
-
+}
 //inputs from add.php
 $dept = $_POST['Dept'];
 $num = $_POST['Num'];
@@ -68,48 +68,48 @@ $hlsuid = $_POST['HLSUID'];
 if(strlen($dept) > 5 || strlen($dept) < 1){
    echo "3";
    exit();
-
+}
 //check num constraints
 if(strlen($num) > 5 || strlen($num) < 1){
    echo "4";
    exit();
-
+}
 //check sect constraints
 if(strlen($sect) > 3 || strlen($sect) < 1){
    echo "5";
    exit();
-
+}
 //check dayA constraints
 if(strlen($daya) != 5){
    echo "6";
    exit();
-
+}
 //check STimeA constraints
 if(strlen($stimea) < 6 || strlen(stimea) >7){
    echo "7";
    exit();
-
+}
 
 //check ETimeA constraints
 if(strlen($etimea) < 6 || strlen(etimea) >7){
    echo "8";
    exit();
-
+}
 //check dayB constraints
 if(strlen($dayb) != 5){
    echo "9";
    exit();
-
+}
 //check STimeB constraints
 if(strlen($stimeb) < 6 || strlen(stimeb) >7){
    echo "10";
    exit();
-
+}
 //check ETimeB constraints
 if(strlen($etimeb) < 6 || strlen(etimeb) >7){
    echo "11";
    exit();
-
+}
 //check if the class is already in the database
 $res = $mysqli->query = "SELECT Dept, Num, Sect, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB  FROM Class" WHERE Dept='$dept' AND Num='$num' AND Sect='$sect' AND DayA='$daya' AND STimeA='$stimea' AND ETimeA='$etimea' AND DayB='$dayb' AND STimeB='stimeb' AND ETimeB='$etimeb'";
    if($res->num_rows == 1){
