@@ -69,7 +69,7 @@ if(isset($first)){
 }
 
 //update lastname.
-if(isser($last)){
+if(isset($last)){
    $res2 = "UPDATE Student SET LastName = '$last' WHERE Sid = '$user'";
 }
 
