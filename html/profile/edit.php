@@ -45,12 +45,105 @@
 		/profile/add.php
 */
 
+session_start();
 
+if(isset($_SESSION['username'])){
+	if(($_SESSION['idle'] + 600) < time()){
+		unset($_SESSION['username']);
+		unset($_SESSION['idle']);
+		header("Location: ../index.php", true, 303);
+		exit();
+	}
+}
+else{
+	header("Location: ../index.php");
+	exit();
+}
 
+$_SESSION['idle'] = time();
 
+echo "<html>
+ 	<head> 
+   		 <title>Edit Profile</title>
+  	</head>
+  	<body> 
+		<h1>Edit Profile</h1>
+			<a href=\"index.php\">Back</a>
+                <form name=\"registerForm\">
+				Nickname: <input type=\"text\" name=\"nickname\" id=\"nickname\"><br>
+				First name: <input type=\"text\" name=\"firstName\" id=\"firstName\"><br>
+				Last name: <input type=\"text\" name=\"lastName\" id=\"lastName\"><br>
+				Phone number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br>
+				
+				<input type=\"button\" value=\"Edit profile\" onClick=\"loadDoc('functions/editProfile.php', myFunction)\">
+			</form>	
+            <a href=\"add.php\">Add Class</a>
+            <a href=\"password.php\">Change Password</a>
+                
+                
+  	</body>
+	
+	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		var nickname = document.getElementById('nickname').value;
+		var firstName = document.getElementById('firstName').value;
+		var lastName = document.getElementById('lastName').value;
+		var phoneNumber = document.getElementById('phoneNumber').value;
+		var attributes = 'Nickname=' + nickname + '&FirstName=' + firstName + '&LastName=' + lastName + '&Phone=' + phoneNumber;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open(\"POST\", url, true);
+		xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
+		xhttp.send(attributes);
+	}
+	
+	function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case \"0\": 
+			alert(\"Edit Profile Script Failure\");
+			break;
+		
+		case \"1\": 
+			window.location = \"index.php\";
+			break;
+		
+		case \"2\": 
+			window.location = \"../index.php\";
+			break;
+        
+        case \"3\":
+			alert(\"First Name must be less than 20 characters\");
+            break;
+        
+        case \"4\":
+			alert(\"Last Name must be less than 20 characters\");
+            break;
+        
+        case \"5\":
+            alert(\"Nickname must be less than 20 characters\");
+            break;
+        
+        case \"6\":
+            alert(\"Phone Number must be less than 20 characters\");
+            break;
+		}
+	}
+	</script>
+</html>";
 
-
-
-
+exit();
 
 ?>

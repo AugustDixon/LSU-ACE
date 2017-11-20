@@ -20,24 +20,27 @@
 */
 session_start();
 
-
-$mysqli = new mysqli("localhost", "LoginSelect", "system", "Logins");
+$mysqli = new mysqli("localhost", "UpdateOnly", "system", "LSU-ACE");
 if($mysqli->connect_errno){
 	echo "0";
 	exit();
 }
 
 //check idle time
-if($_GET['idle'] > 600){
-   echo "2";
-   exit();
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
 }
+
+$_SESSION['idle'] = time();
 
 $first = $_POST['FirstName'];
 $last = $_POST['LastName'];
 $nick = $_POST['Nickname'];
 $phone = $_POST['Phone'];
-$user = $_GET['username'];
+$user = $_SESSION['username'];
 
 //check first name constraints
 if(strlen($first) > 20){
@@ -63,25 +66,16 @@ if(strlen($phone) > 20){
    exit();
 }
 
-//update firstname
-if(isset($first)){
-   $res = "UPDATE Student SET FirstName = '$first' WHERE Sid = '$user'";
-}
 
-//update lastname.
-if(isser($last)){
-   $res2 = "UPDATE Student SET LastName = '$last' WHERE Sid = '$user'";
-}
+$sql = "UPDATE Student SET FirstName = '$first', LastName = '$last', Nickname = '$nick', Phone = '$phone' WHERE Sid = '$user'";
 
-//update nickname.
-if(isset($nick)){
-   $res3 = "UPDATE Student SET Nickname = '$nick' WHERE Sid = '$user'";
-}
+if($mysqli->query($sql))
+	echo "1";
+else
+	echo "0";
 
-//update phone number.
-if(isset($phone)){
-   $res3 = "UPDATE Student SET Phone = '$phone' WHERE Sid = '$user'";
-}
 $mysqli->close();
+
 exit();
+
 ?>

@@ -1,0 +1,169 @@
+<html>
+ 	<head> 
+   		 <title>Add Class</title>
+  	</head>
+  	<body> 
+		<h1>Add Class</h1>
+			<a href= "edit.php">Back</a>
+			</br>
+			</br>
+   		 	<form name="addClass">
+				Department: <input type="text" id="Dept"></br>
+				Number: <input type="text" id="Num"></br>
+				Section: <input type="text" id="Sect"></br>
+				M: <input type="checkbox" id="MondayA" value='M'>
+				T: <input type="checkbox" id="TuesdayA" value='T'>
+				W: <input type="checkbox" id="WednesdayA" value='W'>
+				Th: <input type="checkbox" id="ThursdayA" value='T'>
+				F: <input type="checkbox" id="FridayA" value='F'></br>				
+				Start Time A: <input type="text" id="SHourA">:<input type="text" id="SMinuteA"></br>
+				End Time A: <input type="text" id="EHourA">:<input type="text" id="EMinuteA"></br>
+				M: <input type="checkbox" id="MondayB" value='M'>
+				T: <input type="checkbox" id="TuesdayB" value='T'>
+				W: <input type="checkbox" id="WednesdayB" value='W'>
+				Th: <input type="checkbox" id="ThursdayB" value='T'>
+				F: <input type="checkbox" id="FridayB" value='F'></br>
+				Start Time B: <input type="text" id="SHourB">:<input type="text" id="SMinuteB"></br>
+				End Time B: <input type="text" id="EHourB">:<input type="text" id="EMinuteB"></br>
+				Hide Name: <input type="checkbox" id="HName" value="true">
+				Hide Phone: <input type="checkbox" id="HPhone" value="true">
+				Hide LSUID: <input type="checkbox" id="HLSUID" value="true"></br>
+				<input type="button" value="Add Class" onClick="loadDoc('functions/addClass.php', myFunction)">
+			</form>	
+  	</body>
+	
+	</body>
+	
+	<script>
+	
+	function day(day){
+		if(day.checked)
+			return day.value;
+		else
+			return ' ';
+	}
+	
+	function buildTime(Hour, Minute){
+		var intHour = parseInt(Hour);
+		var intMinute = parseInt(Minute);
+		var ampm = '';
+		if(intHour == 12 || (intHour < 7 && intHour > 0))
+			ampm = 'pm';
+		else if(intHour > 6 || intHour < 12)
+			ampm = 'am';
+		else
+			ampm = '0000000000';
+		if(intMinute < 0 || intMinute > 59)
+			Minute = '000000000';
+			
+		return Hour + ':' + Minute + ampm;
+	}
+	
+	function loadDoc(url, cFunction) 
+	{
+		var Dept = document.getElementById('Dept').value;
+		var Num = document.getElementById('Num').value;
+		var Sect = document.getElementById('Sect').value;
+		var MondayA = document.getElementById('MondayA');
+		var TuesdayA = document.getElementById('TuesdayA');
+		var WednesdayA = document.getElementById('WednesdayA');
+		var ThursdayA = document.getElementById('ThursdayA');
+		var FridayA = document.getElementById('FridayA');
+		var DayA = day(MondayA) + day(TuesdayA) + day(WednesdayA) + day(ThursdayA) + day(FridayA);
+		var SHourA = document.getElementById('SHourA').value;
+		var SMinuteA = document.getElementById('SMinuteA').value;
+		var STimeA = buildTime(SHourA, SMinuteA);
+		var EHourA = document.getElementById('EHourA').value;
+		var EMinuteA = document.getElementById('EMinuteA').value;
+		var ETimeA = buildTime(EHourA, EMinuteA);
+		var MondayA = document.getElementById('MondayB');
+		var TuesdayA = document.getElementById('TuesdayB');
+		var WednesdayA = document.getElementById('WednesdayB');
+		var ThursdayA = document.getElementById('ThursdayB');
+		var FridayA = document.getElementById('FridayB');
+		var DayB = day(MondayB) + day(TuesdayB) + day(WednesdayB) + day(ThursdayB) + day(FridayB);
+		var SHourB = document.getElementById('SHourB').value;
+		var SMinuteB = document.getElementById('SMinuteB').value;
+		var STimeB = buildTime(SHourB, SMinuteB);
+		var EHourB = document.getElementById('EHourB').value;
+		var EMinuteB = document.getElementById('EMinuteB').value;
+		var ETimeB = buildTime(EHourB, EMinuteB);
+		var HName = document.getElementById('HName').checked;
+		var HPhone = document.getElementById('HPhone').checked;
+		var HLSUID = document.getElementById('HLSUID').checked;
+		
+		var attributes = 'Dept=' + Dept + '&Num=' + Num + '&Sect=' + Sect + '&DayA=' + DayA + '&STimeA=' + STimeA + '&ETimeA=' + ETimeA + '&DayB=' + DayB + '&STimeB=' + STimeB + '&ETimeB=' + ETimeB + '&HName=' + HName + '&HPhone=' + HPhone + '&HLSUID=' + HLSUID;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(attributes);
+	}
+	
+	function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case "0": 
+			alert("Add Class Script Failure");
+			break;
+		
+		case "1": 
+			window.location = "index.php";
+			break;
+		
+		case "2": 
+			window.location = "../index.php";
+			break;
+		
+		case "3": 
+			alert("Department must be 1 to 5 characters");
+			break;
+		
+		case "4": 
+			alert("Number must be 1 to 5 characters");
+			break;
+		
+		case "5": 
+			alert("Section must be 1 to 3 characters");
+			break;
+		
+		case "6": 
+			
+			break;
+		
+		case "7": 
+			alert("Start Time A not valid.");
+			break;
+		
+		case "8": 
+			alert("End Time A not valid.");
+			break;
+		
+		case "9": 
+			
+			break;
+		
+		case "10": 
+			alert("Start Time B not valid");
+			break;
+		
+		case "11": 
+			alert("End Time B not valid");
+			break;
+		
+		case "12":
+			alert("Student already taking class");
+			break;
+		}
+	}
+	</script>
+</html>
