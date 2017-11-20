@@ -105,8 +105,13 @@ if(strlen($etimeb) < 6 || strlen(etimeb) >7){
    echo "11";
    exit();
 
-
-
+//check if the class is already in the database
+$res = $mysqli->query = "SELECT Dept, Num, Sect, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB  FROM Class" WHERE Dept='$dept' AND Num='$num' AND Sect='$sect' AND DayA='$daya' AND STimeA='$stimea' AND ETimeA='$etimea' AND DayB='$dayb' AND STimeB='stimeb' AND ETimeB='$etimeb'";
+   if($res->num_rows == 1){
+      $res2 = "INSERT Class (Confirmed)
+      VALUES ('TRUE')";
+      exit();
+   }
 //need to find what constraints need to be added.
 
 //need to find what values go in Cid, Title, Classroom, Confirmed.
