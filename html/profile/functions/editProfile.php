@@ -20,7 +20,30 @@
 */
 
 
+$first = $_POST['FirstName'];
+$last = $_POST['LastName'];
+$nick = $_POST['Nickname'];
+$phone = $_POST['Phone'];
 
+//check first name constraints
+if(strlen($first) > 20){
+   echo "3";
+   exit();
+
+//check last name constraints
+if(strlen($last) > 20){
+   echo "4";
+   exit();
+
+//check nickname constraints
+if(strlen($nick) > 20){
+   echo "5";
+   exit();
+
+//check phone number constraints
+if(strlen($phone) > 20){
+   echo "6";
+   exit();
 
 
 
