@@ -78,7 +78,7 @@ if(isset($nick)){
    $res3 = "UPDATE Student SET Nickname = '$nick' WHERE Sid = '$user'";
 }
 
-//update nickname.
+//update phone number.
 if(isset($phone)){
    $res3 = "UPDATE Student SET Phone = '$phone' WHERE Sid = '$user'";
 }
