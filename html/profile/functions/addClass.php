@@ -59,6 +59,54 @@ $hname = $_POST['HName'];
 $hphone = $_POST['HPhone'];
 $hlsuid = $_POST['HLSUID'];
 
+//check dept constraints
+if(strlen($dept) > 5 || strlen($dept) < 1){
+   echo "3";
+   exit();
+
+//check num constraints
+if(strlen($num) > 5 || strlen($num) < 1){
+   echo "4";
+   exit();
+
+//check sect constraints
+if(strlen($sect) > 3 || strlen($sect) < 1){
+   echo "5";
+   exit();
+
+//check dayA constraints
+if(strlen($daya) != 5){
+   echo "6";
+   exit();
+
+//check STimeA constraints
+if(strlen($stimea) < 6 || strlen(stimea) >7){
+   echo "7";
+   exit();
+
+
+//check ETimeA constraints
+if(strlen($etimea) < 6 || strlen(etimea) >7){
+   echo "8";
+   exit();
+
+//check dayB constraints
+if(strlen($dayb) != 5){
+   echo "9";
+   exit();
+
+//check STimeB constraints
+if(strlen($stimeb) < 6 || strlen(stimeb) >7){
+   echo "10";
+   exit();
+
+//check ETimeB constraints
+if(strlen($etimeb) < 6 || strlen(etimeb) >7){
+   echo "11";
+   exit();
+
+
+
 //need to find what constraints need to be added.
 
 //need to find what values go in Cid, Title, Classroom, Confirmed.
