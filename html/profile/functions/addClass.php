@@ -45,6 +45,11 @@ if($mysqli->connect_errno){
 	echo "0";
 	exit();
 }
+//check idle time
+if($_GET['idle'] > 600){
+   echo "2";
+   exit();
+
 //inputs from add.php
 $dept = $_POST['Dept'];
 $num = $_POST['Num'];

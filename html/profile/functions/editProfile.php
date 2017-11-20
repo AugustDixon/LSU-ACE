@@ -18,7 +18,12 @@
 		5 = Nickname Constraint Error
 		6 = Phone Number Constraint Error
 */
+session_start();
 
+//check idle time
+if($_GET['idle'] > 600){
+   echo "2";
+   exit();
 
 $first = $_POST['FirstName'];
 $last = $_POST['LastName'];
