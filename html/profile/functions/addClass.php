@@ -63,6 +63,7 @@ $etimeb = $_POST['ETimeB'];
 $hname = $_POST['HName'];
 $hphone = $_POST['HPhone'];
 $hlsuid = $_POST['HLSUID'];
+$user = $_GET['username'];
 
 //check dept constraints
 if(strlen($dept) > 5 || strlen($dept) < 1){
@@ -89,7 +90,6 @@ if(strlen($stimea) < 6 || strlen(stimea) >7){
    echo "7";
    exit();
 }
-
 //check ETimeA constraints
 if(strlen($etimea) < 6 || strlen(etimea) >7){
    echo "8";
@@ -110,24 +110,41 @@ if(strlen($etimeb) < 6 || strlen(etimeb) >7){
    echo "11";
    exit();
 }
+
+//check if user is already taking the class.
+$istaken $mysqli->query = "SELECT Sid FROM Taken WHERE Sid='$user' AND Cid='$cid'";
+if(mysqli->num_rows > 0){
+   echo "12";
+   exit();
+}
+
 //check if the class is already in the database
 $res = $mysqli->query = "SELECT Dept, Num, Sect, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB  FROM Class" WHERE Dept='$dept' AND Num='$num' AND Sect='$sect' AND DayA='$daya' AND STimeA='$stimea' AND ETimeA='$etimea' AND DayB='$dayb' AND STimeB='stimeb' AND ETimeB='$etimeb'";
-   if($res->num_rows == 1){
-      $res2 = "INSERT Class (Confirmed)
-      VALUES ('TRUE')";
-      exit();
+if($res->num_rows > 0){
+   $res2 = "INSERT Class (Confirmed)
+   VALUES ('TRUE')";
+}
+else{   
+   //need to find what values go in Cid, Title, Classroom, Confirmed.
+   $sql = "INSERT Class (Cid, Dept, Num, Sect, Title, Classroom, Confirmed, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB)
+   VALUES ('', '$dept', '$num', '$sect', '', '', '', '$daya', '$stimea', '$etimea', '$dayb', '$stimeb', '$etimeb')";
+   if ($mysqli->query($sql) === TRUE) {
+      echo "1";
+   } else {
+    echo "0";
+    exit();
    }
-//need to find what constraints need to be added.
+}
 
-//need to find what values go in Cid, Title, Classroom, Confirmed.
-$sql = "INSERT Class (Cid, Dept, Num, Sect, Title, Classroom, Confirmed, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB)
-VALUES ('', '$dept', '$num', '$sect', '', '', '', '$daya', '$stimea', '$etimea', '$dayb', '$stimeb', '$etimeb')";
-if ($mysqli->query($sql) === TRUE) {
+//Add user to Taken.
+$add = "INSERT Taken (Sid, Cid, HideName, HidePhone, HideID)
+VALUES ('$user', '$cid', '$hname', '$hphone, '$hlsuid')";
+if ($logins->query($sql) === TRUE) {
     echo "1";
 } else {
     echo "0";
-    exit();
 }
 $mysqli->close();
+exit();
 
 ?>
