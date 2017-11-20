@@ -1,0 +1,67 @@
+<html>
+ 	<head> 
+   		 <title>Form Group</title>
+  	</head>
+  	<body> 
+		<h1>Form Group</h1>
+                <a href= https://lsu-ace.com/class/group/index.php">Back</a>
+                       <form name="makeGroup">
+                                ID: <input type="text" name="ID"><br>
+				Group Name: <input type="text" name="groupName"><br>
+				Max Group Members:<input type="text" name="groupName"><br>
+                                Looking for Members:<input id="checkBox" type="checkbox" name="Looking">
+                                Open Group:<input id="checkBox" type="checkbox" name="Open">
+                                
+                                </div>
+				
+	<input type="button" value="Form Group" onClick="loadDoc('https://lsu-ace.com/class/group/functions/makeGroup.php', myFunction)">
+			</form>	
+                </body>
+	
+	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+                var id = document.getElementById('makeGroup').id;
+		var name = document.getElementById('makeGroup').name;
+                var max = document.getElementById('makeGroup').max;
+		var looking = document.getElementById('makeGroup').looking;
+		var open = document.getElementById('makeGroup').open;
+		var attributes = 'id=' + ID '&name=' + groupName '&max=' + max '&looking=' + looking '&open=' + open;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.send(attributes);
+                function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case "0": 
+		
+		break;
+		
+		case "1": 
+		window.location = "class/group/view.php"
+		break;
+		
+		case "2": 
+		window.location = "class/group/index.php"
+		break;
+		
+		case "3": 
+		
+		break;
+		
+		case "4": 
+		
+		break;         
+	}
