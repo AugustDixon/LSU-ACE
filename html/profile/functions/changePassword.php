@@ -37,7 +37,7 @@ if(strlen($npass) > 20 || strlen($npass) < 1){
    exit();
 
 //check if current password and new password are the same.
-if($npass == $cpass){
+if($pass == $npass){
    echo "5";
    exit();
 
