@@ -21,6 +21,9 @@
 //Start/Load session
 session_start();
 
+if($_GET['idle'] > 600){
+   echo "2";
+   exit();
 
 $logins = new mysqli("localhost", "Scheduler", "system", "Logins");
 if($logins->connect_error){
@@ -30,7 +33,7 @@ if($logins->connect_error){
 $pass = $_POST['password'];
 $npass = $_POST['newpass'];
 $cpass = $_POST['cpass'];
-
+$user = $_GET['username'];
 //check new password length constraints
 if(strlen($npass) > 20 || strlen($npass) < 1){
    echo "4";
@@ -47,14 +50,14 @@ if($npass != $cpass){
    exit();
 
 // check if password matches current password in database
-$sql = "SELECT Password FROM Logins WHERE Sid ='?'";
+$sql = "SELECT Password FROM Logins WHERE Sid ='$user'";
 if ($logins->query($sql) === FALSE) {
     echo "3";
     exit();
 }
 
 //update new password
-$sql2 = "UPDATE Logins SET Password = '$npass' WHERE Sid = '?'";
+$sql2 = "UPDATE Logins SET Password = '$npass' WHERE Sid = '$user'";
 if ($logins->query($sql) === TRUE) {
     echo "1";
 } else {
