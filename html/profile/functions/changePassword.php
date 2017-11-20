@@ -22,6 +22,7 @@
 session_start();
 
 
+
 $logins = new mysqli("localhost", "Scheduler", "system", "Logins");
 if($logins->connect_error){
 	echo "0";
@@ -30,7 +31,12 @@ if($logins->connect_error){
 $pass = $_POST['password'];
 $npass = $_POST['newpass'];
 $cpass = $_POST['cpass'];
+$user = $_GET['username'];
 
+if($_GET['idle'] > 600){
+   echo "2";
+   exit();
+}
 //check new password length constraints
 if(strlen($npass) > 20 || strlen($npass) < 1){
    echo "4";
@@ -48,7 +54,7 @@ if($npass != $cpass){
 
 // check if password matches current password in database
 //I need to figure out how to get Sid without the info 
-$sql = "SELECT Password FROM Logins WHERE Sid ='?'";
+$sql = "SELECT Password FROM Logins WHERE Sid ='$user'";
 
 if ($logins->query($sql) === FALSE) {
     echo "3";
@@ -57,7 +63,7 @@ if ($logins->query($sql) === FALSE) {
 
 //update new password
 //I need to figure out how to get Sid without the info
-$sql2 = "UPDATE Logins SET Password = '$npass' WHERE Sid = '?'";
+$sql2 = "UPDATE Logins SET Password = '$npass' WHERE Sid = '$user'";
 if ($logins->query($sql) === TRUE) {
     echo "1";
 } else {
