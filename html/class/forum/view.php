@@ -9,6 +9,7 @@
 		
 	Page Features:
 		"Back" button - Hyperlinks to class/forum/index.php
+		"Make Post" button - Hyperlinks to class/forum/post.php
 		Thread Title
 		For each post:
 			Author - Either Nickname or Anonymous
@@ -30,6 +31,7 @@
 					
 	Page Connections:
 		class/forum/index.php
+		class/forum/post.php
 */
 
 

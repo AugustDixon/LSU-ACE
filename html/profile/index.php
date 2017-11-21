@@ -38,7 +38,26 @@
 
 session_start();
 
+if(isset($_SESSION['username'])){
+	if(($_SESSION['idle'] + 600) < time()){
+		unset($_SESSION['username']);
+		unset($_SESSION['idle']);
+		header("Location: ../index.php", true, 303);
+		exit();
+	}
+}
+else{
+	header("Location: ../index.php");
+	exit();
+}
+
+$_SESSION['idle'] = time();
+
 $mysqli = new mysqli("localhost", "SelectOnly", "system", "LSU-ACE");
+if($mysqli->connect_errno){
+	//Send HTTP error code
+	exit();
+}
 
 $LSUID = $_SESSION['username'];
 $res = $mysqli->query("SELECT FirstName, LastName, Nickname, Phone FROM Student WHERE Sid = '$LSUID';");
@@ -48,18 +67,8 @@ $LastName = $result["LastName"];
 $Nickname = $result["Nickname"];
 $PhoneNumber = $result["Phone"];
 
-$res = $mysqli->query("SELECT Cid, Dept, Num FROM Class NATURAL JOIN Taking WHERE Sid = '$LSUID';");
-$NumRows = $res->num_rows;
-$Department = [];
-$Number = [];
-for($i = 0; $i < $res->num_rows; $i++){
-	$res->data_seek($i);
-	$result = $res->fetch_assoc();
-	$Department = $result["Dept"];
-	$Number = $result["Num"];
-}
 
-echo "<html>
+$html = "<html>
  	<head> 
    		 <title>Profile</title>
   	</head>
@@ -67,27 +76,39 @@ echo "<html>
 		<h1>Profile</h1>
    		 	
 			<button onclick=\"loadDoc('functions/logout.php', myFunction)\">Logout</button>
-			<a href=\"profile/edit.php\">Edit Profile</a>
-			<a href=\"class/index.php\">Class Page</a>
+			<a href=\"edit.php\">Edit Profile</a>
 			<p>
-			Student Info:
-			LSUID: $LSUID
-			Name: $FirstName $LastName
-			Nicknake: $Nickname
-			Phone: $PhoneNumber
+			Student Info:<br>
+			LSUID: $LSUID<br>
+			Name: $FirstName $LastName<br>
+			Nickname: $Nickname<br>
+			Phone: $PhoneNumber<br>
 			</p>
-			</br>
-			<p>
+			<br>";
+
+$res = $mysqli->query("SELECT Cid, Dept, Num FROM Class NATURAL JOIN Taking WHERE Sid = '$LSUID';");
+$NumRows = $res->num_rows;
+$Department = [];
+$Number = [];
+for($i = 0; $i < $NumRows; $i++){
+	$res->data_seek($i);
+	$result = $res->fetch_assoc();
+	$Department = $result["Dept"];
+	$Number = $result["Num"];
+	$Cid = $result["Cid"];
+	$html .= "<p>
 			Class Info:
-			$Department $Number
-			<a href=\"class/index.php\">Class Page</a>
-			</p>
-  	</body>
+			$Department $Number 
+			<a href=\"../class/index.php?ID=$Cid\">Class Page</a>
+			</p></br>";
+}			
+			
+
+$html .= "</body>
 	
 	<script>
 	function loadDoc(url, cFunction) 
 	{
-		
 		var xhttp;
 		xhttp=new XMLHttpRequest();
 		xhttp.onreadystatechange = function() 
@@ -98,7 +119,7 @@ echo "<html>
 			}
 		};
 		xhttp.open(\"POST\", url, true);
-		xhttp.send(attributes);
+		xhttp.send();
 	}
 	
 	function myFunction(xhttp) 
@@ -106,20 +127,18 @@ echo "<html>
 		switch(xhttp.responseText)
 		{
 		case \"0\": 
-		
-		break;
+			alert(\"Logout Script Failure\");
+			break;
 		
 		case \"1\": 
-		window.location = \"index.php\"
-		break;
-		
-		case \"2\": 
-		
-		break;
+			window.location = \"../index.php\";
+			break;
 		}
 	}
 	</script>
 </html>";
+
+echo $html;
 
 exit();
 ?>

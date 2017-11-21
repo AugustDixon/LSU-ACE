@@ -9,6 +9,7 @@ $PhoneNumber
 
 $Department
 $Number
+$Cid
 -->
 <html>
  	<head> 
@@ -18,27 +19,28 @@ $Number
 		<h1>Profile</h1>
    		 	
 			<button onclick="loadDoc('functions/logout.php', myFunction)">Logout</button>
-			<a href="profile/edit.php">Edit Profile</a>
-			<a href="class/index.php">Class Page</a>
+			<a href="edit.php">Edit Profile</a>
 			<p>
-			Student Info:
-			LSUID: $LSUID
-			Name: $FirstName $LastName
-			Nicknake: $Nickname
-			Phone: $PhoneNumber
+			Student Info:<br>
+			LSUID: $LSUID<br>
+			Name: $FirstName $LastName<br>
+			Nickname: $Nickname<br>
+			Phone: $PhoneNumber<br>
 			</p>
 			</br>
+			<!-- This Code is generated for each class -->
 			<p>
 			Class Info:
 			$Department $Number
-			<a href="class/index.php">Class Page</a>
+			<a href="../class/index.php?ID=$Cid">Class Page</a>
 			</p>
+			</br>
+			<!--  End        -->
   	</body>
 	
 	<script>
 	function loadDoc(url, cFunction) 
 	{
-		
 		var xhttp;
 		xhttp=new XMLHttpRequest();
 		xhttp.onreadystatechange = function() 
@@ -49,7 +51,7 @@ $Number
 			}
 		};
 		xhttp.open("POST", url, true);
-		xhttp.send(attributes);
+		xhttp.send();
 	}
 	
 	function myFunction(xhttp) 
@@ -57,18 +59,13 @@ $Number
 		switch(xhttp.responseText)
 		{
 		case "0": 
-		
-		break;
+			alert("Logout Script Failure");
+			break;
 		
 		case "1": 
-		window.location = "index.php"
-		break;
-		
-		case "2": 
-		
-		break;
+			window.location = "../index.php";
+			break;
 		}
 	}
 	</script>
 </html>
-	

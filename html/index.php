@@ -46,12 +46,12 @@ session_start();
 */
 
 if(isset($_SESSION['username'])){
-	if(($_SESSION['idle'] + 600) > time()){
+	if(($_SESSION['idle'] + 600) < time()){
 		unset($_SESSION['username']);
 		unset($_SESSION['idle']);		
 	}
 	else{										
-		header('Location: profile.php', true, 303);
+		header('Location: profile/index.php', true, 303);
 		exit();
 	}
 }
@@ -98,7 +98,7 @@ echo "
 		switch(xhttp.responseText)
 		{
 		case \"0\": 
-			
+			alert(\"Login Script Failure\");
 			break;
 		
 		case \"1\": 
@@ -106,7 +106,7 @@ echo "
 			break;
 		
 		case \"2\": 
-			
+			alert(\"Incorrect Username or Password\");
 			break;
 		}
 	}
