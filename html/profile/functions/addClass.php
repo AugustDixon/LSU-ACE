@@ -67,7 +67,7 @@ $etimeb = $_POST['ETimeB'];
 $hname = $_POST['HName'];
 $hphone = $_POST['HPhone'];
 $hlsuid = $_POST['HLSUID'];
-$user = $_GET['username'];
+$user = $_SESSION['username'];
 
 //check dept constraints
 if(strlen($dept) > 5 || strlen($dept) < 1){

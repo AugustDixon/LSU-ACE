@@ -37,7 +37,7 @@ if($logins->connect_error){
 $pass = $_POST['password'];
 $npass = $_POST['newpass'];
 $cpass = $_POST['cpass'];
-$user = $_GET['username'];
+$user = $_SESSION['username'];
 
 //check new password length constraints
 if(strlen($npass) > 20 || strlen($npass) < 1){
