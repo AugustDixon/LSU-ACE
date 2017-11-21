@@ -28,9 +28,11 @@ if($mysqli->connect_errno){
 }
 
 //check idle time
-if($_GET['idle'] > 600){
-   echo "2";
-   exit();
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
 }
 
 $first = $_POST['FirstName'];

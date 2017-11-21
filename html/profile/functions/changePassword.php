@@ -21,10 +21,14 @@
 //Start/Load session
 session_start();
 
-if($_GET['idle'] > 600){
-   echo "2";
-   exit();
+//check idle time
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
 }
+
 $logins = new mysqli("localhost", "Scheduler", "system", "Logins");
 if($logins->connect_error){
 	echo "0";
