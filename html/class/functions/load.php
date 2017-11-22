@@ -12,9 +12,50 @@
 		ELSE = Success
 */
 
+session_start();
+
+$username = $_SESSION['username'];
+$_SESSION['idle'] = time();
+
+$mysqli = new mysqli("localhost", "InsertOnly", "system", "LSU-ACE");
+if($mysqli->connect_errno){
+	echo "0";
+	exit();
+}
+
+$ID = $_POST['ID'];
 
 
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
 
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
 
+$res = $mysqli->query("SELECT Sesid FROM Session WHERE Cid = '$ID' AND InSession = 1;");
+
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
+
+$result = $res->fetch_assoc();
+$Sesid = $result['Sesid'];
+
+$res = $mysqli->query("SELECT Notes FROM Notes WHERE Sesid = '$Sesid' AND Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	if($mysqli->query("INSERT INTO Notes (Sesid, Cid, Sid, Notes) VALUES ('$Sesid', '$ID', '$username', '');")
+		echo "";
+	else
+		echo "0";
+}
+else {
+	$result = $res->fetch_assoc();
+	echo $result['Notes'];
+}
+
+exit();
 
 ?>

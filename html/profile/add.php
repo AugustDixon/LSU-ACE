@@ -144,6 +144,8 @@ echo "<html>
 	
 	function buildTime(Hour, Minute){
 		var intHour = parseInt(Hour);
+		if(Hour.length == 1)
+			Hour = '0' + Hour;
 		var intMinute = parseInt(Minute);
 		var ampm = '';
 		if(intHour == 12 || (intHour < 7 && intHour > 0))

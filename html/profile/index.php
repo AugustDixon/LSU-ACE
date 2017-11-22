@@ -86,7 +86,7 @@ $html = "<html>
 			</p>
 			<br>";
 
-$res = $mysqli->query("SELECT Cid, Dept, Num FROM Class NATURAL JOIN Taking WHERE Sid = '$LSUID';");
+$res = $mysqli->query("SELECT Cid, Dept, Num, Confirmed FROM Class NATURAL JOIN Taking WHERE Sid = '$LSUID';");
 $NumRows = $res->num_rows;
 $Department = [];
 $Number = [];
@@ -95,12 +95,19 @@ for($i = 0; $i < $NumRows; $i++){
 	$result = $res->fetch_assoc();
 	$Department = $result["Dept"];
 	$Number = $result["Num"];
-	$Cid = $result["Cid"];
-	$html .= "<p>
-			Class Info:
-			$Department $Number 
-			<a href=\"../class/index.php?ID=$Cid\">Class Page</a>
-			</p></br>";
+	if($result['Confirmed']{
+		$Cid = $result["Cid"];
+		$html .= "<p>
+				Class Info:
+				$Department $Number 
+				<a href=\"../class/index.php?ID=$Cid\">Class Page</a>
+				</p></br>";
+	}
+	else
+		$html .= "<p>
+				Class Info:
+				$Department $Number 
+				</p></br>";
 }			
 			
 
