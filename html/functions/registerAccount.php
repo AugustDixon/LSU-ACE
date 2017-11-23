@@ -43,42 +43,51 @@ $password = $_POST['password'];
 $cpass = $_POST['cpass'];
 
 //Check if username is valid
-if(strlen($username) > 0){
+if(strlen($username) > 20 || strlen($username) == 0){
    echo "2";
    exit();
 }
-if(strlen($username) > 20){
-   echo "2";
-   exit();
-}
-else {
-   $res = $mysqli->query("SELECT Sid FROM Student WHERE Sid = '$username';");
 
-	if($res->num_rows == 1){
-        echo "9";
-		exit();
-    }   
-}
+$res = $mysqli->query("SELECT Sid FROM Student WHERE Sid = '$username';");
+if($res->num_rows == 1){
+    echo "9";
+	exit();
+}   
 
 //Check if password and cpass match if not than send constrain failure notification.
 if($password != $cpass){
    echo "8";
    exit();
 }
-//check if password is atleast 5 characters long and send constraint failure notification.
-if(strlen($password) < 5){
-   echo "7";
-   exit();
-}
-//check if password is over 20 characters long and send constraint failure notification.
-if(strlen($password) > 20){
+//check if password is atleast 5 characters long or over 20 characters long and send constraint failure notification.
+if(strlen($password) < 5 || strlen($password) > 20){
    echo "7";
    exit();
 }
 
+if(strlen($firstname) > 20){
+	echo "4";
+	exit();
+}
+
+if(strlen($lastname) > 20){
+	echo "5";
+	exit();
+}
+
+if(strlen($nickname) > 20){
+	echo "3";
+	exit();
+}
+
+if(strlen($phone) > 20){
+	echo "6";
+	exit();
+}
+
+
 //add account to LSU-ACE database
-$sql = "INSERT Student (Sid, FirstName, LastName, Phone)
-VALUES ('$username', '$firstname', '$lastname', '$phone')";
+$sql = "INSERT Student (Sid, Nickname, FirstName, LastName, Phone) VALUES ('$username', '$nickname', '$firstname', '$lastname', '$phone')";
 
 if ($mysqli->query($sql) === FALSE){
     echo "0";
@@ -87,8 +96,7 @@ if ($mysqli->query($sql) === FALSE){
 $mysqli->close();
 
 //add account to Logins database
-$sql = "INSERT Logins (Sid, Password)
-VALUES ('$username', '$password')";
+$sql = "INSERT Logins (Sid, Password) VALUES ('$username', '$password')";
 
 if ($logins->query($sql) === TRUE) {
     echo "1";

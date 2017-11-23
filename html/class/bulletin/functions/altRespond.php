@@ -19,8 +19,125 @@
 		2 = Idle Timeout
 */
 
+session_start();
+
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
+}
+
+$username = $_SESSION['username'];
+$_SESSION['idle'] = time();
+
+$mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
+if($mysqli->connect_errno){
+	echo "0";
+	exit();
+}
+
+$ID = $_POST['ID'];
+
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
+
+$Answer = $_POST['Answer'];
+$Pid = $_POST['Pid'];
+
+$res = $mysqli->query("SELECT Aid FROM Bulletin WHERE Cid = '$ID' AND Pid = '$Pid';");
+$result = $res->fetch_assoc();
+$Aid = $result['Aid'];
 
 
+//Check if student already answered
+$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Cid = '$ID' AND Sid = '$username' AND Aid = '$Aid';");
+if($res->num_rows > 0){
+	echo "0";
+	exit();
+}
+
+
+//Add response
+if(!($mysqli->query("INSERT INTO AlteredResp (Cid, Aid, Sid, Response) VALUES ('$ID', '$Aid', '$username', '$Answer');"))){
+	echo "0";
+	exit();
+}
+
+//Find Total Students, number of Yes's and number of No's
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID';");
+$Num = $res->num_rows;
+$Majority = ($Num / 2) + 1;
+
+$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid' AND Response = 1;");
+$NumYes = $res->num_rows;
+
+$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid' AND Response = 0;");
+$NumNo = $res->num_rows;
+$Total = $NumYes + $NumNo;
+
+
+$Succeed = $NumYes >= $Majority;
+$Kill = ($NumNo >= $Majority) || ($Total == $Num);
+
+if($Succeed){
+	$res = $mysqli->query("SELECT EditClass, Title, Classroom, EditInstructor, InstrName, InstrEmail, Office, Hours, EditTA, TAName, TAEmail FROM Altered WHERE Cid = '$ID' AND Aid = '$Aid';");
+	$result = $res->fetch_assoc();
+	$EditInstructor = $result['EditInstructor'];
+	$EditTA = $result['EditTA'];
+	$EditClass = $result['EditClass'];
+	
+	if($EditClass){
+		$Title = $result['Title'];
+		$Classroom = $result['Classroom'];
+		if(!($mysqli->query("UPDATE Class SET Title = '$Title', Classroom = '$Classroom' WHERE Cid = '$ID';"))){
+			echo "0";
+			exit();
+		}
+	}
+	else if($EditInstructor){
+		$Name = $result['InstrName'];
+		$Email = $result['InstrEmail'];
+		$Office = $result['Office'];
+		$Hours = $result['Hours'];
+		if(!($mysqli->query("UPDATE Instructor SET Name = '$Name', Email = '$Email', Office = '$Office', Hours = '$Hours' WHERE Cid = '$ID';"))){
+			echo "0";
+			exit();
+		}
+	}
+	else if($EditTA){
+		$Name = $result['InstrName'];
+		$Email = $result['InstrEmail'];
+		if(!($mysqli->query("UPDATE Instructor SET Name = '$Name', Email = '$Email' WHERE Cid = '$ID';"))){
+			echo "0";
+			exit();
+		}
+	}
+}
+if($Kill || $Succeed){
+	if(!($mysqli->query("DELETE FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid';"))){
+		echo "0";
+		exit();
+	}
+	if(!($mysqli->query("DELETE FROM Altered WHERE Cid = '$ID' AND Aid = '$Aid';"))){
+		echo "0";
+		exit();
+	}
+	if($mysqli->query("DELETE FROM Bulletin WHERE Cid = '$ID' AND Pid = '$Pid';"))
+		echo "1";
+	else
+		echo "0";
+	exit();
+}
+
+
+echo "1";
+
+exit();
 
 
 ?>

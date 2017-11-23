@@ -72,22 +72,22 @@ for($i = 0; $i < $res->num_rows; $i++){
 	$HideID = $result['HideID'];
 	$HidePhone = $result['HidePhone'];
 	if($HideID)
-		$LSUID = $result['Sid'];
-	else
 		$LSUID = "Hidden";
+	else
+		$LSUID = $result['Sid'];
 	$Nickname = $result['Nickname'];
 	if($HideName){
-		$FirstName = $result['FirstName'];
-		$LastName = $result['LastName'];
-	}
-	else{
 		$FirstName = "Hidden";
 		$LastName = "Hidden";
 	}
+	else{
+		$FirstName = $result['FirstName'];
+		$LastName = $result['LastName'];
+	}
 	if($HidePhone)
-		$Phone = $result['Phone'];
-	else
 		$Phone = "Hidden";
+	else
+		$Phone = $result['Phone'];
 	$html .= "";
 }
 
