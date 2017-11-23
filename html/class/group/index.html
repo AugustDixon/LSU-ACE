@@ -1,0 +1,50 @@
+<!--
+PHP vals:
+$ID
+$LSUID1 through X (examine code for clarification)
++$Group Title  
++$LSUID
++$Looking for Members
++$Open group
++-->
+
+
+
+
+<html>
+ 	<head> 
+   		 <title>Group Finder</title>
+  	</head>
+  	
+        <body> 
+		<h1>Group Finder</h1>
+                <p>
+                    ID: $ID
+                </p>
+                
+                <a href= https://lsu-ace.com/class/index.php">Back</a>
+       
+                <p>
+                                Group Title: $GroupTitle
+                                LSU ID (Group leader): $LSUID
+				Group Open: $OpenGroup
+				Looking for members: $LookingForMembers
+                </p>
+                                <table style="width:100%">
+                                    <tr>
+                                        <th>Group Title</th>
+                                        <th>LSU ID</th>
+                                        <th>Group Open</th>
+                                        <th>Looking For Members</th>
+                                        
+                                        
+                                    </tr>
+                               
+	<input type="button" value="View Group" onClick="loadDoc('https://lsu-ace.com/class/group/view.php', myFunction)">
+			</form>	
+                        <input type="button" value="Form Group" onClick="loadDoc('https://lsu-ace.com/class/group/make.php', myFunction)">
+                </body>
+	
+	</body>
+	
+	</html>
