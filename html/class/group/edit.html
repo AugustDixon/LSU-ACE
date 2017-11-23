@@ -1,0 +1,66 @@
+<html>
+ 	<head> 
+   		 <title>Edit Group</title>
+  	</head>
+  	<body> 
+		<h1>Edit Group</h1>
+                <a href= https://lsu-ace.com/class/group/view.php">Back</a>
+                       <form name="editGroup">
+                                ID: <input type="text" name="ID"><br>
+				Group Name: <input type="text" name="groupName"><br>
+                                Max Group Members:<input type="text" name="groupName" maxlength="36"><br>
+                                Looking for Members:<input id="checkBox" type="checkbox" name="Looking">
+                                Open Group:<input id="checkBox" type="checkbox" name="Open">
+                                
+                                </div>
+				
+	<input type="button" value="Edit Group" onClick="loadDoc('https://lsu-ace.com/class/group/functions/editGroup.php', myFunction)">
+			</form>	
+                </body>
+	
+	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+                var id = document.getElementById('editGroup').id;
+		var name = document.getElementById('editGroup').name;
+                var max = document.getElementById('editGroup').max;
+		var looking = document.getElementById('editGroup').looking;
+		var open = document.getElementById('editGroup').open;
+		var attributes = 'id=' + ID '&name=' + groupName '&max=' + max '&looking=' + looking '&open=' + open;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.send(attributes);
+                function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case "0": 
+		alert("Script Failure");
+		break;
+		
+		case "1": 
+		window.location = "class/group/view.php"
+		break;
+		
+		case "2": 
+		window.location = "class/group/index.php"
+		break;
+		
+		case "3": 
+		alert("Group Name Error");
+		break;
+		
+		    
+	}
+        </html>
