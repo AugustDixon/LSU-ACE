@@ -35,7 +35,7 @@ if($mysqli->connect_errno){
 
 $ID = $_POST['ID'];
 
-$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';";
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
 
 if($res->num_rows == 0){
 	echo "0";
