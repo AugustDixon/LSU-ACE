@@ -23,6 +23,8 @@ if(($_SESSION['idle'] + 600) < time()){
 	exit();
 }
 
+$_SESSION['idle'] = time();
+
 $mysqli = new mysqli("localhost", "UpdateOnly", "system", "LSU-ACE");
 if($mysqli->connect_errno){
 	echo "0";

@@ -31,6 +31,8 @@ if(($_SESSION['idle'] + 600) < time()){
 	exit();
 }
 
+$_SESSION['idle'] = time();
+
 $id = $_POST['ID'];
 $tid = $_POST['Tid'];
 $body = $_POST['Body'];

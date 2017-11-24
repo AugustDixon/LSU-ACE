@@ -14,10 +14,35 @@
 		1 = Success
 		2 = Idle Timeout
 		3 = Group Name Constraint Error
-*/
+*/Connect
 
+//start/load session
+session_start();
 
+//Connect to the MySQL server
+$mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
+if($mysqli->connect_errno){
+	echo "0";
+	exit();
+}
+//check idle time
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
+}
+$_SESSION['idle'] = time();
 
+$id = $_POST['ID'];
+$name = $_POST['Name'];
+$max = $_POST['Max'];
+$looking = $_POST['Looking'];
+$open = $_POST['Open'];
 
+if(strlen($name) > 30 || strlen($name) < 1){
+	echo "3";
+	exit();
+}
 
 ?>

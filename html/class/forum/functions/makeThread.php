@@ -24,6 +24,15 @@ if($mysqli->connect_errno){
 	exit();
 }
 
+//check idle time
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
+}
+$_SESSION['idle'] = time();
+
 $id = $_POST['ID'];
 $title = $_POST['Title'];
 $body = $_POST['Body'];
