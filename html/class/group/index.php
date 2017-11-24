@@ -72,7 +72,7 @@ $html = "<html>
     <body> 
 		<h1>Group Finder</h1>
         <a href= \"../index.php?ID=$ID\">Back</a>
-		<input type=\"button\" value=\"Form Group\" onClick=\"loadDoc('make.php?ID=$ID', myFunction)\"><br><br>";
+		<a href= \"make.php?ID=$ID\">Form Group</a><br><br>";
 
 
 

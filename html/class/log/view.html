@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>View Notes</title>
+	</head>
+	<body>
+		<h1>Notes for $Sid</h1>
+		<a href="class.php?ID=$ID&Sesid=$Sesid">Back</a>
+		<input type="button" value="Save Notes to Computer" onClick="download()">
+		<textarea rows="150" cols="100" wrap="hard" id="notes" readonly>$notes</textarea>
+	</body>
+	<script>
+		function download() {
+			var notes = document.getElementById("notes").value;
+			var file = new Blob([notes], {type: "text/plain"});
+			
+			if (window.navigator.msSaveOrOpenBlob)
+				window.navigator.msSaveOrOpenBlob(file, notes.txt);
+			else {
+				var a = document.createElement("a"),
+				url = URL.createObjectURL(file);
+				a.href = url;
+				a.download = "notes.txt";
+				document.body.appendChild(a);
+				a.click();
+				setTimeout(function() {
+					document.body.removeChild(a);
+					window.URL.revokeObjectURL(url);  
+				}, 0); 
+			}
+		}
+	</script>
+</html>
