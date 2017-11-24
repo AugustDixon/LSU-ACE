@@ -128,12 +128,9 @@ if(!($mysqli->query("INSERT INTO Altered (Cid, EditInstructor, InstrName, InstrE
 	echo "0";
 	exit();
 }
+$Aid = $mysqli->insert_id;
 
 //Create AlteredResp relation
-$res = $mysqli->query("SELECT Aid FROM Altered WHERE Cid = '$ID' AND InstrName = '$Name' AND InstrEmail = '$Email' AND Office = '$Office' AND Hours = '$Hours' AND EditInstructor = 1;");
-$result = $res->fetch_assoc();
-$Aid = $result['Aid'];
-
 if(!($mysqli->query("INSERT INTO AlteredResp (Cid, Aid, Sid, Response) VALUES ('$ID', '$Aid', '$username', 1);"))){
 	echo "0";
 	exit();
@@ -147,10 +144,7 @@ if(!($mysqli->query("INSERT INTO Bulletin (Cid, Sid, Title, Body, Date, Query, A
 	echo "0";
 	exit();
 }
-
-$res = $mysqli->query("SELECT Pid FROM Bulletin WHERE Cid = '$ID' AND Aid = '$Aid';");
-$result = $res-> fetch_assoc();
-$Pid = $result['Pid'];
+$Pid = $mysqli->insert_id;
 
 echo "1 $Pid";
 

@@ -166,9 +166,7 @@ else{
 		echo "0";
 		exit();
 	} 
-	$res = $mysqli->query("SELECT Cid FROM Class WHERE Dept = '$dept' AND Num = '$num' AND Sect = '$sect' AND DayA = '$daya' AND STimeA = '$stimea' AND ETimeA = '$etimea' AND DayB = '$dayb' AND STimeB = '$stimeb' AND ETimeB = '$etimeb';");
-	$result = $res->fetch_assoc();
-	$Cid = $result['Cid'];
+	$Cid = $mysqli->insert_id;
 	if(!($mysqli->query("INSERT INTO Instructor (Cid, Name, Email, Office, Hours) VALUES ('$Cid', '', '', '', '');"))){
 		echo "0";
 		exit();

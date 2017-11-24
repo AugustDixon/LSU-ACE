@@ -15,7 +15,6 @@
 
 session_start();
 
-//check idle time
 if(($_SESSION['idle'] + 600) < time()){
 	unset($_SESSION['username']);
 	unset($_SESSION['idle']);
@@ -23,23 +22,38 @@ if(($_SESSION['idle'] + 600) < time()){
 	exit();
 }
 
+$username = $_SESSION['username'];
+$_SESSION['idle'] = time();
+
 $mysqli = new mysqli("localhost", "UpdateOnly", "system", "LSU-ACE");
 if($mysqli->connect_errno){
 	echo "0";
 	exit();
 }
 
-$id = $_POST['ID'];
-$pid = $_POST['Pid'];
+$ID = $_POST['ID'];
 
-if(isset($Pid) && isset($ID)){
-	$sql = "UPDATE ForumPost SET Body = 'Deleted', Anonymous = 'true' WHERE Pid = '$pid'";
-	if($mysqli->query($sql))
-		echo "1";
-	else
-		echo "0";
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	echo "0";
+	exit();
 }
-$mysqli->close();
+
+$Pid = $_POST['Pid'];
+
+//Check if user is author
+$res = $mysqli->query("SELECT * FROM ForumPost WHERE Cid = '$ID' AND Pid = '$Pid' AND Sid = '$username';");
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
+
+$sql = "UPDATE ForumPost SET Body = 'Deleted', Anonymous = 1 WHERE Pid = '$Pid'";
+if($mysqli->query($sql))
+	echo "1";
+else
+	echo "0";
 
 exit();
 
