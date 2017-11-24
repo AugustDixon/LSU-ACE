@@ -20,7 +20,7 @@
 session_start();
 
 //Connect to the MySQL server
-$mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
+$mysqli = new mysqli("localhost", "UpdateOnly", "system", "LSU-ACE");
 if($mysqli->connect_errno){
 	echo "0";
 	exit();
@@ -44,5 +44,15 @@ if(strlen($name) > 30 || strlen($name) < 1){
 	echo "3";
 	exit();
 }
+if(isset($id)){
+	$sql = "UPDATE SGroup SET Max = '$max', Open = '$open', Looking = '$looking', Name = '$name' WHERE Sid = '$id'";
+	if($mysqli->query($sql))
+		echo "1";
+	else
+		echo "0";
+}
+$mysqli->close();
+exit();
+
 
 ?>
