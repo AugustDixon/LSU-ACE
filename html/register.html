@@ -46,19 +46,62 @@
 	
 	function myFunction(xhttp) 
 	{
-		switch(xhttp.responseText)
-		{
+		switch(xhttp.responseText){
 		case "0": 
-		
-		break;
+			alert("Register Script Failure");
+			break;
 		
 		case "1": 
-		window.location = "profile/index.php"
-		break;
+			window.location = "profile/index.php"
+			break;
 		
 		case "2": 
+			alert("Username must be between 1 and 20 characters");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
+			
+		case "3":
+			alert("Nickname must be less than 20 characters");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
 		
-		break;
+		case "4":
+			alert("First Name must be less than 20 characters");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
+		
+		case "5":
+			alert("Last Name must be less than 20 characters");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
+		
+		case "6":
+			alert("Phone Number must be less than 20 characters");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
+		
+		case "7":
+			alert("Password must be between 5 and 20 characters");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
+		
+		case "8":
+			alert("Passwords do not match");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
+		
+		case "9":
+			alert("Username already exists");
+			document.getElementById('password').value = "";
+			document.getElementById('confirmPassword').value = "";
+			break;
 		}
 	}
 	</script>

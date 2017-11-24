@@ -46,7 +46,7 @@ $HideID = $_POST['HideID'];
 $HideName = $_POST['HideName'];
 $HidePhone = $_POST['HidePhone'];
 
-$sql = "UPDATE Taking SET HideID = '$HideID', HideName = '$HideName', HidePhone = '$HidePhone' WHERE Cid = '$ID' AND Sid = '$username';";
+$sql = "UPDATE Taking SET HideID = $HideID, HideName = $HideName, HidePhone = $HidePhone WHERE Cid = '$ID' AND Sid = '$username';";
 
 if($mysqli->query($sql))
 	echo "1";

@@ -56,8 +56,7 @@ if(isset($_SESSION['username'])){
 	}
 }
 
-echo "
-	<html>
+echo "<html>
  	<head> 
    		 <title>Log In</title>
   	</head>
@@ -65,7 +64,7 @@ echo "
 		<h1>Log In</h1>
    		 	<form name=\"loginForm\">
 				Username: <input type=\"text\" name=\"username\" id=\"username\"><br>  
-				Password: <input type=\"text\" name=\"password\" id=\"password\"><br>
+				Password: <input type=\"password\" name=\"password\" id=\"password\"><br>
 				<input type=\"button\" value=\"Submit\" onClick=\"loadDoc('functions/login.php', myFunction)\">
 			</form>
 			<a href=\"forgot1.php\">Forgot Password?</a>

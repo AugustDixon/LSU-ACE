@@ -46,7 +46,7 @@ $Sesid = $result['Sesid'];
 $res = $mysqli->query("SELECT Notes FROM Notes WHERE Sesid = '$Sesid' AND Cid = '$ID' AND Sid = '$username';");
 
 if($res->num_rows == 0){
-	if($mysqli->query("INSERT INTO Notes (Sesid, Cid, Sid, Notes) VALUES ('$Sesid', '$ID', '$username', '');")
+	if($mysqli->query("INSERT INTO Notes (Sesid, Cid, Sid, Notes) VALUES ('$Sesid', '$ID', '$username', '');"))
 		echo "";
 	else
 		echo "0";

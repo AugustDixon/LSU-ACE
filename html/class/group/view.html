@@ -1,38 +1,22 @@
-<!--
-PHP vals:
-$ID
-$Sid
-$LSUID1 through X (examine code for clarification)
-$FirstName1 ""
-$LastName1 ""
-$Nickname1 ""
-$PhoneNumber1 ""
--->
 <html>
  	<head> 
    		 <title>View Group</title>
   	</head>
   	<body> 
 		<h1>View Group</h1>
-			<p>
-				ID: $ID
-				Sid: $Sid
-			</p>
-   		 	<a href="class/group/index.php">Back</a>'
-			<!-- Next line only shows if you are the group leader-->
-			<a href="class/group/edit.php">Edit Group</a>
-			<!-- Next line only shows if LookingForMembers == true and $NumberOfMembers < $MaximumMembers-->
-			<input type="button" value="Join Group" onClick="loadDoc('class/group/functions/joinGroup.php', myFunction)">
+   		 	<a href="index.php?ID=$ID">Back</a><!-- -->
+			<a href="edit.php?ID=$ID">Edit Group</a><!-- -->
+			<input type="button" value="Join Group" onClick="loadDoc('functions/joinGroup.php', myFunction)"><!-- -->
 			
 			<p>
-				Group Name: $GroupName
-				Maximum Members $MaximumMembers
-				Number of Members $NumberOfMembers
-				Looking for members: $LookingForMembers
+				Group Name: $Name<br>
+				Maximum Members: $Max<br>
+				Number of Members: $Num<br>
+				<!-- -->
+				Currently Looking for Members<br>
+				<!-- -->
 			</p>
-			
-			<!-- Next table only shows if you are in the group-->
-			
+			<!-- -->
 			<table style="width:100%">
 				<tr>
 					<th>LSUID</th>
@@ -41,72 +25,52 @@ $PhoneNumber1 ""
 					<th>Nickname</th>
 					<th>Phone Number</th>
 				</tr>
-				<tr> <!-- Group Member One-->
-					<td>$LSUID1</td>
-					<td>$FirstName1</td> 
-					<td>$LastName1</td>
-					<td>$Nickname1</td>
-					<td>$PhoneNumber1</td>
-				</tr>
-				<tr> <!-- Group Member Two-->
-					<td>$LSUID2</td>
-					<td>$FirstName2</td> 
-					<td>$LastName2</td>
-					<td>$Nickname2</td>
-					<td>$PhoneNumber2</td>
-				</tr>
-				
-				<!--COPY AND PASTE this section for the maximum # of members and change X to # -->
-				<tr> <!-- Group Member X-->
-					<td>$LSUIDX</td>
-					<td>$FirstNameX</td> 
-					<td>$LastNameX</td>
-					<td>$NicknameX</td>
-					<td>$PhoneNumberX</td>
+				<tr> 
+					<td>$LSUID</td>
+					<td>$FirstName</td> 
+					<td>$LastName</td>
+					<td>$Nickname</td>
+					<td>$PhoneNumber</td>
 				</tr>
 			</table>
+			<!-- -->
+	</body>
 			
 	<script>
-	
-	function loadDoc(url, cFunction) 
-	{
-		var ID = $ID; 
-		var Sid = $Sid; 
-		var attributes = "ID=" + ID + "&Sid=" + Sid;
-	
-		var xhttp;
-		xhttp=new XMLHttpRequest();
-		xhttp.onreadystatechange = function() 
+		function loadDoc(url, cFunction) 
 		{
-			if (this.readyState == 4 && this.status == 200) 
+			var attributes = "ID=$ID&Sid=$Sid";
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
 			{
-				cFunction(this);
-			}
-		};
-		xhttp.open("POST", url, true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send(attributes);
-	}
-	
-	function myFunction(xhttp) 
-	{
-		switch(xhttp.responseText)
-		{
-		case "0": 
-			alert("Script Failure");
-			break;
-		
-		case "1": 
-			window.location = "class/group/view.php";
-			break;
-		
-		case "2": 
-			window.location = "index.php";
-			break;
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
 		}
-	}
+	
+		function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+			case "0": 
+				alert("Join Group Script Failure");
+				break;
+			
+			case "1": 
+				location.reload();
+				break;
+			
+			case "2": 
+				window.location = "../../index.php";
+				break;
+			}
+		}
 	</script>
-  	</body>
-	
-	
 </html>

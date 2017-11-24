@@ -56,7 +56,6 @@ $_SESSION['idle'] = time();
 $mysqli = new mysqli("localhost", "SelectOnly", "system", "LSU-ACE");
 if($mysqli->connect_errno){
 	//Send HTTP error code
-	exit();
 }
 
 $LSUID = $_SESSION['username'];
@@ -95,7 +94,7 @@ for($i = 0; $i < $NumRows; $i++){
 	$result = $res->fetch_assoc();
 	$Department = $result["Dept"];
 	$Number = $result["Num"];
-	if($result['Confirmed']{
+	if($result['Confirmed']){
 		$Cid = $result["Cid"];
 		$html .= "<p>
 				Class Info:

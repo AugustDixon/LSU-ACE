@@ -36,6 +36,24 @@
 		11 - End Time B Constraint Error
 		12 - Student already taking class
 */
+
+//Check if a start and end time pair is valid
+function invalid($STime, $ETime){
+	$STime = convert($STime);
+	$ETime = convert($ETime);
+	return $STime > $ETime;
+}
+
+//Convert a Time for use in previous function
+function convert($Time){
+	$Time = substr($Time, 0, 2);
+	if($Time < 7)
+		$Time = '2' . $Time;
+	return (int) $Time;
+}
+
+
+
 //Start/Load session
 session_start();
 
@@ -53,6 +71,8 @@ if(($_SESSION['idle'] + 600) < time()){
 	echo "2";
 	exit();
 }
+
+$_SESSION['idle'] = time();
 
 //inputs from add.php
 $dept = $_POST['Dept'];
@@ -90,12 +110,12 @@ if(strlen($daya) != 5){
    exit();
 }
 //check STimeA constraints
-if(strlen($stimea) < 6 || strlen(stimea) >7){
+if(strlen($stimea) < 6 || strlen($stimea) > 7){
    echo "7";
    exit();
 }
 //check ETimeA constraints
-if(strlen($etimea) < 6 || strlen(etimea) >7){
+if(strlen($etimea) < 6 || strlen($etimea) > 7 || invalid($stimea, $etimea)){
    echo "8";
    exit();
 }
@@ -105,50 +125,63 @@ if(strlen($dayb) != 5){
    exit();
 }
 //check STimeB constraints
-if(strlen($stimeb) < 6 || strlen(stimeb) >7){
+if(strlen($stimeb) < 6 || strlen($stimeb) > 7){
    echo "10";
    exit();
 }
 //check ETimeB constraints
-if(strlen($etimeb) < 6 || strlen(etimeb) >7){
+if(strlen($etimeb) < 6 || strlen($etimeb) > 7 || invalid($stimea, $etimea)){
    echo "11";
    exit();
 }
 
-//check if user is already taking the class.
-$istaken $mysqli->query = "SELECT Sid FROM Taken WHERE Sid='$user' AND Cid='$cid'";
-if(mysqli->num_rows > 0){
-   echo "12";
-   exit();
-}
+
+
+
 
 //check if the class is already in the database
-$res = $mysqli->query = "SELECT Dept, Num, Sect, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB  FROM Class" WHERE Dept='$dept' AND Num='$num' AND Sect='$sect' AND DayA='$daya' AND STimeA='$stimea' AND ETimeA='$etimea' AND DayB='$dayb' AND STimeB='stimeb' AND ETimeB='$etimeb'";
+$res = $mysqli->query("SELECT Cid FROM Class WHERE Dept = '$dept' AND Num = '$num' AND Sect = '$sect' AND DayA = '$daya' AND STimeA = '$stimea' AND ETimeA = '$etimea' AND DayB = '$dayb' AND STimeB = '$stimeb' AND ETimeB = '$etimeb';");
+
 if($res->num_rows > 0){
-   $res2 = "INSERT Class (Confirmed)
-   VALUES ('TRUE')";
+	$result = $res->fetch_assoc();
+	$Cid = $result['Cid'];
+	$res = $mysqli->query("SELECT Sid FROM Taking WHERE Sid = '$user' AND Cid = '$Cid';");
+	if($res->num_rows > 0){
+		echo "12";
+		exit();
+	}
+	if(!($mysqli->query("INSERT INTO Taking (Sid, Cid, HideName, HidePhone, HideID) VALUES ('$user', '$Cid', $hname, $hphone, $hlsuid);"))){
+		echo "0";
+		exit();
+	}
+	if($mysqli->query("UPDATE Class SET Confirmed = 1 WHERE Cid = '$Cid';"))
+		echo "1";
+	else
+		echo "0";
+	exit();
 }
 else{   
-   //need to find what values go in Cid, Title, Classroom, Confirmed.
-   $sql = "INSERT Class (Cid, Dept, Num, Sect, Title, Classroom, Confirmed, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB)
-   VALUES ('', '$dept', '$num', '$sect', '', '', '', '$daya', '$stimea', '$etimea', '$dayb', '$stimeb', '$etimeb')";
-   if ($mysqli->query($sql) === TRUE) {
-      echo "1";
-   } else {
-    echo "0";
-    exit();
-   }
+	$sql = "INSERT INTO Class (Dept, Num, Sect, Confirmed, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB) VALUES ('$dept', '$num', '$sect', 0, '$daya', '$stimea', '$etimea', '$dayb', '$stimeb', '$etimeb');";
+	if(!($mysqli->query($sql))){
+		echo "0";
+		exit();
+	} 
+	$res = $mysqli->query("SELECT Cid FROM Class WHERE Dept = '$dept' AND Num = '$num' AND Sect = '$sect' AND DayA = '$daya' AND STimeA = '$stimea' AND ETimeA = '$etimea' AND DayB = '$dayb' AND STimeB = '$stimeb' AND ETimeB = '$etimeb';");
+	$result = $res->fetch_assoc();
+	$Cid = $result['Cid'];
+	if(!($mysqli->query("INSERT INTO Instructor (Cid, Name, Email, Office, Hours) VALUES ('$Cid', '', '', '', '');"))){
+		echo "0";
+		exit();
+	} 
+	if(!($mysqli->query("INSERT INTO TA (Cid, Name, Email) VALUES ('$Cid', '', '');"))){
+		echo "0";
+		exit();
+	}
+	if($mysqli->query("INSERT INTO Taking (Sid, Cid, HideName, HidePhone, HideID) VALUES ('$user', '$Cid', $hname, $hphone, $hlsuid);"))
+		echo "1";
+	else
+		echo "0";
+	exit();
 }
-
-//Add user to Taken.
-$add = "INSERT Taken (Sid, Cid, HideName, HidePhone, HideID)
-VALUES ('$user', '$cid', '$hname', '$hphone, '$hlsuid')";
-if ($logins->query($sql) === TRUE) {
-    echo "1";
-} else {
-    echo "0";
-}
-$mysqli->close();
-exit();
 
 ?>

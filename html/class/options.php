@@ -77,7 +77,7 @@ echo "<html>
 	<head>
 	<body>
 		<h1>Edit Student Options</h1>
-		<a href=\"index.php\">Back</a><br><br>
+		<a href=\"index.php?ID=$ID\">Back</a><br><br>
 		Hide Name: <input type=\"checkbox\" id=\"HName\"><br>
 		Hide Phone: <input type=\"checkbox\" id=\"HPhone\"><br>
 		Hide LSUID: <input type=\"checkbox\" id=\"HLSUID\"><br>
@@ -107,6 +107,7 @@ echo "<html>
 	
 	function myFunction(xhttp) 
 	{
+		alert(xhttp.responseText);
 		switch(xhttp.responseText)
 		{
 		case \"0\": 
@@ -114,7 +115,7 @@ echo "<html>
 			break;
 		
 		case \"1\": 
-			window.location = \"index.php\";
+			window.location = \"index.php?ID=$ID\";
 			break;
 		
 		case \"2\": 
