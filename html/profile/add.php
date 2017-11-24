@@ -192,6 +192,10 @@ echo "<html>
 		var HName = document.getElementById('HName').checked;
 		var HPhone = document.getElementById('HPhone').checked;
 		var HLSUID = document.getElementById('HLSUID').checked;
+		if(DayB == '     '){
+			STimeB = '      ';
+			ETimeB = '      ';
+		}
 		
 		var attributes = 'Dept=' + Dept + '&Num=' + Num + '&Sect=' + Sect + '&DayA=' + DayA + '&STimeA=' + STimeA + '&ETimeA=' + ETimeA + '&DayB=' + DayB + '&STimeB=' + STimeB + '&ETimeB=' + ETimeB + '&HName=' + HName + '&HPhone=' + HPhone + '&HLSUID=' + HLSUID;
 	
@@ -206,13 +210,11 @@ echo "<html>
 		};
 		xhttp.open(\"POST\", url, true);
 		xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
-		alert(attributes);
 		xhttp.send(attributes);
 	}
 	
 	function myFunction(xhttp) 
 	{
-		alert(xhttp.responseText);
 		switch(xhttp.responseText)
 		{
 		case \"0\": 

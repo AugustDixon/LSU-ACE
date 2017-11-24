@@ -55,14 +55,14 @@ $res->data_seek($num_rows - 1);
 $result = $res->fetch_assoc();
 $Mid = $result['Mid'];
 
-$output = '$Mid ';
+$output = "$Mid ";
 
 for($i = 0; $i < $num_rows; $i++){
 	$res->data_seek($i);
 	$result = $res->fetch_assoc();
 	$Time = $result['Time'];
 	$Body = $result['Body'];
-	$output .= '$Time $Body\n';
+	$output .= "$Time $Body\n";
 }
 
 echo $output;

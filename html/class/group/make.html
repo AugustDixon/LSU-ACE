@@ -4,64 +4,65 @@
   	</head>
   	<body> 
 		<h1>Form Group</h1>
-                <a href= https://lsu-ace.com/class/group/index.php">Back</a>
-                       <form name="makeGroup">
-                                ID: <input type="text" name="ID"><br>
-				Group Name: <input type="text" name="groupName"><br>
-                                Max Group Members:<input type="text" name="groupName" maxlength="36"><br>
-                                Looking for Members:<input id="checkBox" type="checkbox" name="Looking">
-                                Open Group:<input id="checkBox" type="checkbox" name="Open">
-                                
-                                </div>
+            <a href= "index.php?ID=$ID">Back</a>
+            <form name="makeGroup">
+				Group Name: <input type="text" id="groupName"><br>
+                Max Group Members:<input type="text" name="max" maxlength="36"><br>
+                Looking for Members:<input id="Looking" type="checkbox" name="Looking"><br>
+                Open Group:<input id="Open" type="checkbox" name="Open"><br>                
+				</div>
 				
-	<input type="button" value="Form Group" onClick="loadDoc('https://lsu-ace.com/class/group/functions/makeGroup.php', myFunction)">
+				<input type="button" value="Form Group" onClick="loadDoc('functions/makeGroup.php', myFunction)">
 			</form>	
-                </body>
-	
-	</body>
+    </body>
 	
 	<script>
-	function loadDoc(url, cFunction) 
-	{
-                var id = document.getElementById('makeGroup').id;
-		var name = document.getElementById('makeGroup').name;
-                var max = document.getElementById('makeGroup').max;
-		var looking = document.getElementById('makeGroup').looking;
-		var open = document.getElementById('makeGroup').open;
-		var attributes = 'id=' + ID '&name=' + groupName '&max=' + max '&looking=' + looking '&open=' + open;
+		function loadDoc(url, cFunction) 
+		{
+			var name = document.getElementById('groupName').value;
+			var max = document.getElementById('max').value;
+			var looking = document.getElementById('Looking').value;
+			var open = document.getElementById('Open').value;
+			var attributes = 'ID=$ID&Name=' + name + '&Max=' + max + '&Looking=' + looking + '&Open=' + open;
 	
-		var xhttp;
-		xhttp=new XMLHttpRequest();
-		xhttp.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
 			{
-				cFunction(this);
-			}
-		};
-		xhttp.open("POST", url, true);
-		xhttp.send(attributes);
-                function myFunction(xhttp) 
-	{
-		switch(xhttp.responseText)
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
+		}
+		
+		function myFunction(xhttp) 
 		{
-		case "0": 
+			switch(xhttp.responseText)
+			{
+				case "0": 
+					alert("Form Group Script Failure");
+					break;
 		
-		break;
+				case "1": 
+					window.location = "view.php?ID=$ID&Sid=$username";
+					break;
 		
-		case "1": 
-		window.location = "class/group/view.php"
-		break;
+				case "2": 
+					window.location = "../../index.php";
+					break;
 		
-		case "2": 
-		window.location = "class/group/index.php"
-		break;
+				case "3": 
+					alert("Group Name must be 1 to 30 characters long");
+					break;
 		
-		case "3": 
-		
-		break;
-		
-		case "4": 
-		
-		break;         
-	}
+				case "4": 
+					alert("You are already leading a group");
+					break;         
+			}
+		}
+	</script>
+</html>
