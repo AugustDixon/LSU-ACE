@@ -1,0 +1,88 @@
+<!-- 
+need from Database:
+$ID
+$Tid 
+$ThreadTitle
+$Nickname
+$Pid
+-->
+
+<html>
+ 	<head> 
+   		 <title>View</title>
+  	</head>
+  	<body>
+		<h1>View</h1>
+		
+			<p>
+				ID: $ID<br>
+				Thread ID: $Tid<br>
+			</p>
+			<br>
+		
+   		 	<a href="class/forum/index.php">Back</a><!-- -->
+			<a href="class/forum/post.php">Make Post</a><!-- -->
+			
+			<p>
+				Thread Title: $ThreadTitle
+			</p>
+			<!-- -->
+			<table style="width:100%">
+				<tr>
+					<th>Author</th>
+					<th>Body</th> 
+					<th>Delete Post</th>
+				</tr>
+				<!--The following five lines repeat for each post in the thread-->
+				<tr id="$Pid"> 
+					<td>$Nickname</td>
+					<td>$Body</td> 
+					<td><input type="button" value="Delete Post" onClick="loadDoc('class/forum/functions/deletePost.php', myFunction)"></td>
+				</tr>
+			</table>
+			<!-- -->
+			
+
+			
+	</body>
+			
+	<script>
+		function loadDoc(url, cFunction) 
+		{
+			var ID = $ID;
+			var Pid = $ Pid;
+			var attributes = 'ID=' + ID + '&Pid=' + Pid;
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
+		}
+	
+		function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+			case "0": 
+				alert("Script Failure");
+				break;
+			
+			case "1": 
+				location.reload();
+				break;
+			
+			case "2": 
+				window.location = "index.php";
+				break;
+			}
+		}
+	</script>
+</html>

@@ -1,0 +1,59 @@
+<html>
+ 	<head> 
+   		 <title>Make Thread</title>
+  	</head>
+  	<body> 
+		<h1>Make Thread</h1>
+			<p>
+				ID: $ID<br>
+			</p>
+			<a href="..class/forum/index.php">Back</a>
+			<form name="makeThreadForm">
+			Title: <input type="text" name="Title" id="Title" maxlength=40><br>  
+			Body: <input type="text" name="Body" id="Body" size=100 maxlength=400><br>  
+			Anonymous <input type="checkbox" name="Anonymous" id="Anonymous" maxlength=400><br>  
+			</form>
+			<input type="button" value="Make Thread" onClick="loadDoc('class/forum/functions/makeThread.php', myFunction)"><!-- -->
+						
+	<script>
+		function loadDoc(url, cFunction) 
+		{
+			var attributes = "ID=$ID&Sid=$Sid";
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
+		}
+	
+		function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+			case "0": 
+				alert("Script Failure");
+				break;
+			
+			case "1": 
+				window.location = "class/forum/index.php";
+				break;
+			
+			case "2": 
+				alert("Title Constraint Error");
+				break;
+				
+			case "3": 
+				alert("Body Constraint Error");
+				break;	
+			}
+		}
+	</script>
+</html>
