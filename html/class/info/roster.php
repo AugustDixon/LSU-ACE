@@ -61,7 +61,13 @@ if($res->num_rows == 0){
 }
 
 
-$html = "";
+$html = "<html>
+	<head>
+		<title>Class Roster</title>
+	</head>
+	<body>
+		<h1>Class Roster</h1>
+		<a href=\"index.php?ID=$ID\">Back</a>";
 
 $res = $mysqli->query("SELECT Sid, HideName, HideID, HidePhone, FirstName, LastName, Nickname, Phone FROM Taking NATURAL JOIN Student WHERE Cid = '$ID';");
 
@@ -88,10 +94,18 @@ for($i = 0; $i < $res->num_rows; $i++){
 		$Phone = "Hidden";
 	else
 		$Phone = $result['Phone'];
-	$html .= "";
+	$html .= "
+		<p>
+			LSUID: $LSUID<br>
+			Nickname: $Nickname<br>
+			Name: $FirstName $LastName<br>
+			Phone Number: $Phone
+		</p>";
 }
 
-$html .= "";
+$html .= "
+	</body>
+</html>";
 
 echo $html;
 

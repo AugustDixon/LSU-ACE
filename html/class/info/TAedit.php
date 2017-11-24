@@ -10,7 +10,7 @@
 		"Back" button - Hyperlinks to class/info/index.php
 		"Name" Text field - 0 to 30 characters. 
 		"Email" Text field - 0 to 30 characters
-		"Edit TA" button - Runs AJAX class/info/functions/editTA.php
+		"Submit Change Request" button - Runs AJAX class/info/functions/editTA.php
 		
 	AJAX Functions:
 		editTA.php
@@ -78,7 +78,74 @@ if($res->num_rows == 0){
 }
 
 
-$html = "";
+$html = "<html>
+	<head>
+		<title>Edit TA Info</title>
+	</head>
+	<body>
+		<h1>Edit TA Info</h1>
+		<a href=\"index.php?ID=$ID\">Back</a><br><br>
+		Name: <input type=\"text\" id=\"Name\"><br>
+		Email: <input type=\"text\" id=\"Email\"><br>
+		<input type=\"button\" value=\"Submit Change Request\" onClick=\"edit()\">
+	</body>
+	<script>
+		function edit(){
+			var Name = document.getElementById('Name').value;
+			var Email = document.getElementById('Email').value;
+			
+			var attributes = 'ID=$ID&Name=' + Name + '&Email=' + Email;
+			
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					editResponse(this);
+				}
+			};
+			xhttp.open(\"POST\", \"functions/editTA.php\", true);
+			xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
+			xhttp.send(attributes);
+		}
+		
+		function editResponse(xhttp){
+			
+			switch(xhttp.responseText.charAt(0)){
+			case \"0\":
+				alert(\"Edit TA Script Failure\");
+				break;
+			
+			case \"1\":
+				var arr = xhttp.responseText.split(\" \");
+				window.location = \"../bulletin/view.php?ID=$ID&Pid=\" + arr[1];
+				break;
+			
+			case \"2\":
+				window.location = \"../../index.php\";
+				break;
+			
+			case \"3\":
+				alert(\"Name must be less than 30 characters\");
+				break;
+			
+			case \"4\":
+				alert(\"Email must be less than 30 characters\");
+				break;
+			
+			case \"5\":
+				window.location = \"index.php?ID=$ID\";
+				break;
+			
+			case \"6\":
+				var arr = xhttp.responseText.split(\" \");
+				window.location = \"../bulletin/view.php?ID=$ID&Pid=\" + arr[1];
+				break;
+			}
+		}
+	</script>
+</html>";
 
 
 echo $html;
