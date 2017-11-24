@@ -17,8 +17,25 @@
 		4 = User Already Leads Group
 */
 
+session_start();
 
+//check idle time
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
+}
+$_SESSION['idle'] = time();
 
+$id = $_POST['ID'];
+$name = $_POST['Name'];
+$max = $_POST['Max'];
+$looking = $_POST['Looking'];
+$open = $_POST['Open'];
 
-
+if(strlen($name) > 30 || strlen($name) < 1){
+	echo "3";
+	exit();
+}
 ?>
