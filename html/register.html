@@ -6,10 +6,11 @@
 		<h1>Register</h1>
    		 	<form name="registerForm">
 				Username: <input type="text" name="username" id="username"><br>
-				Nickname: <input type="text" name="nickname" id="nickname"><br>
+				LSUID: <input type="text" name="LSUID" id="LSUID"><br>
 				First name: <input type="text" name="firstName" id="firstName"><br>
 				Last name: <input type="text" name="lastName" id="lastName"><br>
-				Phone number: <input type="text" name="phoneNumber" id="phoneNumber"><br>
+				Phone number: <input type="text" name="phoneNumber" id="phoneNumber"><br><br>
+				Note: We suggest to use a different password than your myLSU account.<br>
 				Password: <input type="text" name="password" id="password"><br>
 				Confirm Password: <input type="text" name="confirmPassword" id="confirmPassword"><br>
 				<input type="button" value="Register" onClick="loadDoc('functions/registerAccount.php', myFunction)">
@@ -22,13 +23,13 @@
 	function loadDoc(url, cFunction) 
 	{
 		var username = document.getElementById('username').value;
-		var nickname = document.getElementById('nickname').value;
+		var LSUID = document.getElementById('LSUID').value;
 		var firstName = document.getElementById('firstName').value;
 		var lastName = document.getElementById('lastName').value;
 		var phoneNumber = document.getElementById('phoneNumber').value;
 		var password = document.getElementById('password').value;
 		var confirmPassword = document.getElementById('confirmPassword').value;
-		var attributes = 'username=' + username + '&nickname=' + nickname + '&firstname=' + firstName + '&lastname=' + lastName + '&phone=' + phoneNumber + '&password=' + password + '&cpass=' + confirmPassword;
+		var attributes = 'username=' + username + '&LSUID=' + LSUID + '&firstname=' + firstName + '&lastname=' + lastName + '&phone=' + phoneNumber + '&password=' + password + '&cpass=' + confirmPassword;
 	
 		var xhttp;
 		xhttp=new XMLHttpRequest();
@@ -62,7 +63,7 @@
 			break;
 			
 		case "3":
-			alert("Nickname must be less than 20 characters");
+			alert("LSUID must be less than 20 characters");
 			document.getElementById('password').value = "";
 			document.getElementById('confirmPassword').value = "";
 			break;

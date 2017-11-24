@@ -11,7 +11,7 @@
 		"Form Group" button - Hyperlinks to class/group/make.php
 		For Each Group:
 			Group Title
-			LSUID of group leader
+			Username of group leader
 			Whether or not the group is looking for members
 			Whether or not the group is open
 			"View Group" button - Hyperlinks to class/group/view.php
@@ -92,7 +92,7 @@ for($i = 0; $i < $res->num_rows; $i++){
 	
 	$html .= "<p>
             Group Title: $Title<br>
-            Group leader: $Sid<br>";
+            Group Leader: $Sid<br>";
 	if($Open)
 		$html .= "
 			Group Open<br>";

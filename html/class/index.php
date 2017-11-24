@@ -69,13 +69,19 @@ if($res->num_rows == 0){
 	exit();
 }
 
+$res = $mysqli->query("SELECT Dept, Num, Sect FROM Class WHERE Cid = '$ID';");
+$result = $res->fetch_assoc();
+$Dept = $result['Dept'];
+$Num = $result['Num'];
+$Sect = $result['Sect'];
+
 
 $html = "<html>
  	<head> 
-   		 <title>Class</title>
+   		 <title>$Dept $Num</title>
   	</head>
   	<body> 
-		<h1>Class</h1>
+		<h1>$Dept $Num Section $Sect Class Page</h1>
    		 	
 			<a href=\"../profile/index.php\">Back</a><br>
 			<a href=\"info/index.php?ID=$ID\">Class Info</a><br>";

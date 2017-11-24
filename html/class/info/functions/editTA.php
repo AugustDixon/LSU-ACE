@@ -15,7 +15,7 @@
 		2 = Idle Timeout
 		3 = Name Constraint Error
 		4 = Email Constraint Error
-		5 = Total Success
+		5 = Same as current info
 		6 [Pid]= Already Exists
 */
 
@@ -71,17 +71,6 @@ $res = $mysqli->query("SELECT * FROM TA WHERE Cid = '$ID' AND Name = '$Name' AND
 
 if($res->num_rows > 0){
 	echo "5";
-	exit();
-}
-	
-//Check if only class member
-$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID';");
-
-if($res->num_rows == 1){
-		if($mysqli->query("UPDATE TA SET Name = '$Name', Email = '$Email' WHERE Cid = '$ID';"))
-			echo "5";
-		else
-			echo "0";
 	exit();
 }
 

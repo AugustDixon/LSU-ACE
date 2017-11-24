@@ -5,7 +5,7 @@
 	
 	Script Inputs:
 	'username' - 1 to 20 characters. Must be unique
-	'nickname' - 0 to 20 characters
+	'LSUID' - 0 to 20 characters
 	'firstname' - 0 to 20 characters
 	'lastname' - 0 to 20 characters
 	'phone' - 0 to 20 characters
@@ -16,7 +16,7 @@
 		0 = Script Failure
 		1 = Successful Account Creation
 		2 = Username Constraint Error
-		3 = Nickname Constraint Error
+		3 = LSUID Constraint Error
 		4 = First Name Constraint Error
 		5 = Last Name Constraint Error
 		6 = Phone Number Constraint Error
@@ -34,7 +34,7 @@ if($mysqli->connect_errno || $logins->connect_error){
 	echo "0";
 	exit();
 }
-$nickname = $_POST['nickname'];
+$LSUID = $_POST['LSUID'];
 $firstname = $_POST['firstname'];
 $lastname = $_POST['lastname'];
 $phone = $_POST['phone'];
@@ -75,7 +75,7 @@ if(strlen($lastname) > 20){
 	exit();
 }
 
-if(strlen($nickname) > 20){
+if(strlen($LSUID) > 20){
 	echo "3";
 	exit();
 }
@@ -87,7 +87,7 @@ if(strlen($phone) > 20){
 
 
 //add account to LSU-ACE database
-$sql = "INSERT Student (Sid, Nickname, FirstName, LastName, Phone) VALUES ('$username', '$nickname', '$firstname', '$lastname', '$phone')";
+$sql = "INSERT Student (Sid, LSUID, FirstName, LastName, Phone) VALUES ('$username', '$LSUID', '$firstname', '$lastname', '$phone')";
 
 if ($mysqli->query($sql) === FALSE){
     echo "0";

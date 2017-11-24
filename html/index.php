@@ -10,7 +10,7 @@
 		"Username" text field
 		"Password" text field
 		"Login" button - Runs AJAX /functions/login.php
-		"Forgot Password?" button - Hyperlinks to /forgotPassword.php
+		"Forgot Password?" button - Hyperlinks to /forgot1.php
 		"Register" button - Hyperlinks to /register.php
 	
 	AJAX functions:
@@ -69,9 +69,8 @@ echo "<html>
 			</form>
 			<a href=\"forgot1.php\">Forgot Password?</a>
 			<a href=\"register.php\">Register?</a>
-			
+	</body>
 	<script>
-	
 	function loadDoc(url, cFunction) 
 	{
 		var username = document.getElementById('username').value; 
@@ -110,9 +109,6 @@ echo "<html>
 		}
 	}
 	</script>
-  	</body>
-	
-	
 </html>";
 
 exit();

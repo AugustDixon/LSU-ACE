@@ -95,7 +95,7 @@ $Name = $result['Name'];
 $res = $mysqli->query("SELECT * FROM InGroup WHERE Cid = '$ID' AND Gid = '$Sid' AND Sid = '$username';");
 $InGroup = $res->num_rows > 0;
 
-$res = $mysqli->query("SELECT Sid, FirstName, LastName, Phone, Nickname FROM InGroup NATURAL JOIN Student WHERE Cid = '$ID' AND Gid = '$Sid';");
+$res = $mysqli->query("SELECT Sid, FirstName, LastName, Phone, LSUID FROM InGroup NATURAL JOIN Student WHERE Cid = '$ID' AND Gid = '$Sid';");
 $Join = ($res->num_rows < $Max) && $Open;
 $Leader = $username == $Sid;
 
@@ -118,6 +118,7 @@ if($Join)
 $html .= "
 			<p>
 				Group Name: $Name<br>
+				Group Leader: $Sid<br>
 				Maximum Members: $Max<br>
 				Number of Members: $Num<br>";
 
@@ -130,26 +131,24 @@ $html .= "
 if($InGroup){
 	$html .= "<table style=\"width:100%\">
 				<tr>
+					<th>Username</th>
+					<th>Name</th> 
 					<th>LSUID</th>
-					<th>First Name</th> 
-					<th>Last Name</th>
-					<th>Nickname</th>
 					<th>Phone Number</th>
 				</tr>";
 	for($i = 0; $i < $res->num_rows(); $i++){
 		$res->data_seek($i);
 		$result = $res->fetch_assoc();
-		$LSUID = $result['Sid'];
+		$SUsername = $result['Sid'];
 		$FirstName = $result['FirstName'];
 		$LastName = $result['LastName'];
 		$PhoneNumber = $result['Phone'];
-		$Nickname = $result['Nickname'];
+		$LSUID = $result['LSUID'];
 		$html .= "
 				<tr> 
+					<td>$SUsername</td>
+					<td>$FirstName $LastName</td>
 					<td>$LSUID</td>
-					<td>$FirstName</td> 
-					<td>$LastName</td>
-					<td>$Nickname</td>
 					<td>$PhoneNumber</td>
 				</tr>";
 	}

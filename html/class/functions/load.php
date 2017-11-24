@@ -34,12 +34,10 @@ if($res->num_rows == 0){
 }
 
 $res = $mysqli->query("SELECT Sesid FROM Session WHERE Cid = '$ID' AND InSession = 1;");
-
 if($res->num_rows == 0){
 	echo "0";
 	exit();
 }
-
 $result = $res->fetch_assoc();
 $Sesid = $result['Sesid'];
 

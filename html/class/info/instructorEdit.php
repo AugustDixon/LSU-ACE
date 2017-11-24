@@ -37,7 +37,7 @@
 					Show Constraints
 				Case "6" - Hours  Constraint Error
 					Show Constraints
-				Case "7" - "Total" Success
+				Case "7" - Same as current info
 					Redirect to class/info/index.php
 				Case "8 [Pid]" - Already Exists
 					Redirect to class/bulletin/view.php

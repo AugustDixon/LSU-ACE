@@ -12,7 +12,7 @@
 		"Make Post" button - Hyperlinks to class/forum/post.php
 		Thread Title
 		For each post:
-			Author - Either Nickname or Anonymous
+			Author - Either Username or Anonymous
 			Body
 			"Delete Post" button - Runs AJAX class/forum/functions/deletePost.php. Only exists if the user is the author of the post.
 			

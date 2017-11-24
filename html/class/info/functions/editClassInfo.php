@@ -73,17 +73,6 @@ if($res->num_rows > 0){
 	exit();
 }
 
-//Check if only class member
-$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID';");
-
-if($res->num_rows == 1){
-	if($mysqli->query("UPDATE Class SET Title = '$Title', Classroom = '$Classroom' WHERE Cid = '$ID';"))
-		echo "5";
-	else
-		echo "0";
-	exit();
-}
-
 //Check if query already exists
 $res = $mysqli->query("SELECT Aid FROM Altered WHERE Cid = '$ID' AND EditClass = 1 AND Title = '$Title' AND Classroom = '$Classroom';");
 

@@ -9,8 +9,8 @@
 	Page Features:
 		"Back" button - Hyperlinks to class/info/index.php
 		For each student:
+			Username
 			LSUID - Replaced with "Hidden" if HideID is set.
-			Nickname
 			FirstName - Replaced with "Hidden" if HideName is set.
 			LastName - Replaced with "Hidden" if HideName is set.
 			PhoneNumber - Replaced with "Hidden" if HidePhone is set.
@@ -69,7 +69,7 @@ $html = "<html>
 		<h1>Class Roster</h1>
 		<a href=\"index.php?ID=$ID\">Back</a>";
 
-$res = $mysqli->query("SELECT Sid, HideName, HideID, HidePhone, FirstName, LastName, Nickname, Phone FROM Taking NATURAL JOIN Student WHERE Cid = '$ID';");
+$res = $mysqli->query("SELECT Sid, HideName, HideID, HidePhone, FirstName, LastName, LSUID, Phone FROM Taking NATURAL JOIN Student WHERE Cid = '$ID';");
 
 for($i = 0; $i < $res->num_rows; $i++){
 	$res->data_seek($i);
@@ -80,8 +80,8 @@ for($i = 0; $i < $res->num_rows; $i++){
 	if($HideID)
 		$LSUID = "Hidden";
 	else
-		$LSUID = $result['Sid'];
-	$Nickname = $result['Nickname'];
+		$LSUID = $result['LSUID'];
+	$SUsername = $result['Sid'];
 	if($HideName){
 		$FirstName = "Hidden";
 		$LastName = "Hidden";
@@ -96,8 +96,8 @@ for($i = 0; $i < $res->num_rows; $i++){
 		$Phone = $result['Phone'];
 	$html .= "
 		<p>
+			Username: $SUsername<br>
 			LSUID: $LSUID<br>
-			Nickname: $Nickname<br>
 			Name: $FirstName $LastName<br>
 			Phone Number: $Phone
 		</p>";

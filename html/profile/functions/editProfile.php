@@ -6,7 +6,7 @@
 	Input:
 		'FirstName' - 0 to 20 characters
 		'LastName' - 0 to 20 characters
-		'Nickname' - 0 to 20 characters
+		'LSUID' - 0 to 20 characters
 		'Phone' - 0 to 20 characters
 		
 	Output Codes:
@@ -15,7 +15,7 @@
 		2 = Idle Timeout
 		3 = First Name Constraint Error
 		4 = Last Name Constraint Error
-		5 = Nickname Constraint Error
+		5 = LSUID Constraint Error
 		6 = Phone Number Constraint Error
 */
 session_start();
@@ -38,7 +38,7 @@ $_SESSION['idle'] = time();
 
 $first = $_POST['FirstName'];
 $last = $_POST['LastName'];
-$nick = $_POST['Nickname'];
+$LSUID = $_POST['LSUID'];
 $phone = $_POST['Phone'];
 $user = $_SESSION['username'];
 
@@ -54,8 +54,8 @@ if(strlen($last) > 20){
    exit();
 }
 
-//check nickname constraints
-if(strlen($nick) > 20){
+//check LSUID constraints
+if(strlen($LSUID) > 20){
    echo "5";
    exit();
 }
@@ -67,7 +67,7 @@ if(strlen($phone) > 20){
 }
 
 
-$sql = "UPDATE Student SET FirstName = '$first', LastName = '$last', Nickname = '$nick', Phone = '$phone' WHERE Sid = '$user'";
+$sql = "UPDATE Student SET FirstName = '$first', LastName = '$last', LSUID = '$LSUID', Phone = '$phone' WHERE Sid = '$user'";
 
 if($mysqli->query($sql))
 	echo "1";

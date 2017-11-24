@@ -12,7 +12,7 @@
 		"Change Password" button - Hyperlinks to /profile/password.php
 		"First Name" text field - 0 to 20 characters
 		"Last Name" text field - 0 to 20 characters
-		"Nickname" text field - 0 to 20 characters
+		"LSUID" text field - 0 to 20 characters
 		"Phone Number" text field - 0 to 20 characters
 		"Edit Profile" button - Runs AJAX /profile/functions/editProfile.php
 	
@@ -21,7 +21,7 @@
 			Inputs
 				'FirstName'
 				'LastName'
-				'Nickname'
+				'LSUID'
 				'Phone'
 			Outputs/Actions
 				Case "0" - Script Failure
@@ -34,7 +34,7 @@
 					Show message and constraints
 				Case "4" - Last Name Constraint Error
 					Show message and constraints
-				Case "5" - Nickname Constraint Error
+				Case "5" - LSUID Constraint Error
 					Show message and constraints
 				Case "6" - Phone Number Constraint Error
 					Show message and constraints
@@ -70,7 +70,7 @@ echo "<html>
 		<h1>Edit Profile</h1>
 			<a href=\"index.php\">Back</a>
                 <form name=\"registerForm\">
-				Nickname: <input type=\"text\" name=\"nickname\" id=\"nickname\"><br>
+				LSUID: <input type=\"text\" name=\"LSUID\" id=\"LSUID\"><br>
 				First name: <input type=\"text\" name=\"firstName\" id=\"firstName\"><br>
 				Last name: <input type=\"text\" name=\"lastName\" id=\"lastName\"><br>
 				Phone number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br>
@@ -88,11 +88,11 @@ echo "<html>
 	<script>
 	function loadDoc(url, cFunction) 
 	{
-		var nickname = document.getElementById('nickname').value;
+		var LSUID = document.getElementById('LSUID').value;
 		var firstName = document.getElementById('firstName').value;
 		var lastName = document.getElementById('lastName').value;
 		var phoneNumber = document.getElementById('phoneNumber').value;
-		var attributes = 'Nickname=' + nickname + '&FirstName=' + firstName + '&LastName=' + lastName + '&Phone=' + phoneNumber;
+		var attributes = 'LSUID=' + LSUID + '&FirstName=' + firstName + '&LastName=' + lastName + '&Phone=' + phoneNumber;
 	
 		var xhttp;
 		xhttp=new XMLHttpRequest();
@@ -133,7 +133,7 @@ echo "<html>
             break;
         
         case \"5\":
-            alert(\"Nickname must be less than 20 characters\");
+            alert(\"LSUID must be less than 20 characters\");
             break;
         
         case \"6\":

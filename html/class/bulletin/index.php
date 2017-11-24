@@ -11,7 +11,7 @@
 		"Make Post" button - Hyperlinks to class/bulletin/post.php
 		For each post:
 			Date
-			LSUID/Nickname of poster
+			Username of poster
 			Title of post - Hyperlinks to class/bulletin/view.php
 			
 	AJAX Functions:
@@ -66,16 +66,12 @@ if($res->num_rows == 0){
 
 $html = "";
 
-$res = $mysqli->query("SELECT Pid, Sid, Title, Date, HideID, Nickname FROM Bulletin NATURAL JOIN Taking NATURAL JOIN Student WHERE Cid = '$ID';");
+$res = $mysqli->query("SELECT Pid, Sid, Title, Date FROM Bulletin WHERE Cid = '$ID';");
 
 for($i = 0; $i < $res->num_rows; $i++){
 	$res->data_seek($i);
 	$result = $res->fetch_assoc();
-	$HideID = $result['HideID'];
-	if($HideID)
-		$LSUID = $result['Nickname'];
-	else
-		$LSUID = $result['Sid'];
+	$Username = $result['Sid'];
 	$Pid = $result['Pid'];
 	$Title = $result['Title'];
 	$Date = $result['Date'];

@@ -9,10 +9,10 @@
 	Page Features:
 		"Logout" button - Runs AJAX /profile/functions/logout.php
 		Displays from database:
+			Username
 			LSUID
 			First Name
 			Last Name
-			Nickname
 			Phone Number
 		"Edit Profile" button - Hyperlinks to /profile/edit.php
 		Displays from database for each real class taken by the student:
@@ -58,12 +58,12 @@ if($mysqli->connect_errno){
 	//Send HTTP error code
 }
 
-$LSUID = $_SESSION['username'];
-$res = $mysqli->query("SELECT FirstName, LastName, Nickname, Phone FROM Student WHERE Sid = '$LSUID';");
+$username = $_SESSION['username'];
+$res = $mysqli->query("SELECT FirstName, LastName, LSUID, Phone FROM Student WHERE Sid = '$username';");
 $result = $res->fetch_assoc();
 $FirstName = $result["FirstName"];
 $LastName = $result["LastName"];
-$Nickname = $result["Nickname"];
+$LSUID = $result["LSUID"];
 $PhoneNumber = $result["Phone"];
 
 
@@ -78,14 +78,14 @@ $html = "<html>
 			<a href=\"edit.php\">Edit Profile</a>
 			<p>
 			Student Info:<br>
+			Username: $username<br>
 			LSUID: $LSUID<br>
 			Name: $FirstName $LastName<br>
-			Nickname: $Nickname<br>
 			Phone: $PhoneNumber<br>
 			</p>
 			<br>";
 
-$res = $mysqli->query("SELECT Cid, Dept, Num, Confirmed FROM Class NATURAL JOIN Taking WHERE Sid = '$LSUID';");
+$res = $mysqli->query("SELECT Cid, Dept, Num, Confirmed FROM Class NATURAL JOIN Taking WHERE Sid = '$username';");
 $NumRows = $res->num_rows;
 $Department = [];
 $Number = [];

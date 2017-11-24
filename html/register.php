@@ -8,7 +8,7 @@
 		
 	Page Features:
 		"Username" text field - 1 to 20 characters. Must be Unique.
-		"Nickname" text field - 0 to 20 characters.
+		"LSUID" text field - 0 to 20 characters.
 		"First Name" text field - 0 to 20 characters.
 		"Last Name" text field - 0 to 20 characters
 		"Phone Number" text field - 0 to 20 characters
@@ -20,7 +20,7 @@
 		registerAccount.php
 			Inputs
 				'username'
-				'nickname'
+				'LSUID'
 				'firstname'
 				'lastname'
 				'phone'
@@ -33,7 +33,7 @@
 					Redirect the user to their profile page.
 				Case "2" - Username constraint error
 					Show message and constraints and clear password fields
-				Case "3" - Nickname constraint error
+				Case "3" - LSUID constraint error
 					Show message and constraints and clear password fields
 				Case "4" - First Name constraint error
 					Show message and constraints and clear password fields
@@ -74,10 +74,11 @@ echo "<html>
 		<h1>Register</h1>
    		 	<form name=\"registerForm\">
 				Username: <input type=\"text\" name=\"username\" id=\"username\"><br>
-				Nickname: <input type=\"text\" name=\"nickname\" id=\"nickname\"><br>
+				LSUID: <input type=\"text\" name=\"LSUID\" id=\"LSUID\"><br>
 				First name: <input type=\"text\" name=\"firstName\" id=\"firstName\"><br>
 				Last name: <input type=\"text\" name=\"lastName\" id=\"lastName\"><br>
-				Phone number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br>
+				Phone number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br><br>
+				Note: We suggest to use a different password than your myLSU account.<br>
 				Password: <input type=\"text\" name=\"password\" id=\"password\"><br>
 				Confirm Password: <input type=\"text\" name=\"confirmPassword\" id=\"confirmPassword\"><br>
 				<input type=\"button\" value=\"Register\" onClick=\"loadDoc('functions/registerAccount.php', myFunction)\">
@@ -90,13 +91,13 @@ echo "<html>
 	function loadDoc(url, cFunction) 
 	{
 		var username = document.getElementById('username').value;
-		var nickname = document.getElementById('nickname').value;
+		var LSUID = document.getElementById('LSUID').value;
 		var firstName = document.getElementById('firstName').value;
 		var lastName = document.getElementById('lastName').value;
 		var phoneNumber = document.getElementById('phoneNumber').value;
 		var password = document.getElementById('password').value;
 		var confirmPassword = document.getElementById('confirmPassword').value;
-		var attributes = 'username=' + username + '&nickname=' + nickname + '&firstname=' + firstName + '&lastname=' + lastName + '&phone=' + phoneNumber + '&password=' + password + '&cpass=' + confirmPassword;
+		var attributes = 'username=' + username + '&LSUID=' + LSUID + '&firstname=' + firstName + '&lastname=' + lastName + '&phone=' + phoneNumber + '&password=' + password + '&cpass=' + confirmPassword;
 	
 		var xhttp;
 		xhttp=new XMLHttpRequest();
@@ -130,7 +131,7 @@ echo "<html>
 			break;
 			
 		case \"3\":
-			alert(\"Nickname must be less than 20 characters\");
+			alert(\"LSUID must be less than 20 characters\");
 			document.getElementById('password').value = \"\";
 			document.getElementById('confirmPassword').value = \"\";
 			break;

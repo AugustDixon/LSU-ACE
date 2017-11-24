@@ -71,6 +71,13 @@ if($res->num_rows == 0){
 	exit();
 }
 
+$res = $mysqli->query("SELECT * FROM SGroup WHERE Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	header("Location: ../../profile/index.php", true, 303);
+	exit();
+}
+
 
 
 $html = "<html>
@@ -82,7 +89,7 @@ $html = "<html>
             <a href= \"view.php?ID=$ID&Sid=$username\">Back</a>
             <form name=\"editGroup\">
 				Group Name: <input type=\"text\" id=\"groupName\"><br>
-                Max Group Members:<input type=\"text\" name=\"max\" maxlength=\"36\"><br>
+                Max Group Members:<input type=\"text\" id=\"max\" maxlength=\"36\"><br>
                 Looking for Members:<input id=\"Looking\" type=\"checkbox\" name=\"Looking\"><br>
                 Open Group:<input id=\"Open\" type=\"checkbox\" name=\"Open\"><br>
                 </div>

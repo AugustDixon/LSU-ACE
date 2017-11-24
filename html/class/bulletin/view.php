@@ -91,15 +91,12 @@ if($res->num_rows == 0){
 
 $Pid = $_GET['Pid'];
 
-$res = $mysqli->query("SELECT Sid, Title, Body, Date, Query, Aid, HideID, Nickname FROM Bulletin NATURAL JOIN Taking NATURAL JOIN Student WHERE Cid = '$ID' AND Pid = '$Pid';");
+$res = $mysqli->query("SELECT Sid, Title, Body, Date, Query, Aid FROM Bulletin WHERE Pid = '$Pid';");
 
 $result = $res->fetch_assoc();
 
-if($result['HideID'])
-	$Sid = $result['Nickname'];
-else
-	$Sid = $result['Sid'];
 
+$Sid = $result['Sid'];
 $Title = $result['Title'];
 $Body = $result['Body'];
 $Date = $result['Date'];

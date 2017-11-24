@@ -88,7 +88,7 @@ $html = "<html>
             <a href= \"index.php?ID=$ID\">Back</a>
             <form name=\"makeGroup\">
 				Group Name: <input type=\"text\" id=\"groupName\"><br>
-                Max Group Members:<input type=\"text\" name=\"max\" maxlength=\"36\"><br>
+                Max Group Members:<input type=\"text\" id=\"max\" maxlength=\"36\"><br>
                 Looking for Members:<input id=\"Looking\" type=\"checkbox\" name=\"Looking\"><br>
                 Open Group:<input id=\"Open\" type=\"checkbox\" name=\"Open\"><br>                
 				</div>
@@ -102,6 +102,7 @@ $html = "<html>
 		{
 			var name = document.getElementById('groupName').value;
 			var max = document.getElementById('max').value;
+			max = parseInt(max);
 			var looking = document.getElementById('Looking').value;
 			var open = document.getElementById('Open').value;
 			var attributes = 'ID=$ID&Name=' + name + '&Max=' + max + '&Looking=' + looking + '&Open=' + open;

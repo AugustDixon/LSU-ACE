@@ -44,7 +44,7 @@ $Pid = $_POST['Pid'];
 
 
 
-$res = $mysqli->query("SELECT Query, Aid, Sid FROM Bulletin WHERE Cid = '$ID' AND Pid = '$Pid';");
+$res = $mysqli->query("SELECT Query, Aid, Sid FROM Bulletin WHERE Pid = '$Pid';");
 $result = $res->fetch_assoc();
 
 if($username != $result['Sid']){
@@ -54,17 +54,17 @@ if($username != $result['Sid']){
 
 if($result['Query']){
 	$Aid = $result['Aid'];
-	if(!($mysqli->query("DELETE FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid';"))){
+	if(!($mysqli->query("DELETE FROM AlteredResp WHERE Aid = '$Aid';"))){
 		echo "0";
 		exit();
 	}
-	if(!($mysqli->query("DELETE FROM Altered WHERE Cid = '$ID' AND Aid = '$Aid';"))){
+	if(!($mysqli->query("DELETE FROM Altered WHERE Aid = '$Aid';"))){
 		echo "0";
 		exit();
 	}
 }
 
-if($mysqli->query("DELETE FROM Bulletin WHERE Cid = '$ID' AND Pid = '$Pid';"))
+if($mysqli->query("DELETE FROM Bulletin WHERE Pid = '$Pid';"))
 	echo "1";
 else
 	echo "0";

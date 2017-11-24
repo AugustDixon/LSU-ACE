@@ -18,7 +18,7 @@
 		4 = Email Constraint Error
 		5 = Office Constraint Error
 		6 = Hours Constraint Error
-		7 = Total Success
+		7 = Same as current info
 		8 [Pid] = Already Exists
 */
 
@@ -87,16 +87,6 @@ if($res->num_rows > 0){
 	exit();
 }
 
-//Check if only class member
-$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID';");
-
-if($res->num_rows == 1){
-	if($mysqli->query("UPDATE Instructor SET Name = '$Name', Email = '$Email', Office = '$Office', Hours = '$Hours' WHERE Cid = '$ID';"))
-		echo "7";
-	else
-		echo "0";
-	exit();
-}
 
 //Check if query already exists
 $res = $mysqli->query("SELECT Aid FROM Altered WHERE Cid = '$ID' AND InstrName = '$Name' AND InstrEmail = '$Email' AND Office = '$Office' AND Hours = '$Hours' AND EditInstructor = 1;");

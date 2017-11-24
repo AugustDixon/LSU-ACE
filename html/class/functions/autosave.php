@@ -34,14 +34,15 @@ if($res->num_rows == 0){
 	exit();
 }
 
-$res = $mysqli->query("SELECT * FROM Session WHERE Cid = '$ID' AND InSession = 1;");
-
+$res = $mysqli->query("SELECT Sesid FROM Session WHERE Cid = '$ID' AND InSession = 1;");
 if($res->num_rows == 0){
 	echo "0";
 	exit();
 }
+$result = $res->fetch_assoc();
+$Sesid = $result['Sesid'];
 
-if($mysqli->query("UPDATE Notes SET Notes = '$text';"))
+if($mysqli->query("UPDATE Notes SET Notes = '$text' WHERE Cid = '$ID' AND Sesid = '$Sesid' AND Sid = '$username';"))
 	echo "1";
 else
 	echo "0";

@@ -29,7 +29,7 @@
 					Show Constraint
 				Case "4" - Email Constraint error
 					Show Constraint
-				Case "5" - "Total" Success
+				Case "5" - Same as current info
 					Redirect to class/info/index.php
 				Case "6 [Pid]" - Already Exists
 					Redirect to class/bulletin/view.php
