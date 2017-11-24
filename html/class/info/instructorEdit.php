@@ -87,7 +87,86 @@ if($res->num_rows == 0){
 
 
 
-$html = "";
+$html = "<html>
+	<head>
+		<title>Edit Instructor Info</title>
+	</head>
+	<body>
+		<h1>Edit Instructor Info</h1>
+		<a href=\"index.php?ID=$ID\">Back</a><br><br>
+		Name: <input type=\"text\" id=\"Name\"><br>
+		Email: <input type=\"text\" id=\"Email\"><br>
+		Office: <input type=\"text\" id=\"Office\"><br>
+		Hours: <input type=\"text\" id=\"Hours\"><br>
+		<input type=\"button\" value=\"Submit Change Request\" onClick=\"edit()\">
+	</body>
+	<script>
+		function edit(){
+			var Name = document.getElementById('Name').value;
+			var Email = document.getElementById('Email').value;
+			var Office = document.getElementById('Office').value;
+			var Hours = document.getElementById('Hours').value;
+			
+			var attributes = 'ID=$ID&Name=' + Name + '&Email=' + Email + '&Office=' + Office + '&Hours' + Hours;
+			
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					editResponse(this);
+				}
+			};
+			xhttp.open(\"POST\", \"functions/editInstructor.php\", true);
+			xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
+			xhttp.send(attributes);
+		}
+		
+		function editResponse(xhttp){
+			
+			switch(xhttp.responseText.charAt(0)){
+			case \"0\":
+				alert(\"Edit Instructor Script Failure\");
+				break;
+			
+			case \"1\":
+				var arr = xhttp.responseText.split(\" \");
+				window.location = \"../bulletin/view.php?ID=$ID&Pid=\" + arr[1];
+				break;
+			
+			case \"2\":
+				window.location = \"../../index.php\";
+				break;
+			
+			case \"3\":
+				alert(\"Name must be less than 30 characters\");
+				break;
+			
+			case \"4\":
+				alert(\"Email must be less than 30 characters\");
+				break;
+			
+			case \"5\":
+				alert(\"Office must be less than 20 characters\");
+				break;
+			
+			case \"6\":
+				alert(\"Hours must be less than 50 characters\");
+				break;
+			
+			case \"7\":
+				window.location = \"index.php?ID=$ID\";
+				break;
+			
+			case \"8\":
+				var arr = xhttp.responseText.split(\" \");
+				window.location = \"../bulletin/view.php?ID=$ID&Pid=\" + arr[1];
+				break;
+			}
+		}
+	</script>
+</html>";
 
 echo $html;
 

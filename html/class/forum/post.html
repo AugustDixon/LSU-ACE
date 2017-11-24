@@ -1,0 +1,75 @@
+<!-- 
+Variables from database:
+
+$ID
+$Tid
+-->
+<html>
+ 	<head> 
+   		 <title>Post</title>
+  	</head>
+  	<body> 
+		<h1>Post</h1>
+   		 	<p>
+			ID: $ID <br>
+			Thread ID: $Tid<br>
+			</p>
+			<br>
+			
+			<a href="class/forum/view.php">Back</a>
+			<br><br><br>
+			
+			<form name="makeThreadForm"> 
+			Body: <input type="text" name="Body" id="Body" size=100 maxlength=400><br>  
+			Anonymous <input type="checkbox" name="Anonymous" id="Anonymous" maxlength=400><br>  
+			</form>
+			<input type="button" value="Make Post" onClick="loadDoc('class/forum/functions/makePost.php', myFunction)"><!-- -->
+			<br>
+  	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		
+		var ID = document.getElementById('$ID').value;
+		var Tid = document.getElementById('$Cid').value;
+		var Body = document.getElementById('Body').value;
+		var Anon = document.getElementById('Anonymous').value;
+		var attributes = 'ID=' + ID + '&Tid=' + Tid + '&Body=' + Body + '&Anon=' + Anon;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.send(attributes);
+	}
+	
+	function myFunction(xhttp) 
+	{
+		switch(xhttp.responseText)
+		{
+		case "0": 
+			alert("Script Failure");
+			break;
+			
+		case "1": 
+			window.location = "class/forum/index.php";
+			break;
+			
+		case "2": 
+			window.location = "index.php";
+			break;
+			
+		case "3": 
+			alert("Body Constraint Error");
+			break;
+		}
+	}
+	</script>
+</html>

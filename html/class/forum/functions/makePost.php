@@ -17,13 +17,6 @@
 */
 session_start();
 
-$mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
-if($mysqli->connect_errno){
-	echo "0";
-	exit();
-}
-
-//check idle time
 if(($_SESSION['idle'] + 600) < time()){
 	unset($_SESSION['username']);
 	unset($_SESSION['idle']);
@@ -31,29 +24,42 @@ if(($_SESSION['idle'] + 600) < time()){
 	exit();
 }
 
-$id = $_POST['ID'];
-$tid = $_POST['Tid'];
-$body = $_POST['Body'];
-$anon = $_POST['Anon'];
-$date = date("Y/m/d");
+$username = $_SESSION['username'];
+$_SESSION['idle'] = time();
 
-if(strlen($body) > 400 || strlen($body) <1){
+$mysqli = new mysqli("localhost", "InsertOnly", "system", "LSU-ACE");
+if($mysqli->connect_errno){
+	echo "0";
+	exit();
+}
+
+$ID = $_POST['ID'];
+
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
+
+
+$Tid = $_POST['Tid'];
+$Body = $_POST['Body'];
+$Anon = $_POST['Anon'];
+$Date = date("m/d/y");
+
+if(strlen($Body) > 400 || strlen($Body) < 1){
 	echo "3";
 	exit();
 }
 
-//need to figure out Cid, Pid, Sid
-if(isset($id) && isset($tid) && isset($body) && isset($anon)){
-	$sql = "INSERT ForumPost (Cid, Tid, Pid, Sid, Body, Date, Anonymous)
-	VALUES ('', '$tid', '', '', '$body', '$date', '$anon')";
-	if($mysqli->query($sql))
-		echo "1";
-	else
-		echo "0";
-}
-$mysqli->close();
+
+$sql = "INSERT INTO ForumPost (Cid, Tid, Sid, Body, Date, Anonymous) VALUES ('$ID', '$Tid', '$username', '$Body', '$Date', $Anon)";
+if($mysqli->query($sql))
+	echo "1";
+else
+	echo "0";
 
 exit();
-
 	
 ?>

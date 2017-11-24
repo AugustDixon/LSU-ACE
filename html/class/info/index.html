@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>Class Information</title>
+	</head>
+	<body>
+		<h1>Class Information</h1>
+		<a href="../index.php?ID=$ID">Back</a><br>
+		<a href="roster.php?ID=$ID">Class Roster</a>
+		<p>
+			Department: $Dept<br>
+			Number: $Num<br>
+			Section: $Sect<br>
+			Class Title: $Title<br>
+			Classroom: $Classroom<br>
+			$STimeA - $ETimeA $DayA<br>
+			$STimeB - $ETimeB $DayB<br>
+			<a href="edit.php?ID=$ID">Edit Class Info</a>
+		</p>
+		<p>
+			Instructor Name: $InstrName<br>
+			Instructor Email: $InstrEmail<br>
+			Office: $Office<br>
+			Office Hours: $Hours<br>
+			<a href="instructorEdit.php?ID=$ID">Edit Instructor Info</a>
+		</p>
+		<p>
+			TA Name: $TAName<br>
+			TA Email: $TAEmail<br>
+			<a href="TAedit.php?ID=$ID">Edit TA Info</a>
+		</p>
+	</body>
+</html>

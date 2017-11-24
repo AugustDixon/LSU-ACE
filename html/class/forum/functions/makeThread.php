@@ -7,7 +7,7 @@
 		'ID'
 		'Title' - 1 to 40 characters
 		'Body' - 1 to 400 characters
-		'Anon
+		'Anon'
 		
 	Output Codes:
 		0 = Script Failure
@@ -18,39 +18,69 @@
 */
 session_start();
 
+if(($_SESSION['idle'] + 600) < time()){
+	unset($_SESSION['username']);
+	unset($_SESSION['idle']);
+	echo "2";
+	exit();
+}
+
+$username = $_SESSION['username'];
+$_SESSION['idle'] = time();
+
 $mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
 if($mysqli->connect_errno){
 	echo "0";
 	exit();
 }
 
-$id = $_POST['ID'];
-$title = $_POST['Title'];
-$body = $_POST['Body'];
-$anon = $_POST['Anon'];
+$ID = $_POST['ID'];
+
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
+
+$Title = $_POST['Title'];
+$Body = $_POST['Body'];
+$Anon = $_POST['Anon'];
 
 //check title constraints
-if(strlen($title) > 40 || strlen($title) <1){
+if(strlen($Title) > 40 || strlen($Title) < 1){
 	echo "3";
 	exit();
 }
 
 //check body constraints
-if(strlen($body) > 400 || strlen($body) <1){
+if(strlen($Body) > 400 || strlen($Body) <1){
 	echo "4";
 	exit();
 }
 
-//need clarification on Thread table
-if(isset($id) && isset($title) && isset($body) && isset($anon)){
-	$sql = "INSERT ForumPost (Cid, Tid, Pid, Title)
-	VALUES ('', '$id', '', '$title')";
-	if($mysqli->query($sql))
-		echo "1";
-	else
-		echo "0";
+
+
+if(!($mysqli->query("INSERT INTO Thread (Cid, Title) VALUES ('$ID', '$Title');"))){
+	echo "0";
+	exit();
 }
-$mysqli->close();
+$Tid = $mysqli->insert_id;
+
+$Date = date("m/d/y");
+
+if(!($mysqli->query("INSERT INTO ForumPost (Cid, Tid, Sid, Body, Date, Anonymous) VALUES ('$ID', '$Tid', '$username', '$Body', '$Date', $Anon);"))){
+	echo "0";
+	exit();
+}
+$Pid = $mysqli->insert_id;
+
+if($mysqli->query("UPDATE Thread SET Pid = '$Pid' WHERE Tid = '$Tid';"))
+	echo "1";
+else
+	echo "0";
 
 exit();
+
+
 ?>

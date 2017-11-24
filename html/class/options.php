@@ -107,7 +107,6 @@ echo "<html>
 	
 	function myFunction(xhttp) 
 	{
-		alert(xhttp.responseText);
 		switch(xhttp.responseText)
 		{
 		case \"0\": 

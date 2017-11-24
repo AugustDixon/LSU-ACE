@@ -19,14 +19,14 @@
 			Start to End Time A
 			Days B
 			Start to End Time B
-		"Edit Class Info" button - Hyperlinks to class/info/edit.php
+			"Edit Class Info" button - Hyperlinks to class/info/edit.php
 		The following info for the Instructor:
 			Name
 			Email
 			Office
 			Office Hours
-		"Edit Instructor Info" button - Hyperlinks to class/info/instructorEdit.php
-		For each TA(ONLY ONE TA NOW):
+			"Edit Instructor Info" button - Hyperlinks to class/info/instructorEdit.php
+		The following info for the TA:
 			Name 
 			Email
 			"Edit TA Info" button - Hyperlinks to class/info/TAedit.php
@@ -86,35 +86,66 @@ if($res->num_rows == 0){
 $res = $mysqli->query("SELECT Dept, Num, Sect, Title, Classroom, DayA, STimeA, ETimeA, DayB, STimeB, ETimeB FROM Class WHERE Cid = '$ID';");
 
 $result = $res->fetch_assoc();
-$ = $result['Dept'];
-$ = $result['Num'];
-$ = $result['Sect'];
-$ = $result['Title'];
-$ = $result['Classroom'];
-$ = $result['DayA'];
-$ = $result['STimeA'];
-$ = $result['ETimeA'];
-$ = $result['DayB'];
-$ = $result['STimeB'];
-$ = $result['ETimeB'];
+$Dept = $result['Dept'];
+$Num = $result['Num'];
+$Sect = $result['Sect'];
+$Title = $result['Title'];
+$Classroom = $result['Classroom'];
+$DayA = $result['DayA'];
+$STimeA = $result['STimeA'];
+$ETimeA = $result['ETimeA'];
+$DayB = $result['DayB'];
+$STimeB = $result['STimeB'];
+$ETimeB = $result['ETimeB'];
 
 
-$res = $mysqli->query("SELECT Name, Email, Office, Hours FROM Instructor WHERE Cid = '$ID' AND IsReal = 1;");
-
-$result = $res->fetch_assoc();
-$ = $result['Name'];
-$ = $result['Email'];
-$ = $result['Office'];
-$ = $result['Hours'];
-
-$res = $mysqli->query("SELECT Name, Email FROM TA WHERE Cid = '$ID' AND IsReal = 1;");
+$res = $mysqli->query("SELECT Name, Email, Office, Hours FROM Instructor WHERE Cid = '$ID';");
 
 $result = $res->fetch_assoc();
-$ = $result['Name'];
-$ = $result['Email'];
+$InstrName = $result['Name'];
+$InstrEmail = $result['Email'];
+$Office = $result['Office'];
+$Hours = $result['Hours'];
+
+$res = $mysqli->query("SELECT Name, Email FROM TA WHERE Cid = '$ID';");
+
+$result = $res->fetch_assoc();
+$TAName = $result['Name'];
+$TAEmail = $result['Email'];
 
 
-$html = "";
+$html = "<html>
+	<head>
+		<title>Class Information</title>
+	</head>
+	<body>
+		<h1>Class Information</h1>
+		<a href=\"../index.php?ID=$ID\">Back</a><br>
+		<a href=\"roster.php?ID=$ID\">Class Roster</a>
+		<p>
+			Department: $Dept<br>
+			Number: $Num<br>
+			Section: $Sect<br>
+			Class Title: $Title<br>
+			Classroom: $Classroom<br>
+			$STimeA - $ETimeA $DayA<br>
+			$STimeB - $ETimeB $DayB<br>
+			<a href=\"edit.php?ID=$ID\">Edit Class Info</a>
+		</p>
+		<p>
+			Instructor Name: $InstrName<br>
+			Instructor Email: $InstrEmail<br>
+			Office: $Office<br>
+			Office Hours: $Hours<br>
+			<a href=\"instructorEdit.php?ID=$ID\">Edit Instructor Info</a>
+		</p>
+		<p>
+			TA Name: $TAName<br>
+			TA Email: $TAEmail<br>
+			<a href=\"TAedit.php?ID=$ID\">Edit TA Info</a>
+		</p>
+	</body>
+</html>";
 
 
 echo $html;
