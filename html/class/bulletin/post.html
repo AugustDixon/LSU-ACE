@@ -1,0 +1,62 @@
+<html>
+ 	<head> 
+   		 <title>Class Post</title>
+  	</head>
+  	<body> 
+		<h1>Post</h1>
+                <a href= "../index.php?ID=$ID">Back</a>
+   		 	<form name="postClass">
+				Title: <input type="text" name="title" id="title"><br>
+				Body: <input type="text" name="body" id="body"><br>
+				<input type="button" value="Post" onClick="loadDoc('functions/class/bulletin/makePost.php', myFunction)">
+			</form>	
+  	</body>
+	
+	</body>
+	
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		var id = document.getElementById('$ID').value;
+                var title = document.getElementById('title').value;
+		var body = document.getElementById('body').value;
+		var attributes ='&$ID=' + ID + '&title=' + title + '&body' + body;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(attributes);
+	}
+        function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+				case "0": 
+					alert("Post Class Script Failure");
+					break;
+		
+				case "1": 
+					window.location = "https://lsu-ace.com/class/bulletin/view.php";
+					break;
+		
+				case "2": 
+					window.location = "../../index.php";
+					break;
+		
+				case "3": 
+					alert("Title must be 1 to 30 characters long ");
+					break;
+		
+				case "4": 
+					alert("Body must be 1 to 200 characters long");
+					break;         
+			}
+		}
