@@ -104,14 +104,16 @@ function equalHour($TimeA, $TimeB){
 //Startup actions
 
 date_default_timezone_set("America/Chicago");
-$Start = new \Ds\Vector();
-$End = new \Ds\Vector();
-
+$Start = [];
+$End = [];
+$latch = true;
 //Log in to SQL
-while(!$latch){
-	$mysqli = mysqli("localhost", "Scheduler", "system", "LSU-ACE");
-	if(!($mysqli->connect_errno))
-		$latch = true;
+while($latch){
+	$mysqli = new mysqli("localhost", "Scheduler", "system", "LSU-ACE");
+	if($mysqli->connect_errno)
+		unset($mysqli);
+	else
+		$latch = false;
 }
 
 //Clear chat logs
@@ -153,10 +155,10 @@ for($i = 0; $i < $res->num_rows; $i++){
 	
 	$mysqli->query("INSERT INTO Schedule (Cid, STime, ETime) VALUES ('$Cid', '$STimeA', '$ETimeA');");
 	$mysqli->query("INSERT INTO Session (Cid, Date, InSession, Hidden) VALUES ('$Cid', '$Date', 0, 1);");
-	if(!($Start->contains($STimeA)))
-		$Start->push($STimeA);
-	if(!($End->contains($ETimeA)))
-		$End->push($ETimeA);
+	if(!(in_array($STimeA, $Start)))
+		$Start[] = $STimeA;
+	if(!(in_array($ETimeA, $End)))
+		$End[] = $ETimeA;
 }
 $res = $mysqli->query("SELECT Cid, STimeB, ETimeB FROM Class WHERE DayB REGEXP '$day';");
 for($i = 0; $i < $res->num_rows; $i++){
@@ -171,19 +173,18 @@ for($i = 0; $i < $res->num_rows; $i++){
 	
 	$mysqli->query("INSERT INTO Schedule (Cid, STime, ETime) VALUES ('$Cid', '$STimeB', '$ETimeB');");
 	$mysqli->query("INSERT INTO Session (Cid, Date, InSession, Hidden) VALUES ('$Cid', '$Date', 0, 1);");
-	if(!($Start->contains($STimeB)))
-		$Start->push($STimeB);
-	if(!($End->contains($ETimeB)))
-		$End->push($ETimeB);
+	if(!(in_array($STimeB, $Start)))
+		$Start[] = $STimeB;
+	if(!(in_array($ETimeB, $End)))
+		$End[] = $ETimeB;
 }
-$Start->sort(function($a, $b) {	return compare($b, $a); });
-$End->sort(function($a, $b) {	return compare($b, $a); });
-$nextStart = $Start->pop();
-$nextEnd = $End->pop();
+usort($Start, (function($a, $b) {	return compare($b, $a); }));
+usort($End, (function($a, $b) {	return compare($b, $a); }));
+$nextStart = array_pop($Start);
+$nextEnd = array_pop($End);
 //Perform actions already passed
-$latch = true;
-while($latch){
-	$latch = false;
+while(!$latch){
+	$latch = true;
 	if(compare(date("h:ia"), $nextStart) >= 0){
 		//Select all classes this time pertains to
 		$res = $mysqli->query("SELECT Cid FROM Schedule WHERE STime = '$nextStart';");
@@ -197,11 +198,11 @@ while($latch){
 		}
 		
 		//Find next start time
-		if($Start->isEmpty())
+		if(empty($Start))
 			$nextStart = "00";
 		else
-			$nextStart = $Start->pop();
-		$latch = true;
+			$nextStart = array_pop($Start);
+		$latch = false;
 	}
 	if(compare(date("h:ia"), $nextEnd) >= 0){
 		//Select all classes this time pertains to
@@ -216,14 +217,13 @@ while($latch){
 		}
 		
 		//Find next end time
-		if($End->isEmpty())
+		if(empty($End))
 			$nextEnd = "00";
 		else
-			$nextEnd = $End->pop();
-		$latch = true;
+			$nextEnd = array_pop($End);
+		$latch = false;
 	}
 }
-
 
 
 
@@ -249,10 +249,10 @@ while(true){
 		}
 		
 		//Find next start time
-		if($Start->isEmpty())
+		if(empty($Start))
 			$nextStart = "00";
 		else
-			$nextStart = $Start->pop();
+			$nextStart = array_pop($Start);
 	}
 	if(date("h:ia") == $nextEnd){
 		//Select all classes this time pertains to
@@ -267,10 +267,10 @@ while(true){
 		}
 		
 		//Find next end time
-		if($End->isEmpty())
+		if(empty($End))
 			$nextEnd = "00";
 		else
-			$nextEnd = $End->pop();
+			$nextEnd = array_pop($End);
 	}
 	
 	
@@ -287,8 +287,10 @@ while(true){
 		//Empty the schedule
 		$mysqli->query("DELETE * FROM Schedule;");
 		
-		$Start->clear();
-		$End->clear();
+		unset($Start);
+		unset($End);
+		$Start = [];
+		$End = [];
 		//Next day setup
 		//Prepare a string to select against
 		switch(date("l")){
@@ -324,10 +326,10 @@ while(true){
 			
 			$mysqli->query("INSERT INTO Schedule (Cid, STime, ETime) VALUES ('$Cid', '$STimeA', '$ETimeA');");
 			$mysqli->query("INSERT INTO Session (Cid, Date, InSession, Hidden) VALUES ('$Cid', '$Date', 0, 1);");
-			if(!($Start->contains($STimeA)))
-				$Start->push($STimeA);
-			if(!($End->contains($ETimeA)))
-				$End->push($ETimeA);
+			if(!(in_array($STimeA, $Start)))
+				$Start[] = $STimeA;
+			if(!(in_array($ETimeA, $End)))
+				$End[] = $ETimeA;
 		}
 		$res = $mysqli->query("SELECT Cid, STimeB, ETimeB FROM Class WHERE DayB REGEXP '$day';");
 		for($i = 0; $i < $res->num_rows; $i++){
@@ -342,15 +344,15 @@ while(true){
 			
 			$mysqli->query("INSERT INTO Schedule (Cid, STime, ETime) VALUES ('$Cid', '$STimeB', '$ETimeB');");
 			$mysqli->query("INSERT INTO Session (Cid, Date, InSession, Hidden) VALUES ('$Cid', '$Date', 0, 1);");
-			if(!($Start->contains($STimeB)))
-				$Start->push($STimeB);
-			if(!($End->contains($ETimeB)))
-				$End->push($ETimeB);
+			if(!(in_array($STimeB, $Start)))
+				$Start[] = $STimeB;
+			if(!(in_array($ETimeB, $End)))
+				$End[] = $ETimeB;
 		}
-		$Start->sort(function($a, $b) {	return compare($a, $b); });
-		$End->sort(function($a, $b) {	return compare($a, $b); });
-		$nextStart = $Start->pop();
-		$nextEnd = $End->pop();
+		usort($Start, (function($a, $b) {	return compare($b, $a); }));
+		usort($End, (function($a, $b) {	return compare($b, $a); }));
+		$nextStart = array_pop($Start);
+		$nextEnd = array_pop($End);
 		$latch = false;
 	}	
 	if(date("h:ia") == "12:02am")

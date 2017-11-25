@@ -91,7 +91,10 @@ $html = "<html>
 	
 		function changePasswordFinish(xhttp) {
 			switch(xhttp.responseText){
-			case \"0\": 
+			case \"0\":
+				document.getElementById('password').value = \"\";
+				document.getElementById('cpass').value = \"\";
+				document.getElementById('newpass').value = \"\";
 				alert(\"Change Password Script Failure\");
 				break;
 			
@@ -104,18 +107,30 @@ $html = "<html>
 				break;
 			
 			case \"3\":
+				document.getElementById('password').value = \"\";
+				document.getElementById('cpass').value = \"\";
+				document.getElementById('newpass').value = \"\";
 				alert(\"Incorrect Password\");
 				break;
 			
 			case \"4\":
+				document.getElementById('password').value = \"\";
+				document.getElementById('cpass').value = \"\";
+				document.getElementById('newpass').value = \"\";
 				alert(\"New Password must be 5 to 20 characters\");
 				break;
         
 			case \"5\":
+				document.getElementById('password').value = \"\";
+				document.getElementById('cpass').value = \"\";
+				document.getElementById('newpass').value = \"\";
 				alert(\"New Password is the same as Current Password\");
 				break;
 			
 			case \"6\":
+				document.getElementById('password').value = \"\";
+				document.getElementById('cpass').value = \"\";
+				document.getElementById('newpass').value = \"\";
 				alert(\"Passwords do not match\");
 				break;
 			}
