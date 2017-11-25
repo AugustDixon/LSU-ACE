@@ -1,57 +1,23 @@
-<!-- 
-need from Database:
-$ID
-$Tid 
-$ThreadTitle
-$Nickname
-$Pid
--->
-
 <html>
  	<head> 
-   		 <title>View</title>
+   		 <title>View Thread</title>
   	</head>
   	<body>
-		<h1>View</h1>
-		
-			<p>
-				ID: $ID<br>
-				Thread ID: $Tid<br>
-			</p>
-			<br>
-		
-   		 	<a href="class/forum/index.php">Back</a><!-- -->
-			<a href="class/forum/post.php">Make Post</a><!-- -->
-			
-			<p>
-				Thread Title: $ThreadTitle
-			</p>
-			<!-- -->
+		<h1>$Title</h1>
+   		 	<a href="index.php?ID=$ID">Back</a>
+			<a href="post.php?ID=$ID&Tid=$Tid">Make Post</a><br><br>
 			<table style="width:100%">
-				<tr>
-					<th>Author</th>
-					<th>Body</th> 
-					<th>Delete Post</th>
-				</tr>
-				<!--The following five lines repeat for each post in the thread-->
-				<tr id="$Pid"> 
-					<td>$Nickname</td>
+				<tr> 
+					<td>$Sid</td>
 					<td>$Body</td> 
-					<td><input type="button" value="Delete Post" onClick="loadDoc('class/forum/functions/deletePost.php', myFunction)"></td>
+					<td><input type="button" value="Delete Post" onClick="loadDoc('functions/deletePost.php?Pid=$Pid', myFunction)"></td>
 				</tr>
 			</table>
-			<!-- -->
-			
-
-			
 	</body>
-			
 	<script>
 		function loadDoc(url, cFunction) 
 		{
-			var ID = $ID;
-			var Pid = $ Pid;
-			var attributes = 'ID=' + ID + '&Pid=' + Pid;
+			var attributes = 'ID=$ID';
 	
 			var xhttp;
 			xhttp=new XMLHttpRequest();
@@ -72,7 +38,7 @@ $Pid
 			switch(xhttp.responseText)
 			{
 			case "0": 
-				alert("Script Failure");
+				alert("Delete Post Script Failure");
 				break;
 			
 			case "1": 
@@ -80,7 +46,7 @@ $Pid
 				break;
 			
 			case "2": 
-				window.location = "index.php";
+				window.location = "../../index.php";
 				break;
 			}
 		}

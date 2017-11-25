@@ -40,7 +40,7 @@ if($res->num_rows == 0){
 	exit();
 }
 
-$Pid = $_POST['Pid'];
+$Pid = $_GET['Pid'];
 
 //Check if user is author
 $res = $mysqli->query("SELECT * FROM ForumPost WHERE Cid = '$ID' AND Pid = '$Pid' AND Sid = '$username';");

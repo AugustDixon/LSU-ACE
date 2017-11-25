@@ -1,37 +1,23 @@
-<!-- 
-Variables from database:
-
-$ID
-$Title
--->
 <html>
  	<head> 
    		 <title>Forum</title>
   	</head>
   	<body> 
 		<h1>Forum</h1>
-			<p>
-			ID: $ID<br>
-			</p>
-			<br>
-			
-			<a href="..class/index.php">Back</a>
-			<a href="..class/forum/makeThread.php">Make Thread</a>
-			<br>
-			<br>
-			<br>
-			<br>
+		<a href="../index.php?ID=$ID">Back</a>
+		<a href="makeThread.php?ID=$ID">Make Thread</a>
+		<br>
+		<br>
+		<br>
+		<br>
 			
 			<table style="width:100%">
 				<tr>
 					<th>Thread Title:</th>
 				</tr>
-				<!-- The following three line repeats for each thread in the database -->
 				<tr> 
-					<td><a href="..class/forum/view.php">$Title</a></td>
+					<td><a href="view.php?ID=$ID&Tid=$Tid">$Title</a></td>
 				</tr>
 			</table>
-			<br>
-			
   	</body>
 </html>

@@ -4,21 +4,21 @@
   	</head>
   	<body> 
 		<h1>Make Thread</h1>
-			<p>
-				ID: $ID<br>
-			</p>
-			<a href="..class/forum/index.php">Back</a>
+			<a href="index.php?ID=$ID">Back</a>
 			<form name="makeThreadForm">
-			Title: <input type="text" name="Title" id="Title" maxlength=40><br>  
-			Body: <input type="text" name="Body" id="Body" size=100 maxlength=400><br>  
-			Anonymous <input type="checkbox" name="Anonymous" id="Anonymous" maxlength=400><br>  
+				Title: <input type="text" name="Title" id="Title" maxlength=40><br>  
+				<input type="text" name="Body" id="Body" size=100 maxlength=400><br>  
+				Anonymous <input type="checkbox" name="Anonymous" id="Anonymous"><br>  
 			</form>
-			<input type="button" value="Make Thread" onClick="loadDoc('class/forum/functions/makeThread.php', myFunction)"><!-- -->
-						
+			<input type="button" value="Make Thread" onClick="loadDoc('functions/makeThread.php', myFunction)">
+	</body>
 	<script>
 		function loadDoc(url, cFunction) 
 		{
-			var attributes = "ID=$ID&Sid=$Sid";
+			var Title = document.getElementById("Title").value;
+			var Body = document.getElementById("Body").value;
+			var Anon = document.getElementById("Anonymous").checked;
+			var attributes = "ID=$ID&Title=" + escape("Title") + "&Anon=" + Anon + "&Body=" + escape(Body);
 	
 			var xhttp;
 			xhttp=new XMLHttpRequest();
@@ -39,19 +39,23 @@
 			switch(xhttp.responseText)
 			{
 			case "0": 
-				alert("Script Failure");
+				alert("Make Thread Script Failure");
 				break;
 			
 			case "1": 
-				window.location = "class/forum/index.php";
-				break;
-			
-			case "2": 
-				alert("Title Constraint Error");
+				window.location = "index.php?ID=$ID";
 				break;
 				
+			case "2": 
+				window.location = "../../index.php";
+				break;
+			
 			case "3": 
-				alert("Body Constraint Error");
+				alert("Title must be 40 characters or less");
+				break;
+				
+			case "4": 
+				alert("Body must be 400 characters or less");
 				break;	
 			}
 		}

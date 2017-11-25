@@ -1,41 +1,22 @@
-<!-- 
-Variables from database:
-
-$ID
-$Tid
--->
 <html>
  	<head> 
    		 <title>Post</title>
   	</head>
   	<body> 
 		<h1>Post</h1>
-   		 	<p>
-			ID: $ID <br>
-			Thread ID: $Tid<br>
-			</p>
-			<br>
-			
-			<a href="class/forum/view.php">Back</a>
-			<br><br><br>
-			
+			<a href="view.php?ID=$ID&Tid=$Tid">Back</a><br><br>
 			<form name="makeThreadForm"> 
 			Body: <input type="text" name="Body" id="Body" size=100 maxlength=400><br>  
-			Anonymous <input type="checkbox" name="Anonymous" id="Anonymous" maxlength=400><br>  
+			Anonymous <input type="checkbox" name="Anonymous" id="Anonymous"><br>  
 			</form>
-			<input type="button" value="Make Post" onClick="loadDoc('class/forum/functions/makePost.php', myFunction)"><!-- -->
-			<br>
+			<input type="button" value="Make Post" onClick="loadDoc('functions/makePost.php', myFunction)">
   	</body>
-	
 	<script>
 	function loadDoc(url, cFunction) 
 	{
-		
-		var ID = document.getElementById('$ID').value;
-		var Tid = document.getElementById('$Cid').value;
 		var Body = document.getElementById('Body').value;
-		var Anon = document.getElementById('Anonymous').value;
-		var attributes = 'ID=' + ID + '&Tid=' + Tid + '&Body=' + Body + '&Anon=' + Anon;
+		var Anon = document.getElementById('Anonymous').checked;
+		var attributes = 'ID=$ID&Tid=$Tid&Body=' + Body + '&Anon=' + Anon;
 	
 		var xhttp;
 		xhttp=new XMLHttpRequest();
@@ -47,6 +28,7 @@ $Tid
 			}
 		};
 		xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send(attributes);
 	}
 	
@@ -55,19 +37,19 @@ $Tid
 		switch(xhttp.responseText)
 		{
 		case "0": 
-			alert("Script Failure");
+			alert("Make Post Script Failure");
 			break;
 			
 		case "1": 
-			window.location = "class/forum/index.php";
+			window.location = "view.php?ID=$ID&Tid=$Tid";
 			break;
 			
 		case "2": 
-			window.location = "index.php";
+			window.location = "../../index.php";
 			break;
 			
 		case "3": 
-			alert("Body Constraint Error");
+			alert("Body must be 400 characters or less");
 			break;
 		}
 	}
