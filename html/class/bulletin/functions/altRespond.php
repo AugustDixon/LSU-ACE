@@ -19,6 +19,7 @@
 		2 = Idle Timeout
 */
 
+date_default_timezone_set("America/Chicago");
 session_start();
 
 if(($_SESSION['idle'] + 600) < time()){
@@ -63,7 +64,7 @@ if($res->num_rows > 0){
 
 
 //Add response
-if(!($mysqli->query("INSERT INTO AlteredResp (Cid, Aid, Sid, Response) VALUES ('$ID', '$Aid', '$username', '$Answer');"))){
+if(!($mysqli->query("INSERT INTO AlteredResp (Cid, Aid, Sid, Response) VALUES ('$ID', '$Aid', '$username', $Answer);"))){
 	echo "0";
 	exit();
 }
@@ -73,10 +74,10 @@ $res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID';");
 $Num = $res->num_rows;
 $Majority = ($Num / 2) + 1;
 
-$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid' AND Response = 1;");
+$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Aid = '$Aid' AND Response = 1;");
 $NumYes = $res->num_rows;
 
-$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid' AND Response = 0;");
+$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Aid = '$Aid' AND Response = 0;");
 $NumNo = $res->num_rows;
 $Total = $NumYes + $NumNo;
 
@@ -110,9 +111,9 @@ if($Succeed){
 		}
 	}
 	else if($EditTA){
-		$Name = $result['InstrName'];
-		$Email = $result['InstrEmail'];
-		if(!($mysqli->query("UPDATE Instructor SET Name = '$Name', Email = '$Email' WHERE Cid = '$ID';"))){
+		$Name = $result['TAName'];
+		$Email = $result['TAEmail'];
+		if(!($mysqli->query("UPDATE TA SET Name = '$Name', Email = '$Email' WHERE Cid = '$ID';"))){
 			echo "0";
 			exit();
 		}

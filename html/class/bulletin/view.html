@@ -4,89 +4,83 @@
   	</head>
   	<body> 
 		<h1>View Post</h1>
-                <a href= "../index.php?ID=$ID">Back</a>
+            <a href= "index.php?ID=$ID">Back</a><br>
    		 	<form name="postClass">
-				Title: <input type="text" name="title" id="title"><br>
-				Body: <input type="text" name="body" id="body"><br>
-				<input type="button" value="Yes" onClick="loadDoc('class/bulletin/functions/altRespond', myFunction)">
-                                <input type="button" value="No" onClick="loadDoc('class/bulletin/functions/altRespond', myFunction)">
-                                <input type="button" value="Delete Post" onClick="loadDoc('class/bulletin/functions/deletePost', myFunction)">
+				<h2>$Title</h2>
+				$Body<br>
+				<input type="button" value="Yes" onClick="altRespond(1)"> 
+                <input type="button" value="No" onClick="altRespond(0)"><br><br>
+                <input type="button" value="Delete Post" onClick="loadDoc('functions/deletePost.php', myFunction)">
 			</form>	
   	</body>
-	
-
 	<script>
-	function loadDoc(url, cFunction) 
-	{
-		var answer = document.getElementById('answer').value;
-                var id = document.getElementById('$ID').value;
-		var pid = document.getElementById('$PID').value;
-		var attributes ='&answer=' + answer + '&ID=' + ID + '&PID' + PID;
+		function altRespond(Answer) {
+			var attributes = 'ID=$ID&Pid=$Pid&Answer=' + Answer;
 	
-		var xhttp;
-		xhttp=new XMLHttpRequest();
-		xhttp.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
 			{
-				cFunction(this);
-			}
-		};
-		xhttp.open("POST", url, true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send(attributes);
-	}
-        function myFunction(xhttp) 
-		{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					altFinished(this);
+				}
+			};
+			xhttp.open("POST", "functions/altRespond.php", true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
+		}
+		
+        function altFinished(xhttp) {
 			switch(xhttp.responseText)
 			{
 				case "0": 
-					alert("View Bulletin Script Failure");
+					alert("Response Script Failure");
 					break;
 		
 				case "1": 
-					window.location = "https://lsu-ace.com/class/bulletin/view.php";
+					window.location = "index.php?ID=$ID";
 					break;
 		
 				case "2": 
 					window.location = "../../index.php";
 					break;
-		
-		}
-         function loadDoc(url, cFunction) 
-	{
-                var id = document.getElementById('$ID').value;
-		var pid = document.getElementById('$PID').value;
-		var attributes ='&answer=' + answer + '&ID=' + ID + '&PID' + PID;
-	
-		var xhttp;
-		xhttp=new XMLHttpRequest();
-		xhttp.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
-			{
-				cFunction(this);
 			}
-		};
-		xhttp.open("POST", url, true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send(attributes);
-	}
+		}
+		
+        function loadDoc(url, cFunction) {
+			var attributes = 'ID=$ID&Pid=$Pid';
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
+		}
+		
         function myFunction(xhttp) 
 		{
 			switch(xhttp.responseText)
 			{
 				case "0": 
-					alert("View Bulletin Script Failure");
+					alert("Delete Post Script Failure");
 					break;
 		
 				case "1": 
-					window.location = "https://lsu-ace.com/class/bulletin/view.php";
+					window.location = "index.php?ID=$ID";
 					break;
 		
 				case "2": 
 					window.location = "../../index.php";
 					break;
-		
+			}		
 		}
-                </html>
+	</script>
+</html>

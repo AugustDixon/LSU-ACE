@@ -83,20 +83,22 @@ $html = "<html>
   	<body> 
 		<h1>$Dept $Num Section $Sect Class Page</h1>
    		 	
-			<a href=\"../profile/index.php\">Back</a><br>
-			<a href=\"info/index.php?ID=$ID\">Class Info</a><br>";
+			<a href=\"../profile/index.php\">Back</a><br><br>";
 			
 $res = $mysqli->query("SELECT * FROM Session WHERE Cid = '$ID' AND InSession = 1;");
 
 if($res->num_rows > 0)
-	$html .= "<a href=\"session.php?ID=$ID\">Take Notes</a><br>";
+	$html .= "
+			<a href=\"session.php?ID=$ID\">Take Notes</a><br><br>";
 
 
-$html .= "<a href=\"bulletin/index.php?ID=$ID\">Bulletin Board</a><br>
-		<a href=\"log/index.php?ID=$ID\">Class Log</a><br>
-		<a href=\"forum/index.php?ID=$ID\">Forum</a><br>
-		<a href=\"group/index.php?ID=$ID\">Group Finder</a><br>
-		<a href=\"options.php?ID=$ID\">Options</a><br>
+$html .= "
+			<a href=\"bulletin/index.php?ID=$ID\">Bulletin Board</a><br>
+			<a href=\"info/index.php?ID=$ID\">Class Info</a><br>
+			<a href=\"forum/index.php?ID=$ID\">Forum</a><br>
+			<a href=\"group/index.php?ID=$ID\">Group Finder</a><br>
+			<a href=\"log/index.php?ID=$ID\">Class Log</a><br><br>
+			<a href=\"options.php?ID=$ID\">Options</a>
 			
   	</body>
 	

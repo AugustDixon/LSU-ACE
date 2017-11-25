@@ -93,27 +93,40 @@ $Looking = $result['Looking'];
 $Name = $result['Name'];
 
 $res = $mysqli->query("SELECT * FROM InGroup WHERE Cid = '$ID' AND Gid = '$Sid' AND Sid = '$username';");
-$InGroup = $res->num_rows > 0;
+$InGroup = ($res->num_rows > 0);
 
 $res = $mysqli->query("SELECT Sid, FirstName, LastName, Phone, LSUID FROM InGroup NATURAL JOIN Student WHERE Cid = '$ID' AND Gid = '$Sid';");
-$Join = ($res->num_rows < $Max) && $Open;
-$Leader = $username == $Sid;
+$Num = $res->num_rows;
+$Join = ($Num < $Max) && $Open;
+$Leader = ($username == $Sid);
 
 
 
 $html = "<html>
  	<head> 
    		 <title>View Group</title>
+		 <style>
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th, td {
+				padding: 5px;
+				text-align: left;    
+			}
+		</style>
   	</head>
   	<body> 
 		<h1>View Group</h1>
-   		 	<a href=\"index.php?ID=$ID\">Back</a>\n";
+   		 	<a href=\"index.php?ID=$ID\">Back</a>";
 			
 if($Leader)
-	$html .= "<a href=\"edit.php?ID=$ID\">Edit Group</a>\n";
+	$html .= "
+			<a href=\"edit.php?ID=$ID\">Edit Group</a>";
 
-if($Join)
-	$html .= "<input type=\"button\" value=\"Join Group\" onClick=\"loadDoc('functions/joinGroup.php', myFunction)\">\n";
+if($Join && !($InGroup))
+	$html .= "
+			<input type=\"button\" value=\"Join Group\" onClick=\"loadDoc('functions/joinGroup.php', myFunction)\">";
 
 $html .= "
 			<p>
@@ -123,7 +136,8 @@ $html .= "
 				Number of Members: $Num<br>";
 
 if($Looking)
-	$html .= "\nCurrently Looking for Members<br>";
+	$html .= "
+				Currently Looking for Members<br>";
 
 $html .= "
 			</p>";
@@ -136,17 +150,17 @@ if($InGroup){
 					<th>LSUID</th>
 					<th>Phone Number</th>
 				</tr>";
-	for($i = 0; $i < $res->num_rows(); $i++){
+	for($i = 0; $i < $res->num_rows; $i++){
 		$res->data_seek($i);
 		$result = $res->fetch_assoc();
-		$SUsername = $result['Sid'];
+		$User = $result['Sid'];
 		$FirstName = $result['FirstName'];
 		$LastName = $result['LastName'];
 		$PhoneNumber = $result['Phone'];
 		$LSUID = $result['LSUID'];
 		$html .= "
 				<tr> 
-					<td>$SUsername</td>
+					<td>$User</td>
 					<td>$FirstName $LastName</td>
 					<td>$LSUID</td>
 					<td>$PhoneNumber</td>
@@ -157,11 +171,7 @@ if($InGroup){
 }
 
 $html .= "
-	</body>";
-
-if($Join)
-	$html .= "
-			
+	</body>
 	<script>
 		function loadDoc(url, cFunction) 
 		{

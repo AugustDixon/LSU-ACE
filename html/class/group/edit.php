@@ -101,11 +101,11 @@ $html = "<html>
 	<script>
 		function loadDoc(url, cFunction) 
 		{
-			var name = document.getElementById('groupName').value;
+			var groupName = document.getElementById('groupName').value;
 			var max = document.getElementById('max').value;
 			max = parseInt(max);
-			var looking = document.getElementById('Looking').value;
-			var open = document.getElementById('Open').value;
+			var looking = document.getElementById('Looking').checked;
+			var open = document.getElementById('Open').checked;
 			var attributes = 'ID=$ID&Name=' + groupName + '&Max=' + max + '&Looking=' + looking + '&Open=' + open;
 	
 			var xhttp;

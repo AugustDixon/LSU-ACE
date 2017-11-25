@@ -107,7 +107,7 @@ $html = "<html>
 			var Office = document.getElementById('Office').value;
 			var Hours = document.getElementById('Hours').value;
 			
-			var attributes = 'ID=$ID&Name=' + Name + '&Email=' + Email + '&Office=' + Office + '&Hours' + Hours;
+			var attributes = 'ID=$ID&Name=' + Name + '&Email=' + Email + '&Office=' + Office + '&Hours=' + Hours;
 			
 			var xhttp;
 			xhttp=new XMLHttpRequest();

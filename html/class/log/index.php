@@ -70,20 +70,18 @@ $html = "<html>
 		<h1>Class Log</h1>
 		<a href=\"../index.php?ID=$ID\">Back</a>";
 
-$res = $mysqli->query("SELECT Date, Sesid, Hidden FROM Session WHERE Cid = '$ID';");
+$res = $mysqli->query("SELECT Date, Sesid FROM Session WHERE Cid = '$ID' AND Hidden = 0;");
 
 for($i = 0; $i < $res->num_rows; $i++){
 	$res->data_seek($i);
 	$result = $res->fetch_assoc();
-	if(!($result['Hidden'])){
-		$Date = $result['Date'];
-		$Sesid = $result['Sesid'];
+	$Date = $result['Date'];
+	$Sesid = $result['Sesid'];
 		
-		$html .= "
+	$html .= "
 		<p>
 			<a href=\"class.php?ID=$ID&Sesid=$Sesid\">Class on $Date</a>
 		</p>";
-	}
 }
 
 $html .= "

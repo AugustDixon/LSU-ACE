@@ -19,23 +19,58 @@
 
 session_start();
 
-//check idle time
 if(($_SESSION['idle'] + 600) < time()){
 	unset($_SESSION['username']);
 	unset($_SESSION['idle']);
 	echo "2";
 	exit();
 }
+
+$username = $_SESSION['username'];
 $_SESSION['idle'] = time();
 
-$id = $_POST['ID'];
-$name = $_POST['Name'];
-$max = $_POST['Max'];
-$looking = $_POST['Looking'];
-$open = $_POST['Open'];
+$mysqli = new mysqli("localhost", "InsertOnly", "system", "LSU-ACE");
+if($mysqli->connect_errno){
+	echo "0";
+	exit();
+}
 
-if(strlen($name) > 30 || strlen($name) < 1){
+$ID = $_POST['ID'];
+
+$res = $mysqli->query("SELECT * FROM Taking WHERE Cid = '$ID' AND Sid = '$username';");
+
+if($res->num_rows == 0){
+	echo "0";
+	exit();
+}
+
+
+$Name = $_POST['Name'];
+$Max = $_POST['Max'];
+$Looking = $_POST['Looking'];
+$Open = $_POST['Open'];
+
+if(strlen($Name) > 30 || strlen($Name) < 1){
 	echo "3";
 	exit();
 }
+
+$res = $mysqli->query("SELECT * FROM SGroup WHERE Cid = '$ID' AND Sid = '$username';");
+if($res->num_rows > 0){
+	echo "4";
+	exit();
+}
+
+if(!($mysqli->query("INSERT INTO SGroup (Cid, Sid, Max, Open, Looking, Name) VALUES ('$ID', '$username', $Max, $Open, $Looking, '$Name');"))){
+	echo "0";
+	exit();
+}
+
+if($mysqli->query("INSERT INTO InGroup (Cid, Gid, Sid) VALUES ('$ID', '$username', '$username');"))
+	echo "1";
+else
+	echo "0";
+
+exit();
+
 ?>

@@ -102,6 +102,8 @@ function equalHour($TimeA, $TimeB){
 
 
 //Startup actions
+
+date_default_timezone_set("America/Chicago");
 $Start = new \Ds\Vector();
 $End = new \Ds\Vector();
 
@@ -179,7 +181,7 @@ $End->sort(function($a, $b) {	return compare($b, $a); });
 $nextStart = $Start->pop();
 $nextEnd = $End->pop();
 //Perform actions already passed
-$latch = true
+$latch = true;
 while($latch){
 	$latch = false;
 	if(compare(date("h:ia"), $nextStart) >= 0){

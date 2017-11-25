@@ -8,7 +8,7 @@
 		
 	Page Features:
 		"Back" button - Hyperlinks to class/bulletin/index.php
-		"Title" text field - 1 to 30 characters
+		"Title" text field - 1 to 50 characters
 		"Body" text field - 1 to 200 characters
 		"Make Post" button - Runs AJAX class/bulletin/makePost.php
 		
@@ -74,7 +74,68 @@ if($res->num_rows == 0){
 }
 
 
-$html = "";
+$html = "<html>
+ 	<head> 
+   		 <title>Bulletin Board</title>
+  	</head>
+  	<body> 
+		<h1>Make Post</h1>
+            <a href= \"index.php?ID=$ID\">Back</a>
+   		 	<form name=\"postClass\">
+				Title: <textarea rows=\"1\" cols=\"93\" name=\"Title\" id=\"Title\" maxlength=50></textarea><br>
+				<textarea rows=\"4\" cols=\"100\" name=\"Body\" id=\"Body\" maxlength=200></textarea><br>
+				<input type=\"button\" value=\"Make Post\" onClick=\"loadDoc('functions/makePost.php', myFunction)\">
+			</form>	
+  	</body>
+	<script>
+		function loadDoc(url, cFunction) 
+		{
+			var Title = document.getElementById('Title').value;
+			var Body = document.getElementById('Body').value;
+			var attributes ='ID=$ID&Title=' + escape(Title) + '&Body=' + escape(Body);
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open(\"POST\", url, true);
+			xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
+			xhttp.send(attributes);
+		}
+		
+        function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText.charAt(0))
+			{
+				case \"0\": 
+					alert(\"Make Post Script Failure\");
+					break;
+		
+				case \"1\":
+					var res = xhttp.responseText.split(\" \");
+					window.location = 'view.php?ID=$ID&Pid=' + res[1];
+					break;
+		
+				case \"2\": 
+					window.location = \"../../index.php\";
+					break;
+		
+				case \"3\": 
+					alert(\"Title must be 1 to 50 characters long \");
+					break;
+		
+				case \"4\": 
+					alert(\"Body must be 1 to 200 characters long\");
+					break;         
+			}
+		}
+	</script>
+</html>";
 
 echo $html;
 

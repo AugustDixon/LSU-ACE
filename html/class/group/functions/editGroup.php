@@ -55,7 +55,7 @@ if(strlen($Name) > 30 || strlen($Name) < 1){
 }
 
 
-$sql = "UPDATE SGroup SET Max = '$Max', Open = '$Open', Looking = '$Looking', Name = '$Name' WHERE Sid = '$username' AND Cid = '$ID';";
+$sql = "UPDATE SGroup SET Max = '$Max', Open = $Open, Looking = $Looking, Name = '$Name' WHERE Sid = '$username' AND Cid = '$ID';";
 if($mysqli->query($sql))
 	echo "1";
 else

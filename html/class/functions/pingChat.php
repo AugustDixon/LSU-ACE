@@ -14,6 +14,7 @@
 		See session.php on how to format the returned information.
 */
 
+date_default_timezone_set("America/Chicago");
 session_start();
 
 $username = $_SESSION['username'];

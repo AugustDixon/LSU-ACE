@@ -15,6 +15,8 @@
 		2 = Idle Timeout
 		3 = Body Constraint Error
 */
+
+date_default_timezone_set("America/Chicago");
 session_start();
 
 if(($_SESSION['idle'] + 600) < time()){

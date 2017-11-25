@@ -5,7 +5,7 @@
 	
 	Inputs:
 		'ID' - Cid
-		'Title' - 1 to 30 characters
+		'Title' - 1 to 50 characters
 		'Body' - 1 to 200 characters
 		
 	Output Codes:
@@ -16,6 +16,7 @@
 		4 = Body constraint error
 */
 
+date_default_timezone_set("America/Chicago");
 session_start();
 
 if(($_SESSION['idle'] + 600) < time()){
@@ -47,7 +48,7 @@ if($res->num_rows == 0){
 $Title = $_POST['Title'];
 $Body = $_POST['Body'];
 
-if(strlen($Title) > 30){
+if(strlen($Title) > 50){
 	echo "3";
 	exit();
 }
@@ -59,8 +60,10 @@ if(strlen($Body) > 200){
 
 $Date = date("m/d/y");
 
-if($mysqli->query("INSERT INTO Bulletin (Cid, Sid, Title, Body, Date, Query) VALUES ('$ID', '$username', '$Title', '$Body', '$Date', 0);"))
-	echo "1";
+if($mysqli->query("INSERT INTO Bulletin (Cid, Sid, Title, Body, Date, Query) VALUES ('$ID', '$username', '$Title', '$Body', '$Date', 0);")){
+	$Pid = $mysqli->insert_id;
+	echo "1" . " $Pid";
+}
 else
 	echo "0";
 

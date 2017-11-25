@@ -84,7 +84,7 @@ $html = "<html>
 		<h1>Post</h1>
 			<a href=\"view.php?ID=$ID&Tid=$Tid\">Back</a><br><br>
 			<form name=\"makeThreadForm\"> 
-			Body: <input type=\"text\" name=\"Body\" id=\"Body\" size=100 maxlength=400><br>  
+			<textarea rows=\"4\" cols=\"100\" wrap=\"soft\" name=\"Body\" id=\"Body\" maxlength=400></textarea><br> 
 			Anonymous <input type=\"checkbox\" name=\"Anonymous\" id=\"Anonymous\"><br>  
 			</form>
 			<input type=\"button\" value=\"Make Post\" onClick=\"loadDoc('functions/makePost.php', myFunction)\">

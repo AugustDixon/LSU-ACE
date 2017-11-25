@@ -71,9 +71,9 @@ echo "<html>
 			<a href=\"index.php\">Back</a>
                 <form name=\"registerForm\">
 				LSUID: <input type=\"text\" name=\"LSUID\" id=\"LSUID\"><br>
-				First name: <input type=\"text\" name=\"firstName\" id=\"firstName\"><br>
-				Last name: <input type=\"text\" name=\"lastName\" id=\"lastName\"><br>
-				Phone number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br>
+				First Name: <input type=\"text\" name=\"firstName\" id=\"firstName\"><br>
+				Last Name: <input type=\"text\" name=\"lastName\" id=\"lastName\"><br>
+				Phone Number: <input type=\"text\" name=\"phoneNumber\" id=\"phoneNumber\"><br>
 				
 				<input type=\"button\" value=\"Edit profile\" onClick=\"loadDoc('functions/editProfile.php', myFunction)\">
 			</form>	

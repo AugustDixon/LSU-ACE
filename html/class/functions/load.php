@@ -12,6 +12,7 @@
 		ELSE = Success
 */
 
+date_default_timezone_set("America/Chicago");
 session_start();
 
 $username = $_SESSION['username'];

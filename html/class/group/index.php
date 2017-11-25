@@ -76,12 +76,12 @@ $html = "<html>
 
 
 
-$res = $mysqli->query("SELECT Title, Sid, Open, Looking, Max FROM SGroup WHERE Cid = '$ID';");
+$res = $mysqli->query("SELECT Name, Sid, Open, Looking, Max FROM SGroup WHERE Cid = '$ID';");
 
 for($i = 0; $i < $res->num_rows; $i++){
 	$res->data_seek($i);
 	$result = $res->fetch_assoc();
-	$Title = $result['Title'];
+	$Name = $result['Name'];
 	$Sid = $result['Sid'];
 	$Open = $result['Open'];
 	$Looking = $result['Looking'];
@@ -91,7 +91,7 @@ for($i = 0; $i < $res->num_rows; $i++){
 	$Open = $Open && ($Num < $Max);
 	
 	$html .= "<p>
-            Group Title: $Title<br>
+            Group Name: $Name<br>
             Group Leader: $Sid<br>";
 	if($Open)
 		$html .= "

@@ -64,21 +64,33 @@ if($res->num_rows == 0){
 
 
 
-$html = "";
+$html = "<html>
+ 	<head> 
+   		 <title>Class Bulletin</title>
+  	</head>
+    <body> 
+		<h1>Class Bulletin</h1>
+        <a href=\"../index.php?ID=$ID\">Back</a>
+		<a href=\"post.php?ID=$ID\">Make Post</a><br><br>";
 
-$res = $mysqli->query("SELECT Pid, Sid, Title, Date FROM Bulletin WHERE Cid = '$ID';");
+$res = $mysqli->query("SELECT Pid, Sid, Title, Date FROM Bulletin WHERE Cid = '$ID' ORDER BY Pid;");
 
 for($i = 0; $i < $res->num_rows; $i++){
 	$res->data_seek($i);
 	$result = $res->fetch_assoc();
-	$Username = $result['Sid'];
+	$Sid = $result['Sid'];
 	$Pid = $result['Pid'];
 	$Title = $result['Title'];
 	$Date = $result['Date'];
-	$html .= "";
+	$html .= "
+        <p>
+			<a href=\"view.php?ID=$ID&Pid=$Pid\">$Title</a>  $Date $Sid
+        </p>";
 }
 
-$html .= "";
+$html .= "
+	</body>
+</html>";
 
 echo $html;
 

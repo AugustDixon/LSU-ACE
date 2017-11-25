@@ -63,14 +63,19 @@ if($res->num_rows == 0){
 
 $html = "<html>
  	<head> 
-   		 <title>Forum</title>
+   		<title>Forum</title>
+		<style>
+			th{
+				text-align: left;
+			}
+		</style>
   	</head>
   	<body> 
 		<h1>Forum</h1>
 		<a href=\"../index.php?ID=$ID\">Back</a>
 		<a href=\"makeThread.php?ID=$ID\">Make Thread</a>";
 
-$res = $mysqli->query("SELECT Tid, Title FROM Thread WHERE Cid = '$ID' ORDER BY Pid;");
+$res = $mysqli->query("SELECT Tid, Title FROM Thread WHERE Cid = '$ID' ORDER BY Tid;");
 
 if($res->num_rows > 0)
 	$html .= "

@@ -106,6 +106,8 @@ $Author = $username == $result['Sid'];
 
 if($Query){
 	$Aid = $result['Aid'];
+	$res = $mysqli->query("SELECT * FROM AlteredResp WHERE Cid = '$ID' AND Aid = '$Aid' AND Sid = '$username';");
+	$Responded = ($res->num_rows == 0);
 	$res = $mysqli->query("SELECT EditClass, Title, Classroom, EditInstructor, InstrName, InstrEmail, Office, Hours, EditTA, TAName, TAEmail FROM Altered WHERE Cid = '$ID' AND Aid = '$Aid';");
 	$result = $res->fetch_assoc();
 	$EditInstructor = $result['EditInstructor'];
@@ -120,13 +122,15 @@ if($Query){
 		$CurrentTitle = $result['Title'];
 		$CurrentClassroom = $result['Classroom'];
 		
-		$Body = "Current Information:
-		Title: $CurrentTitle
-		Classroom: $CurrentClassroom
+		$Body = "Current Information:<br>
+		Title: $CurrentTitle<br>
+		Classroom: $CurrentClassroom<br><br>
 		
-		New Information:
-		Title: $NewTitle
-		Classroom: $NewClassroom
+		New Information:<br>
+		Title: $NewTitle<br>
+		Classroom: $NewClassroom";
+		if($Responded)
+			$Body .= "<br><br>
 		
 		Do you agree with these changes?";
 	}
@@ -142,35 +146,39 @@ if($Query){
 		$CurrentOffice = $result['Office'];
 		$CurrentHours = $result['Hours'];
 		
-		$Body = "Current Information:
-		Name: $CurrentName
-		Email: $CurrentEmail
-		Office: $CurrentOffice
-		Hours: $CurrentHours
+		$Body = "Current Information:<br>
+		Name: $CurrentName<br>
+		Email: $CurrentEmail<br>
+		Office: $CurrentOffice<br>
+		Hours: $CurrentHours<br><br>
 		
-		New Information:
-		Name: $NewName
-		Email: $NewEmail
-		Office: $NewOffice
-		Hours: $NewHours
+		New Information:<br>
+		Name: $NewName<br>
+		Email: $NewEmail<br>
+		Office: $NewOffice<br>
+		Hours: $NewHours";
+		if($Responded)
+			$Body .= "<br><br>
 		
 		Do you agree with these changes?";
 	}
 	else if($EditTA){
-		$NewName = $result['InstrName'];
-		$NewEmail = $result['InstrEmail'];
+		$NewName = $result['TAName'];
+		$NewEmail = $result['TAEmail'];
 		$res = $mysqli->query("SELECT Name, Email FROM TA WHERE Cid = '$ID';");
 		$result = $res->fetch_assoc();
 		$CurrentName = $result['Name'];
 		$CurrentEmail = $result['Email'];
 		
-		$Body = "Current Information:
-		Name: $CurrentName
-		Email: $CurrentEmail
+		$Body = "Current Information:<br>
+		Name: $CurrentName<br>
+		Email: $CurrentEmail<br><br>
 		
-		New Information:
-		Name: $NewName
-		Email: $NewEmail
+		New Information:<br>
+		Name: $NewName<br>
+		Email: $NewEmail";
+		if($Responded)
+			$Body .= "<br><br>
 		
 		Do you agree with these changes?";
 	}
@@ -179,15 +187,100 @@ if($Query){
 
 
 
-$html = "";
+$html = "<html>
+ 	<head> 
+   		 <title>View Post</title>
+  	</head>
+  	<body> 
+		<h1>View Post</h1>
+            <a href= \"index.php?ID=$ID\">Back</a><br>
+   		 	<form name=\"postClass\">
+				<h2>$Title</h2>
+				$Body<br>";
 
-if($Query)
-	$html .= "";
+if($Query && $Responded)
+	$html .= "
+				<input type=\"button\" value=\"Yes\" onClick=\"altRespond(1)\"> 
+                <input type=\"button\" value=\"No\" onClick=\"altRespond(0)\">";
 
 if($Author)
-	$html .= "";
+	$html .= "
+                <br><br><input type=\"button\" value=\"Delete Post\" onClick=\"loadDoc('functions/deletePost.php', myFunction)\">";
 
-$html .= "";
+$html .= "
+			</form>	
+  	</body>
+	<script>
+		function altRespond(Answer) {
+			var attributes = 'ID=$ID&Pid=$Pid&Answer=' + Answer;
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					altFinished(this);
+				}
+			};
+			xhttp.open(\"POST\", \"functions/altRespond.php\", true);
+			xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
+			xhttp.send(attributes);
+		}
+		
+        function altFinished(xhttp) {
+			switch(xhttp.responseText)
+			{
+				case \"0\": 
+					alert(\"Response Script Failure\");
+					break;
+		
+				case \"1\": 
+					window.location = \"index.php?ID=$ID\";
+					break;
+		
+				case \"2\": 
+					window.location = \"../../index.php\";
+					break;
+			}
+		}
+		
+        function loadDoc(url, cFunction) {
+			var attributes = 'ID=$ID&Pid=$Pid';
+	
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open(\"POST\", url, true);
+			xhttp.setRequestHeader(\"Content-type\", \"application/x-www-form-urlencoded\");
+			xhttp.send(attributes);
+		}
+		
+        function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+				case \"0\": 
+					alert(\"Delete Post Script Failure\");
+					break;
+		
+				case \"1\": 
+					window.location = \"index.php?ID=$ID\";
+					break;
+		
+				case \"2\": 
+					window.location = \"../../index.php\";
+					break;
+			}
+		}
+	</script>
+</html>";
 
 echo $html;
 

@@ -72,6 +72,7 @@ echo "<html>
   	</head>
   	<body> 
 		<h1>Register</h1>
+		<a href=\"index.php\">Back</a><br><br>
    		 	<form name=\"registerForm\">
 				Username: <input type=\"text\" name=\"username\" id=\"username\"><br>
 				LSUID: <input type=\"text\" name=\"LSUID\" id=\"LSUID\"><br>

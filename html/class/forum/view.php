@@ -74,12 +74,25 @@ if($res->num_rows == 0){
 
 $Tid = $_GET['Tid'];
 
+$res = $mysqli->query("SELECT Title FROM Thread WHERE Tid = '$Tid';");
+$result = $res->fetch_assoc();
+$Title = $result['Title'];
 
 
 
 $html = "<html>
  	<head> 
    		 <title>View Thread</title>
+		 <style>
+			table, th, td {
+				border: 1px solid black;
+				border-collapse: collapse;
+			}
+			th, td {
+				padding: 5px;
+				text-align: left;    
+			}
+		</style>
   	</head>
   	<body>
 		<h1>$Title</h1>
@@ -87,7 +100,7 @@ $html = "<html>
 			<a href=\"post.php?ID=$ID&Tid=$Tid\">Make Post</a><br><br>
 			<table style=\"width:100%\">";
 			
-$res = $mysqli->query("SELECT Sid, Body, Pid, Anonymous FROM ForumPost WHERE Tid = '$Tid';");
+$res = $mysqli->query("SELECT Sid, Body, Pid, Anonymous, Date FROM ForumPost WHERE Tid = '$Tid' ORDER BY Pid;");
 
 for($i = 0; $i < $res->num_rows; $i++){
 	$res->data_seek($i);
@@ -98,12 +111,28 @@ for($i = 0; $i < $res->num_rows; $i++){
 		$Sid = $result['Sid'];
 	$Pid = $result['Pid'];
 	$Body = $result['Body'];
+	$Date = $result['Date'];
+	if($i != 0)
+		$html .= "
+				<tr>
+					<td colspan=\"3\"></td>
+				</tr>";
 	
 	$html .= "
 				<tr> 
 					<td>$Sid</td>
-					<td>$Body</td> 
-					<td><input type=\"button\" value=\"Delete Post\" onClick=\"loadDoc('functions/deletePost.php?Pid=$Pid', myFunction)\"></td>
+					<td rowspan=\"2\">$Body</td>";
+	if(($result['Sid'] == $username) && ($Body != "Deleted"))
+		$html .= "
+					<td rowspan=\"2\"><input type=\"button\" value=\"Delete Post\" onClick=\"loadDoc('functions/deletePost.php?Pid=$Pid', myFunction)\"></td>";
+	else
+		$html .= "
+					<td rowspan=\"2\"></td>";
+	$html .= "
+				</tr>
+				<tr>
+					<td>$Date</td>
+					
 				</tr>";
 }
 
@@ -148,6 +177,9 @@ $html .= "
 		}
 	</script>
 </html>";
+
+
+echo $html;
 
 exit();
 

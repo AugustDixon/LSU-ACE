@@ -45,7 +45,7 @@ if(strlen($npass) > 20 || strlen($npass) < 1){
    exit();
 }
 //check if current password and new password are the same.
-if($npass == $cpass){
+if($npass == $pass){
    echo "5";
    exit();
 }
@@ -55,14 +55,14 @@ if($npass != $cpass){
    exit();
 }
 // check if password matches current password in database
-$sql = "SELECT Password FROM Logins WHERE Sid ='$user'";
-if ($logins->query($sql) === FALSE) {
+$res = $logins->query("SELECT * FROM Logins WHERE Sid = '$user' AND Password = '$pass';");
+if ($res->num_rows == 0) {
     echo "3";
     exit();
 }
 
 //update new password
-$sql2 = "UPDATE Logins SET Password = '$npass' WHERE Sid = '$user'";
+$sql = "UPDATE Logins SET Password = '$npass' WHERE Sid = '$user';";
 if ($logins->query($sql) === TRUE) {
     echo "1";
 } else {
