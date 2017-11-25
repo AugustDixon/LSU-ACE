@@ -1,0 +1,92 @@
+<html>
+ 	<head> 
+   		 <title>View Post</title>
+  	</head>
+  	<body> 
+		<h1>View Post</h1>
+                <a href= "../index.php?ID=$ID">Back</a>
+   		 	<form name="postClass">
+				Title: <input type="text" name="title" id="title"><br>
+				Body: <input type="text" name="body" id="body"><br>
+				<input type="button" value="Yes" onClick="loadDoc('class/bulletin/functions/altRespond', myFunction)">
+                                <input type="button" value="No" onClick="loadDoc('class/bulletin/functions/altRespond', myFunction)">
+                                <input type="button" value="Delete Post" onClick="loadDoc('class/bulletin/functions/deletePost', myFunction)">
+			</form>	
+  	</body>
+	
+
+	<script>
+	function loadDoc(url, cFunction) 
+	{
+		var answer = document.getElementById('answer').value;
+                var id = document.getElementById('$ID').value;
+		var pid = document.getElementById('$PID').value;
+		var attributes ='&answer=' + answer + '&ID=' + ID + '&PID' + PID;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(attributes);
+	}
+        function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+				case "0": 
+					alert("View Bulletin Script Failure");
+					break;
+		
+				case "1": 
+					window.location = "https://lsu-ace.com/class/bulletin/view.php";
+					break;
+		
+				case "2": 
+					window.location = "../../index.php";
+					break;
+		
+		}
+         function loadDoc(url, cFunction) 
+	{
+                var id = document.getElementById('$ID').value;
+		var pid = document.getElementById('$PID').value;
+		var attributes ='&answer=' + answer + '&ID=' + ID + '&PID' + PID;
+	
+		var xhttp;
+		xhttp=new XMLHttpRequest();
+		xhttp.onreadystatechange = function() 
+		{
+			if (this.readyState == 4 && this.status == 200) 
+			{
+				cFunction(this);
+			}
+		};
+		xhttp.open("POST", url, true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send(attributes);
+	}
+        function myFunction(xhttp) 
+		{
+			switch(xhttp.responseText)
+			{
+				case "0": 
+					alert("View Bulletin Script Failure");
+					break;
+		
+				case "1": 
+					window.location = "https://lsu-ace.com/class/bulletin/view.php";
+					break;
+		
+				case "2": 
+					window.location = "../../index.php";
+					break;
+		
+		}
+                </html>
