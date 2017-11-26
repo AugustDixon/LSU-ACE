@@ -9,46 +9,55 @@
 				Password: <input type="password" name="password" id="password"><br>
 				<input type="button" value="Submit" onClick="loadDoc('functions/login.php', myFunction)">
 			</form>
-			<a href="forgot1.php">Forgot Password?</a>
+			<a href="forgot1.php" hidden>Forgot Password?</a>
 			<a href="register.php">Register?</a>
 	</body>
 	<script>
-	function loadDoc(url, cFunction) 
-	{
-		var username = document.getElementById('username').value; 
-		var password = document.getElementById('password').value; 
-		var attributes = "username=" + username + "&password=" + password;
-	
-		var xhttp;
-		xhttp=new XMLHttpRequest();
-		xhttp.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
-			{
-				cFunction(this);
+		var user = document.getElementById('username');
+		var pass = document.getElementById('password');
+		user.addEventListener("keydown", function (e) {
+			if (e.keyCode === 13) {
+				pass.focus();
 			}
-		};
-		xhttp.open("POST", url, true);
-		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send(attributes);
-	}
+		}); 
+		pass.addEventListener("keydown", function (e) {
+			if (e.keyCode === 13) {
+				loadDoc('functions/login.php', myFunction);
+			}
+		}); 
+		function loadDoc(url, cFunction) {
+			var username = document.getElementById('username').value; 
+			var password = document.getElementById('password').value; 
+			var attributes = "username=" + username + "&password=" + password;
 	
-	function myFunction(xhttp) 
-	{
-		switch(xhttp.responseText)
-		{
-		case "0": 
-			alert("Login Script Failure");
-			break;
-		
-		case "1": 
-			window.location = "profile/index.php";
-			break;
-		
-		case "2": 
-			alert("Incorrect Username or Password");
-			break;
+			var xhttp;
+			xhttp=new XMLHttpRequest();
+			xhttp.onreadystatechange = function() 
+			{
+				if (this.readyState == 4 && this.status == 200) 
+				{
+					cFunction(this);
+				}
+			};
+			xhttp.open("POST", url, true);
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhttp.send(attributes);
 		}
-	}
+	
+		function myFunction(xhttp) {
+			switch(xhttp.responseText){
+			case "0": 
+				alert("Login Script Failure");
+				break;
+		
+			case "1": 
+				window.location = "profile/index.php";
+				break;
+		
+			case "2": 
+				alert("Incorrect Username or Password");
+				break;
+			}
+		}
 	</script>
 </html>

@@ -76,7 +76,12 @@ if($res->num_rows == 0){
 
 $html = "<html>
  	<head> 
-   		 <title>Bulletin Board</title>
+   		<title>Bulletin Board</title>
+		<style>
+		textarea {
+			resize: none;
+		}
+		</style>
   	</head>
   	<body> 
 		<h1>Make Post</h1>

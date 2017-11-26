@@ -73,12 +73,17 @@ $Sid = $result['Sid'];
 $html = "<html>
 	<head>
 		<title>View Notes</title>
+		<style>
+		textarea {
+			resize: none;
+		}
+		</style>
 	</head>
 	<body>
 		<h1>Notes for $Sid</h1>
 		<a href=\"class.php?ID=$ID&Sesid=$Sesid\">Back</a>
-		<input type=\"button\" value=\"Save Notes to Computer\" onClick=\"download()\">
-		<textarea rows=\"150\" cols=\"100\" wrap=\"hard\" id=\"notes\" readonly>$Notes</textarea>
+		<input type=\"button\" value=\"Save Notes to Computer\" onClick=\"download()\"><br>
+		<textarea rows=\"37\" cols=\"120\" wrap=\"hard\" id=\"notes\" readonly>$Notes</textarea>
 	</body>
 	<script>
 		function download() {

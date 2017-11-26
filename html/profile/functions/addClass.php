@@ -104,6 +104,11 @@ if(strlen($sect) > 3 || strlen($sect) < 1){
    echo "5";
    exit();
 }
+if(substr($sect, 0, 1) == "0"){
+	$sect = substr($sect, 1, 2);
+	if(substr($sect, 0, 1) == "0")
+		$sect = substr($sect, 1, 1);
+}
 //check dayA constraints
 if(strlen($daya) != 5){
    echo "6";

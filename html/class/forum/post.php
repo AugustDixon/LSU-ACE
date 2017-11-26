@@ -78,7 +78,12 @@ $Tid = $_GET['Tid'];
 
 $html = "<html>
  	<head> 
-   		 <title>Post</title>
+   		<title>Post</title>
+		<style>
+		textarea {
+			resize: none;
+		}
+		</style>
   	</head>
   	<body> 
 		<h1>Post</h1>

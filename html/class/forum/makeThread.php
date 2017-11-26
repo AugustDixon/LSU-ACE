@@ -79,6 +79,11 @@ if($res->num_rows == 0){
 $html = "<html>
  	<head> 
    		 <title>Make Thread</title>
+		<style>
+		textarea {
+			resize: none;
+		}
+		</style>
   	</head>
   	<body> 
 		<h1>Make Thread</h1>

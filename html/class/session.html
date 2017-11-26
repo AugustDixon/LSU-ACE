@@ -1,15 +1,28 @@
 <html>
 	<head>
 		<title>Take Notes</title>
+		<style>
+		textarea {
+			resize: none;
+		}
+		</style>
 	</head>
 	<body>
-		<a href="index.php?ID=$ID">Back</a>
+		<input type="button" value="Back" onClick="back()">
 		<input type="button" value="Save Work" onClick="autosave()">
 		<input type="button" value="Save to Computer" onClick="download()"><br>
-		<textarea rows="150" cols="100" wrap="hard" id="notes"></textarea><textarea rows="20" cols="60" wrap="soft" id="chat" readonly></textarea>
-		<textarea rows="2" cols="60" wrap="soft" id="message"></textarea>
-		<input type="button" value="Send Message" onClick="sendMessage()">
-		
+		<table>
+			<tr>
+				<td rowspan=3><textarea rows="40" cols="120" wrap="hard" id="notes"></textarea></td>
+				<td><textarea rows="35" cols="60" wrap="soft" id="chat" readonly></textarea></td>
+			</tr>
+			<tr>
+				<td><textarea rows="2" cols="60" wrap="soft" id="message" maxlength=100></textarea></td>
+			</tr>
+			<tr>
+				<td><input type="button" value="Send Message" onClick="sendMessage()"></td>
+			</tr>
+		</table>
 	</body>
 		
 	<script>
@@ -36,6 +49,11 @@
 					window.URL.revokeObjectURL(url);  
 				}, 0); 
 			}
+		}
+		
+		function back(){
+			autosave();
+			window.location = "index.php?ID=$ID";
 		}
 		
 		function load(){

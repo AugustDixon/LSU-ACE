@@ -99,7 +99,12 @@ $_SESSION['idle'] = time();
 
 echo "<html>
  	<head> 
-   		 <title>Add Class</title>
+		<title>Add Class</title>
+		<style>
+		textarea {
+			resize: none;
+		}
+		</style>
   	</head>
   	<body> 
 		<h1>Add Class</h1>
@@ -107,26 +112,27 @@ echo "<html>
 			</br>
 			</br>
    		 	<form name=\"addClass\">
-				Department: <input type=\"text\" id=\"Dept\"></br>
-				Number: <input type=\"text\" id=\"Num\"></br>
-				Section: <input type=\"text\" id=\"Sect\"></br>
-				M: <input type=\"checkbox\" id=\"MondayA\" value='M'>
-				T: <input type=\"checkbox\" id=\"TuesdayA\" value='T'>
-				W: <input type=\"checkbox\" id=\"WednesdayA\" value='W'>
-				Th: <input type=\"checkbox\" id=\"ThursdayA\" value='T'>
-				F: <input type=\"checkbox\" id=\"FridayA\" value='F'></br>				
-				Start Time A: <input type=\"text\" id=\"SHourA\">:<input type=\"text\" id=\"SMinuteA\"></br>
-				End Time A: <input type=\"text\" id=\"EHourA\">:<input type=\"text\" id=\"EMinuteA\"></br>
-				M: <input type=\"checkbox\" id=\"MondayB\" value='M'>
-				T: <input type=\"checkbox\" id=\"TuesdayB\" value='T'>
-				W: <input type=\"checkbox\" id=\"WednesdayB\" value='W'>
-				Th: <input type=\"checkbox\" id=\"ThursdayB\" value='T'>
-				F: <input type=\"checkbox\" id=\"FridayB\" value='F'></br>
-				Start Time B: <input type=\"text\" id=\"SHourB\">:<input type=\"text\" id=\"SMinuteB\"></br>
-				End Time B: <input type=\"text\" id=\"EHourB\">:<input type=\"text\" id=\"EMinuteB\"></br>
+				Enter the following information exactly as it appears on your Personal Schedule:<br><br>
+				Department: <textarea rows=\"1\" cols=\"5\" maxlength=\"5\" id=\"Dept\"></textarea></br>
+				Number: <textarea rows=\"1\" cols=\"5\" maxlength=\"5\" id=\"Num\"></textarea></br>
+				Section: <textarea rows=\"1\" cols=\"3\" maxlength=\"3\" id=\"Sect\"></textarea></br><br>
+				M<input type=\"checkbox\" id=\"MondayA\" value='M'>
+				  T<input type=\"checkbox\" id=\"TuesdayA\" value='T'>
+				  W<input type=\"checkbox\" id=\"WednesdayA\" value='W'>
+				  Th<input type=\"checkbox\" id=\"ThursdayA\" value='T'>
+				  F<input type=\"checkbox\" id=\"FridayA\" value='F'></br>
+				<textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"SHourA\"></textarea>:<textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"SMinuteA\"></textarea>
+				- <textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"EHourA\"></textarea>:<textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"EMinuteA\"></textarea></br><br>
+				M<input type=\"checkbox\" id=\"MondayB\" value='M'>
+				  T<input type=\"checkbox\" id=\"TuesdayB\" value='T'>
+				  W<input type=\"checkbox\" id=\"WednesdayB\" value='W'>
+				  Th<input type=\"checkbox\" id=\"ThursdayB\" value='T'>
+				  F<input type=\"checkbox\" id=\"FridayB\" value='F'></br>
+				<textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"SHourB\"></textarea>:<textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"SMinuteB\"></textarea>
+				- <textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"EHourB\"></textarea>:<textarea rows=\"1\" cols=\"2\" maxlength=\"2\" id=\"EMinuteB\"></textarea></br><br>
 				Hide Name: <input type=\"checkbox\" id=\"HName\" value=\"true\">
-				Hide Phone: <input type=\"checkbox\" id=\"HPhone\" value=\"true\">
-				Hide LSUID: <input type=\"checkbox\" id=\"HLSUID\" value=\"true\"></br>
+				 Hide Phone: <input type=\"checkbox\" id=\"HPhone\" value=\"true\">
+				 Hide LSUID: <input type=\"checkbox\" id=\"HLSUID\" value=\"true\"></br><br>
 				<input type=\"button\" value=\"Add Class\" onClick=\"loadDoc('functions/addClass.php', myFunction)\">
 			</form>	
   	</body>
